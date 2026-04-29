@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surprisewala | Premium Surprise Planning</title>
+    <meta
+      name="description"
+      content="Premium personalized surprise experiences crafted to make every moment unforgettable."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="site-shell">
+      <section class="hero" aria-label="Surprisewala hero" data-parallax-section>
+        <video class="hero__video" autoplay muted loop playsinline preload="metadata">
+          <source src="assets/hero-video.mp4" type="video/mp4" />
+        </video>
+
+        <div class="hero__overlay" aria-hidden="true"></div>
+
+        <header class="navbar" aria-label="Primary navigation">
+          <a class="navbar__brand" href="#" aria-label="Surprisewala home">
+            <img src="assets/logo.png" alt="Surprisewala" />
+          </a>
+
+          <div class="navbar__actions">
+            <button class="cart-toggle" type="button" aria-label="Open cart" aria-controls="cartPanel">
+              <span class="cart-toggle__icon" aria-hidden="true"></span>
+              <span class="cart-toggle__count" data-cart-count>0</span>
+            </button>
+            <div class="country-menu" data-country-menu>
+              <button
+                class="globe-button"
+                type="button"
+                aria-label="Choose country"
+                aria-expanded="false"
+                data-country-toggle
+              >
+                <span aria-hidden="true"></span>
+              </button>
+              <div class="country-dropdown" data-country-dropdown hidden>
+                <p>Choose your country</p>
+                <div class="country-dropdown__list" data-country-list></div>
+              </div>
+            </div>
+            <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </header>
+
+        <div class="hero__content">
+          <p class="hero__tagline">Your Happiness Partner</p>
+          <h1 class="hero__title">
+            We turn moments into
+            <span>memories</span>
+          </h1>
+          <p class="hero__description">
+            Personalized surprise experiences crafted to make every moment unforgettable.
+          </p>
+          <div class="hero__buttons" aria-label="Hero actions">
+            <a class="button button--primary" href="#plan">Plan My Surprise</a>
+            <a class="button button--secondary" href="#services">View Services</a>
+          </div>
+        </div>
+
+        <div class="scroll-indicator" aria-hidden="true">
+          <span></span>
+        </div>
+      </section>
+
+      <section class="trust-stats" id="stats" aria-label="Surprisewala trust statistics">
+        <div class="trust-stats__inner">
+          <article class="stat-card">
+            <p class="stat-card__number">
+              <span data-count-to="4880" data-suffix="+">0</span>
+            </p>
+            <p class="stat-card__label">Surprises Delivered</p>
+          </article>
+
+          <article class="stat-card">
+            <p class="stat-card__number">
+              <span data-count-to="8">0</span>
+            </p>
+            <p class="stat-card__label">Countries Active</p>
+          </article>
+
+          <article class="stat-card">
+            <p class="stat-card__number">
+              <span data-count-to="4.3" data-decimals="1">0</span>
+            </p>
+            <p class="stat-card__label">Average Rating</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="our-story parallax-backdrop" id="story" aria-label="Our little story" data-parallax-section>
+        <div class="our-story__inner">
+          <div class="story-media reveal-left">
+            <figure class="story-card">
+              <img src="assets/story-founder.jpeg" alt="Surprisewala founder story moment" />
+            </figure>
+          </div>
+
+          <div class="story-copy reveal-right">
+            <p class="section-label">Our Little Story</p>
+            <h2>From one birthday surprise to a little happiness business.</h2>
+            <p class="story-copy__lead">
+              What started as a birthday surprise became a love language for hundreds of families,
+              couples and friends.
+            </p>
+
+            <div class="story-text" id="storyText">
+              <p>
+                I was always passionate about making others happy through cute little surprises. It
+                all started in 2019, when I planned birthday surprises for my boyfriend.
+              </p>
+              <p>
+                During 2020, everything slowed down because of Covid-19. But in 2021, even with
+                restrictions, I managed to arrange a theatre surprise for his birthday. The
+                appreciation I received from people around me and the theatre management motivated
+                me to start this as a business.
+              </p>
+
+              <div class="story-text__more" id="storyMore">
+                <p>
+                  On 1st September 2021, I opened the Surprisewala Instagram page. At first, I
+                  could not focus much because of office work, so I only arranged a few surprises for
+                  people close to me.
+                </p>
+                <p>
+                  The real turning point came on 24th March 2023, when I planned my first ever
+                  midnight car surprise for my boyfriend's birthday. From that day, there was no
+                  looking back. Surprise events started growing, and with the support of my parents
+                  and loved ones, Surprisewala became something bigger.
+                </p>
+                <p>
+                  I am truly grateful to Almighty, to my boyfriend who has been my biggest supporter
+                  and strength, to everyone who supported me, and to all our customers who believed
+                  in Surprisewala to surprise their loved ones.
+                </p>
+              </div>
+            </div>
+
+            <button
+              class="read-more"
+              type="button"
+              aria-expanded="false"
+              aria-controls="storyMore"
+            >
+              Read more
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="services" id="services" aria-label="Our services and packages">
+        <div class="services__header">
+          <p class="section-label">Our Services</p>
+          <h2>Crafted moments for every occasion</h2>
+          <p>
+            Choose from our signature surprise experiences designed to create unforgettable
+            memories.
+          </p>
+        </div>
+
+        <div class="packages-grid">
+          <article class="package-card" data-package-card>
+            <div class="package-card__media">Package Image</div>
+            <div class="package-card__body">
+              <div class="package-card__topline">
+                <h3>Simple but Elegant Surprise</h3>
+                <span class="price-badge">LKR 15,000</span>
+              </div>
+              <p>A sweet, thoughtful setup with timeless keepsakes and full memory coverage.</p>
+              <div class="package-card__actions">
+                <button class="package-button package-button--ghost" type="button" data-view-package="simple-elegant">
+                  View Details
+                </button>
+                <button class="package-button package-button--solid" type="button" data-add-package="simple-elegant">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="package-card" data-package-card>
+            <div class="package-card__media">Package Image</div>
+            <div class="package-card__body">
+              <div class="package-card__topline">
+                <h3>Unexpected Surprise on the Go</h3>
+                <span class="price-badge">LKR 20,000</span>
+              </div>
+              <p>A lively moving surprise with cake, flowers, fireworks or balloons, and media.</p>
+              <div class="package-card__actions">
+                <button class="package-button package-button--ghost" type="button" data-view-package="on-the-go">
+                  View Details
+                </button>
+                <button class="package-button package-button--solid" type="button" data-add-package="on-the-go">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="package-card" data-package-card>
+            <div class="package-card__media">Package Image</div>
+            <div class="package-card__body">
+              <div class="package-card__topline">
+                <h3>Lightup Surprise</h3>
+                <span class="price-badge">LKR 25,000</span>
+              </div>
+              <p>A glowing romantic package with lights, roses, chocolates, balloons, and video.</p>
+              <div class="package-card__actions">
+                <button class="package-button package-button--ghost" type="button" data-view-package="lightup">
+                  View Details
+                </button>
+                <button class="package-button package-button--solid" type="button" data-add-package="lightup">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="package-card" data-package-card>
+            <div class="package-card__media">Package Image</div>
+            <div class="package-card__body">
+              <div class="package-card__topline">
+                <h3>Flashmob Surprise</h3>
+                <span class="price-badge">LKR 25,000</span>
+              </div>
+              <p>A dramatic celebration package with decor, cake, flowers, fireworks, and coverage.</p>
+              <div class="package-card__actions">
+                <button class="package-button package-button--ghost" type="button" data-view-package="flashmob">
+                  View Details
+                </button>
+                <button class="package-button package-button--solid" type="button" data-add-package="flashmob">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="package-card" data-package-card>
+            <div class="package-card__media">Package Image</div>
+            <div class="package-card__body">
+              <div class="package-card__topline">
+                <h3>Private Solo Boat Surprise</h3>
+                <span class="price-badge">LKR 86,000</span>
+              </div>
+              <p>A private boat experience with live music, fireworks, decor, cake, and media.</p>
+              <div class="package-card__actions">
+                <button class="package-button package-button--ghost" type="button" data-view-package="boat">
+                  View Details
+                </button>
+                <button class="package-button package-button--solid" type="button" data-add-package="boat">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="gallery parallax-backdrop" id="gallery" aria-label="Our gallery" data-parallax-section>
+        <div class="gallery__header">
+          <p class="section-label">Our Gallery</p>
+          <h2>Moments we helped make unforgettable</h2>
+          <p>A glimpse of the surprises, smiles and memories created with love.</p>
+        </div>
+
+        <div class="gallery-carousel" data-gallery-carousel>
+          <button class="gallery-arrow gallery-arrow--prev" type="button" data-gallery-prev aria-label="Previous gallery photo"></button>
+          <div class="gallery-track" data-gallery-track aria-live="polite"></div>
+          <button class="gallery-arrow gallery-arrow--next" type="button" data-gallery-next aria-label="Next gallery photo"></button>
+        </div>
+
+        <div class="gallery-dots" data-gallery-dots aria-label="Gallery slide controls"></div>
+      </section>
+
+      <section class="countries" id="countries" aria-label="Countries where Surprisewala operates">
+        <div class="countries__header">
+          <p class="section-label">We Operate In</p>
+          <h2>One Brand, Trusted in 8 Countries</h2>
+          <p>Creating unforgettable surprise moments across borders.</p>
+        </div>
+
+        <div class="countries-carousel" data-countries-carousel>
+          <button class="countries-arrow countries-arrow--prev" type="button" data-countries-prev aria-label="Previous country"></button>
+          <div class="countries-viewport">
+            <div class="countries-track" data-countries-track aria-live="polite"></div>
+          </div>
+          <button class="countries-arrow countries-arrow--next" type="button" data-countries-next aria-label="Next country"></button>
+        </div>
+
+        <div class="countries-dots" data-countries-dots aria-label="Countries carousel controls"></div>
+      </section>
+
+      <section class="reviews" id="reviews" aria-label="Google reviews and customer testimonials">
+        <div class="reviews__header">
+          <p class="section-label">Google Reviews</p>
+          <h2><span>4.9 stars</span> from hundreds of customers</h2>
+          <p>Real words from people who trusted us with their most meaningful moments.</p>
+        </div>
+
+        <div class="reviews-marquee" aria-label="Customer review marquee">
+          <div class="review-row review-row--right">
+            <div class="review-track">
+              <article class="review-card">
+                <div class="review-card__top"><h3>Ayesha Fernando</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The setup was beautiful and perfectly planned. My sister cried happy tears.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Rifka Sameer</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>They made the surprise feel so personal and emotional. Every detail mattered.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Naveen Perera</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Everything was handled professionally from start to finish. Truly stress free.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Fathima Zainab</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The birthday decor looked premium and warm. The final video was lovely.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Tharindu Silva</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>My proposal setup was elegant, private, and exactly what I had imagined.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Hana Mohamed</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Such a kind team. They understood the feeling I wanted and brought it to life.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Ayesha Fernando</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The setup was beautiful and perfectly planned. My sister cried happy tears.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Rifka Sameer</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>They made the surprise feel so personal and emotional. Every detail mattered.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Naveen Perera</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Everything was handled professionally from start to finish. Truly stress free.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Fathima Zainab</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The birthday decor looked premium and warm. The final video was lovely.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Tharindu Silva</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>My proposal setup was elegant, private, and exactly what I had imagined.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Hana Mohamed</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Such a kind team. They understood the feeling I wanted and brought it to life.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="review-row review-row--left">
+            <div class="review-track">
+              <article class="review-card">
+                <div class="review-card__top"><h3>Minuri Jayasinghe</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The midnight car surprise was magical. It felt thoughtful, neat, and premium.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Abdulla Kareem</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Quick communication, beautiful flowers, and perfect timing. Highly recommended.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Shalini Raj</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>They made my parents' anniversary so special. The decorations were stunning.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Imran Nazeer</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The team managed everything calmly and beautifully. We only had to enjoy it.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Kavisha Dissanayake</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The cake, balloons, and video coverage were all arranged perfectly on time.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Sarah Williams</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Even from overseas, they helped me plan a beautiful surprise for my family.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Minuri Jayasinghe</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The midnight car surprise was magical. It felt thoughtful, neat, and premium.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Abdulla Kareem</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Quick communication, beautiful flowers, and perfect timing. Highly recommended.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Shalini Raj</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>They made my parents' anniversary so special. The decorations were stunning.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Imran Nazeer</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The team managed everything calmly and beautifully. We only had to enjoy it.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Kavisha Dissanayake</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The cake, balloons, and video coverage were all arranged perfectly on time.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Sarah Williams</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Even from overseas, they helped me plan a beautiful surprise for my family.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="review-row review-row--right review-row--slow">
+            <div class="review-track">
+              <article class="review-card">
+                <div class="review-card__top"><h3>Yasiru Fernando</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The flower bouquet and polaroids made the surprise feel very personal.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Mariam Al Falasi</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Professional planning, elegant design, and a very emotional reveal moment.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Dineth Peiris</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The cinematic video was amazing. It captured every smile and happy reaction.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Nuzha Rahman</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>They listened carefully and created a surprise that felt meaningful and warm.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Chamath Wijesinghe</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The setup was clean, premium, and exactly ready when we arrived.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Leona Mathews</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>A beautiful experience from booking to delivery. My best friend loved it.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Sajith Kumar</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>They turned a simple birthday into a memory we will talk about for years.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Yasiru Fernando</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The flower bouquet and polaroids made the surprise feel very personal.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Mariam Al Falasi</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>Professional planning, elegant design, and a very emotional reveal moment.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Dineth Peiris</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The cinematic video was amazing. It captured every smile and happy reaction.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Nuzha Rahman</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>They listened carefully and created a surprise that felt meaningful and warm.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Chamath Wijesinghe</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>The setup was clean, premium, and exactly ready when we arrived.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Leona Mathews</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>A beautiful experience from booking to delivery. My best friend loved it.</p>
+              </article>
+              <article class="review-card">
+                <div class="review-card__top"><h3>Sajith Kumar</h3><span class="google-mark">G</span></div>
+                <p class="review-stars" aria-label="5 star rating">★★★★★</p>
+                <p>They turned a simple birthday into a memory we will talk about for years.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="custom-package" id="custom-package" aria-label="Special and customized packages">
+        <div class="custom-package__inner">
+          <div class="custom-package__copy">
+            <p class="section-label">Special Packages</p>
+            <h2>Plan a surprise made just for them</h2>
+            <p>
+              Share your idea with us and we will help shape it into a beautiful personalized
+              moment.
+            </p>
+          </div>
+
+          <form class="custom-form" data-custom-form novalidate>
+            <div class="form-grid">
+              <label class="form-field">
+                <span>Name <strong>*</strong></span>
+                <input type="text" name="name" placeholder="Your name" required />
+              </label>
+
+              <label class="form-field">
+                <span>Phone <strong>*</strong></span>
+                <input type="tel" name="phone" placeholder="Your phone number" required />
+              </label>
+
+              <label class="form-field">
+                <span>Country</span>
+                <select name="country">
+                  <option value="">Select country</option>
+                  <option>Sri Lanka</option>
+                  <option>United Arab Emirates</option>
+                  <option>Qatar</option>
+                  <option>Saudi Arabia</option>
+                  <option>Kuwait</option>
+                  <option>Oman</option>
+                  <option>Japan</option>
+                  <option>Australia</option>
+                  <option>United Kingdom</option>
+                </select>
+              </label>
+
+              <label class="form-field">
+                <span>Occasion <strong>*</strong></span>
+                <select name="occasion" required>
+                  <option value="">Select occasion</option>
+                  <option>Birthday</option>
+                  <option>Proposal</option>
+                  <option>Anniversary</option>
+                  <option>Welcome Home</option>
+                  <option>Graduation</option>
+                  <option>Baby Shower</option>
+                  <option>Other</option>
+                </select>
+              </label>
+
+              <label class="form-field">
+                <span>Date &amp; Time</span>
+                <input type="datetime-local" name="date" />
+              </label>
+
+              <label class="form-field">
+                <span>Location</span>
+                <input type="text" name="location" placeholder="Preferred location" />
+              </label>
+
+              <label class="form-field">
+                <span>Budget</span>
+                <select name="budget">
+                  <option value="">Select budget</option>
+                  <option>Below LKR 20,000</option>
+                  <option>LKR 20,000 - 50,000</option>
+                  <option>LKR 50,000 - 100,000</option>
+                  <option>Above LKR 100,000</option>
+                  <option>Not decided yet</option>
+                </select>
+              </label>
+
+              <label class="form-field form-field--wide">
+                <span>Custom Message</span>
+                <textarea name="customMessage" rows="5" placeholder="Tell us your surprise idea"></textarea>
+              </label>
+            </div>
+
+            <p class="form-error" data-form-error role="alert"></p>
+            <button class="whatsapp-button" type="submit" data-whatsapp-submit>
+              Send on WhatsApp
+            </button>
+            <p class="form-helper">You'll be redirected to WhatsApp with your details.</p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" aria-label="Surprisewala footer">
+      <div class="site-footer__inner">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#" aria-label="Surprisewala home">
+            <img src="assets/logo.png" alt="Surprisewala" />
+          </a>
+          <p>
+            Your happiness partner, creating personalized surprise experiences with love, care and
+            unforgettable details.
+          </p>
+          <div class="footer-socials" aria-label="Social links">
+            <a href="https://wa.me/94720626224" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+            <a href="https://www.instagram.com/surprisewala.lk" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Facebook">FB</a>
+          </div>
+        </div>
+
+        <nav class="footer-column" aria-label="Footer navigation">
+          <h2>Navigate</h2>
+          <a href="#">Home</a>
+          <a href="#story">About</a>
+          <a href="#services">Services</a>
+          <a href="#services">Packages</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#custom-package">Contact</a>
+        </nav>
+
+        <div class="footer-column">
+          <h2>Reach Us</h2>
+          <a href="https://wa.me/94720626224" target="_blank" rel="noopener">WhatsApp: +94 72 062 6224</a>
+          <a href="https://www.instagram.com/surprisewala.lk" target="_blank" rel="noopener">Instagram: @surprisewala.lk</a>
+          <p>One Brand, Trusted in 8 Countries</p>
+        </div>
+
+        <div class="footer-cta">
+          <h2>Ready to plan your surprise?</h2>
+          <a class="footer-whatsapp" href="https://wa.me/94720626224" target="_blank" rel="noopener">
+            Order on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Surprisewala. All rights reserved.</p>
+        <p>Memory makers since day one.</p>
+      </div>
+    </footer>
+
+    <div class="menu-backdrop" data-menu-backdrop hidden></div>
+    <aside class="premium-menu" data-premium-menu aria-label="Main menu" aria-hidden="true">
+      <div class="premium-menu__top">
+        <a class="premium-menu__logo" href="#" aria-label="Surprisewala home">
+          <img src="assets/logo.png" alt="Surprisewala" />
+        </a>
+        <button class="menu-close" type="button" data-menu-close aria-label="Close menu"></button>
+      </div>
+
+      <nav class="premium-menu__nav" aria-label="Menu navigation">
+        <a href="#" data-menu-link>Home</a>
+        <a href="#story" data-menu-link>About</a>
+        <a href="#services" data-menu-link>Services</a>
+        <a href="#services" data-menu-link>Packages</a>
+        <a href="#gallery" data-menu-link>Gallery</a>
+        <a href="#custom-package" data-menu-link>Contact</a>
+      </nav>
+
+      <div class="premium-menu__divider"></div>
+
+      <div class="premium-menu__actions">
+        <a class="premium-menu__primary" href="#custom-package" data-menu-link>Plan My Surprise</a>
+        <a class="premium-menu__secondary" href="https://wa.me/94720626224" target="_blank" rel="noopener">
+          Order on WhatsApp
+        </a>
+      </div>
+
+      <div class="premium-menu__countries">
+        <h2>Choose Your Country</h2>
+        <div class="premium-menu__country-grid">
+          <button type="button" data-menu-country="Sri Lanka">Sri Lanka 🇱🇰</button>
+          <button type="button" data-menu-country="United Arab Emirates">UAE 🇦🇪</button>
+          <button type="button" data-menu-country="Qatar">Qatar 🇶🇦</button>
+          <button type="button" data-menu-country="Saudi Arabia">Saudi 🇸🇦</button>
+          <button type="button" data-menu-country="Kuwait">Kuwait 🇰🇼</button>
+        </div>
+      </div>
+
+      <div class="premium-menu__socials" aria-label="Social links">
+        <a href="https://wa.me/94720626224" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+        <a href="https://www.instagram.com/surprisewala.lk" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+        <a href="#" aria-label="Facebook">FB</a>
+      </div>
+
+      <div class="premium-menu__footer">
+        <p>Your Happiness Partner</p>
+        <span>Creating unforgettable surprise moments.</span>
+      </div>
+
+      <a class="premium-menu__sticky" href="https://wa.me/94720626224" target="_blank" rel="noopener">
+        Order Now
+      </a>
+    </aside>
+
+    <div class="modal-backdrop" data-details-modal hidden>
+      <section class="package-modal" role="dialog" aria-modal="true" aria-labelledby="packageModalTitle">
+        <button class="modal-close" type="button" data-close-details aria-label="Close package details"></button>
+        <div class="package-modal__content">
+          <div class="package-modal__details">
+            <p class="section-label">Package Details</p>
+            <h2 id="packageModalTitle"></h2>
+            <p class="package-modal__description"></p>
+            <span class="price-badge package-modal__price"></span>
+            <h3>Includes</h3>
+            <ul class="package-modal__list"></ul>
+            <button class="package-button package-button--solid package-modal__cart" type="button">
+              Add to Cart
+            </button>
+          </div>
+          <div class="package-modal__media">
+            <div class="media-placeholder">
+              <span>Photo will be placed here</span>
+            </div>
+            <div class="media-placeholder media-placeholder--video">
+              <span class="media-placeholder__play" aria-hidden="true"></span>
+              <span>Video will be placed here</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="cart-backdrop" data-cart-backdrop hidden></div>
+    <aside class="cart-panel" id="cartPanel" aria-label="Shopping cart" aria-hidden="true">
+      <div class="cart-panel__header">
+        <div>
+          <p class="section-label">Cart</p>
+          <h2>Your selected packages</h2>
+        </div>
+        <button class="modal-close" type="button" data-close-cart aria-label="Close cart"></button>
+      </div>
+      <div class="cart-panel__items" data-cart-items></div>
+      <div class="cart-panel__empty" data-cart-empty>Your cart is empty.</div>
+      <div class="cart-panel__footer">
+        <div class="cart-panel__total">
+          <span>Total</span>
+          <strong data-cart-total>LKR 0</strong>
+        </div>
+        <button class="checkout-button" type="button">Checkout</button>
+      </div>
+    </aside>
+
+    <script src="script.js"></script>
+  </body>
+</html>
