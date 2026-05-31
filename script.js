@@ -1,6 +1,7 @@
 const statCards = document.querySelectorAll(".stat-card");
 const statNumbers = document.querySelectorAll("[data-count-to]");
 const storySection = document.querySelector(".our-story");
+const purposeSection = document.querySelector(".purpose");
 const readMoreButton = document.querySelector(".read-more");
 const packageCards = document.querySelectorAll("[data-package-card]");
 const packageFilterButtons = document.querySelectorAll("[data-package-filter]");
@@ -34,7 +35,6 @@ const cakeWordingInput = document.querySelector("[data-cake-wording]");
 const cakeSummary = document.querySelector("[data-cake-summary]");
 const cakeSummaryMedia = document.querySelector("[data-cake-summary-media]");
 const cakeError = document.querySelector("[data-cake-error]");
-const cakeAddButton = document.querySelector("[data-cake-add]");
 const cakeCheckoutButton = document.querySelector("[data-cake-checkout]");
 const cartToggle = document.querySelector(".cart-toggle");
 const cartPanel = document.querySelector("#cartPanel");
@@ -643,11 +643,6 @@ const cakes = Object.fromEntries(
   })
 );
 
-const cakeWeightPrices = {
-  "500g": 3500,
-  "1kg": 6500,
-};
-
 const paymentMethods = {
   card: {
     name: "Card Payment",
@@ -760,6 +755,26 @@ if (readMoreButton && storySection) {
     readMoreButton.setAttribute("aria-expanded", String(isExpanded));
     readMoreButton.textContent = isExpanded ? "Show less" : "Read more";
   });
+}
+
+if (purposeSection && "IntersectionObserver" in window) {
+  const purposeObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        purposeSection.classList.add("is-visible");
+        observer.disconnect();
+      });
+    },
+    { threshold: 0.24 }
+  );
+
+  purposeObserver.observe(purposeSection);
+} else if (purposeSection) {
+  purposeSection.classList.add("is-visible");
 }
 
 if (packageCards.length && "IntersectionObserver" in window) {
@@ -1706,8 +1721,6 @@ const getSelectedCakeWeight = () => Array.from(cakeWeightInputs).find((input) =>
 
 const getSelectedCakeTopper = () => Array.from(cakeTopperInputs).find((input) => input.checked)?.value || "";
 
-const getCakePrice = () => cakeWeightPrices[getSelectedCakeWeight()] || 0;
-
 const renderCakeSummary = () => {
   if (!cakeSummary) {
     return;
@@ -1797,54 +1810,6 @@ const closeCakeModal = () => {
       cakeModal.hidden = true;
     }
   }, 220);
-};
-
-const addCakeToCart = () => {
-  const selectedCake = cakes[activeCakeId];
-  const weight = getSelectedCakeWeight();
-  const topper = getSelectedCakeTopper();
-  const wording = cakeWordingInput ? cakeWordingInput.value.trim() : "";
-  const price = getCakePrice();
-
-  if (!selectedCake) {
-    return null;
-  }
-
-  if (!weight) {
-    if (cakeError) {
-      cakeError.textContent = "Please select a cake weight.";
-    }
-    return null;
-  }
-
-  const cartId = `cake-${activeCakeId}-${encodeURIComponent(weight)}-${encodeURIComponent(
-    topper || "no-topper"
-  )}-${encodeURIComponent(wording || "no-wording")}`;
-  const existingItem = cart.find((item) => item.id === cartId);
-
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({
-      id: cartId,
-      type: "cake",
-      name: selectedCake.name,
-      image: selectedCake.image,
-      weight,
-      topper,
-      wording,
-      price,
-      quantity: 1,
-    });
-  }
-
-  if (cakeError) {
-    cakeError.textContent = "";
-  }
-
-  saveCart();
-  renderCart();
-  return cartId;
 };
 
 const orderCakeOnWhatsapp = () => {
@@ -2305,15 +2270,6 @@ cakeTopperInputs.forEach((input) => {
 
 if (cakeWordingInput) {
   cakeWordingInput.addEventListener("input", renderCakeSummary);
-}
-
-if (cakeAddButton) {
-  cakeAddButton.addEventListener("click", () => {
-    if (addCakeToCart()) {
-      closeCakeModal();
-      openCart();
-    }
-  });
 }
 
 if (cakeCheckoutButton) {

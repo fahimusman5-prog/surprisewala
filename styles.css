@@ -937,6 +937,226 @@ body.modal-open {
   width: 3rem;
 }
 
+.purpose {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(5.25rem, 8vw, 8rem) clamp(1.25rem, 5vw, 4.5rem);
+  background: var(--section-surface-alt);
+  background-position: center calc(50% + var(--section-parallax-y, 0px)), center;
+}
+
+.purpose::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 24% 18%, rgba(69, 243, 255, 0.13), transparent 18rem),
+    radial-gradient(circle at 76% 78%, rgba(149, 251, 255, 0.08), transparent 20rem),
+    linear-gradient(120deg, rgba(69, 243, 255, 0.05), transparent 42%, rgba(255, 255, 255, 0.025));
+  pointer-events: none;
+}
+
+.purpose__inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 72rem);
+  margin: 0 auto;
+}
+
+.purpose__header {
+  width: min(100%, 48rem);
+  margin: 0 auto clamp(2.3rem, 5vw, 4rem);
+  text-align: center;
+}
+
+.purpose__header .section-label {
+  gap: 1.75rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.purpose__header .section-label::after {
+  content: "";
+  width: clamp(4.4rem, 6vw, 5.65rem);
+  height: 2px;
+  opacity: 0.9;
+  background: linear-gradient(90deg, transparent, #22f3ff, transparent);
+  box-shadow: 0 0 0.7rem rgba(34, 243, 255, 0.34);
+}
+
+.purpose__header h2 {
+  margin: 0;
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-size: clamp(2.9rem, 6vw, 5.9rem);
+  font-weight: 700;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.purpose__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.15rem, 3vw, 1.8rem);
+}
+
+.purpose-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 24rem;
+  padding: clamp(1.65rem, 3vw, 2.35rem);
+  border: 1px solid rgba(69, 243, 255, 0.2);
+  border-radius: 1.35rem;
+  background:
+    linear-gradient(145deg, rgba(69, 243, 255, 0.12), rgba(255, 255, 255, 0.055) 38%, rgba(1, 8, 14, 0.62)),
+    rgba(4, 17, 27, 0.72);
+  box-shadow:
+    0 1.55rem 4.25rem rgba(0, 0, 0, 0.36),
+    0 0 2.6rem rgba(69, 243, 255, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.055) inset;
+  backdrop-filter: blur(20px);
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 700ms ease,
+    transform 700ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease,
+    background 260ms ease;
+}
+
+.purpose-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent),
+    radial-gradient(circle at 18% 0%, rgba(69, 243, 255, 0.22), transparent 16rem);
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.purpose-card::after {
+  content: "";
+  position: absolute;
+  right: -4.5rem;
+  bottom: -4.5rem;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(69, 243, 255, 0.16), transparent 68%);
+  filter: blur(0.2rem);
+  pointer-events: none;
+}
+
+.js .purpose-card {
+  opacity: 0;
+  transform: translateY(1.65rem);
+}
+
+.js .purpose.is-visible .purpose-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js .purpose.is-visible .purpose-card--vision {
+  transition-delay: 120ms;
+}
+
+.purpose-card:hover {
+  transform: translateY(-0.35rem);
+  border-color: rgba(69, 243, 255, 0.42);
+  background:
+    linear-gradient(145deg, rgba(69, 243, 255, 0.17), rgba(255, 255, 255, 0.07) 38%, rgba(1, 8, 14, 0.66)),
+    rgba(4, 17, 27, 0.78);
+  box-shadow:
+    0 1.85rem 4.8rem rgba(0, 0, 0, 0.42),
+    0 0 3rem rgba(69, 243, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.js .purpose.is-visible .purpose-card:hover {
+  transform: translateY(-0.35rem);
+}
+
+.purpose-card__icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 3.75rem;
+  height: 3.75rem;
+  place-items: center;
+  margin-bottom: clamp(1.25rem, 2vw, 1.65rem);
+  border: 1px solid rgba(69, 243, 255, 0.3);
+  border-radius: 1rem;
+  color: var(--color-teal);
+  background:
+    linear-gradient(135deg, rgba(69, 243, 255, 0.2), rgba(255, 255, 255, 0.075)),
+    rgba(255, 255, 255, 0.055);
+  box-shadow:
+    0 0.85rem 2rem rgba(69, 243, 255, 0.13),
+    0 0 1.25rem rgba(69, 243, 255, 0.1) inset;
+}
+
+.purpose-card__icon--heart::before,
+.purpose-card__icon--heart::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.purpose-card__icon--heart::before {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.18rem;
+  transform: translateY(0.16rem) rotate(45deg);
+  box-shadow: 0 0 1.2rem rgba(69, 243, 255, 0.72);
+}
+
+.purpose-card__icon--heart::after {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 999px 999px 0 999px;
+  box-shadow:
+    0.52rem 0.52rem 0 currentColor,
+    0 0 1.2rem rgba(69, 243, 255, 0.72);
+  transform: translate(-0.25rem, -0.25rem) rotate(45deg);
+}
+
+.purpose-card__icon--star::before {
+  content: "";
+  width: 1.75rem;
+  height: 1.75rem;
+  background: currentColor;
+  clip-path: polygon(50% 0, 61% 34%, 98% 35%, 68% 56%, 79% 91%, 50% 70%, 21% 91%, 32% 56%, 2% 35%, 39% 34%);
+  filter: drop-shadow(0 0 0.75rem rgba(69, 243, 255, 0.72));
+}
+
+.purpose-card h3 {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 1rem;
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 3.6vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.purpose-card p {
+  position: relative;
+  z-index: 1;
+  max-width: 33rem;
+  margin: 0;
+  color: rgba(235, 247, 250, 0.74);
+  font-size: clamp(0.98rem, 1.45vw, 1.08rem);
+  line-height: 1.78;
+}
+
+.purpose-card p + p {
+  margin-top: 1rem;
+}
+
 .services {
   position: relative;
   overflow: hidden;
@@ -4517,6 +4737,58 @@ body.modal-open {
   .story-text {
     font-size: 0.95rem;
     line-height: 1.78;
+  }
+
+  .purpose {
+    padding: 4.75rem 1.15rem 5.25rem;
+  }
+
+  .purpose__inner {
+    width: min(100%, 22rem);
+  }
+
+  .purpose__header {
+    margin-bottom: 2.15rem;
+  }
+
+  .purpose__header .section-label {
+    gap: 0.9rem;
+    letter-spacing: 0.22em;
+  }
+
+  .purpose__header .section-label::after {
+    width: 3.4rem;
+  }
+
+  .purpose__header h2 {
+    font-size: clamp(2.7rem, 12vw, 3.6rem);
+  }
+
+  .purpose__cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .purpose-card {
+    min-height: 0;
+    padding: 1.45rem;
+    border-radius: 1.15rem;
+  }
+
+  .purpose-card__icon {
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-bottom: 1.15rem;
+    border-radius: 0.9rem;
+  }
+
+  .purpose-card h3 {
+    font-size: clamp(2rem, 10vw, 2.65rem);
+  }
+
+  .purpose-card p {
+    font-size: 0.95rem;
+    line-height: 1.74;
   }
 
   .services {
