@@ -1102,25 +1102,41 @@ body.modal-open {
 .purpose-card__icon--heart::after {
   content: "";
   position: absolute;
-  background: currentColor;
 }
 
 .purpose-card__icon--heart::before {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 0.18rem;
-  transform: translateY(0.16rem) rotate(45deg);
-  box-shadow: 0 0 1.2rem rgba(69, 243, 255, 0.72);
+  z-index: 2;
+  width: 1.85rem;
+  height: 1.68rem;
+  background: currentColor;
+  clip-path: polygon(
+    50% 100%,
+    10% 61%,
+    3% 50%,
+    0 36%,
+    4% 21%,
+    15% 9%,
+    29% 5%,
+    42% 10%,
+    50% 22%,
+    58% 10%,
+    71% 5%,
+    85% 9%,
+    96% 21%,
+    100% 36%,
+    97% 50%,
+    90% 61%
+  );
+  filter: drop-shadow(0 0 0.85rem rgba(69, 243, 255, 0.76));
 }
 
 .purpose-card__icon--heart::after {
-  width: 0.95rem;
-  height: 0.95rem;
-  border-radius: 999px 999px 0 999px;
-  box-shadow:
-    0.52rem 0.52rem 0 currentColor,
-    0 0 1.2rem rgba(69, 243, 255, 0.72);
-  transform: translate(-0.25rem, -0.25rem) rotate(45deg);
+  z-index: 1;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(69, 243, 255, 0.32), transparent 66%);
+  filter: blur(0.08rem);
 }
 
 .purpose-card__icon--star::before {
