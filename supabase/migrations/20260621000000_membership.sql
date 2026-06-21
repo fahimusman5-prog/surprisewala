@@ -43,9 +43,18 @@ alter table public.orders enable row level security;
 drop policy if exists "Users read own profile" on public.profiles;
 create policy "Users read own profile" on public.profiles for select using ((select auth.uid()) = id);
 drop policy if exists "Users insert own profile" on public.profiles;
-create policy "Users insert own profile" on public.profiles for insert with check ((select auth.uid()) = id);
+create policy "Users insert own profile" on public.profiles for insert
+with check (
+  (select auth.uid()) = id
+  and email = (select auth.jwt() ->> 'email')
+);
 drop policy if exists "Users update own profile" on public.profiles;
-create policy "Users update own profile" on public.profiles for update using ((select auth.uid()) = id) with check ((select auth.uid()) = id);
+create policy "Users update own profile" on public.profiles for update
+using ((select auth.uid()) = id)
+with check (
+  (select auth.uid()) = id
+  and email = (select auth.jwt() ->> 'email')
+);
 
 drop policy if exists "Users read own addresses" on public.addresses;
 create policy "Users read own addresses" on public.addresses for select using ((select auth.uid()) = user_id);
@@ -59,7 +68,19 @@ create policy "Users delete own addresses" on public.addresses for delete using 
 drop policy if exists "Users read own orders" on public.orders;
 create policy "Users read own orders" on public.orders for select using ((select auth.uid()) = user_id);
 drop policy if exists "Users insert own orders" on public.orders;
-create policy "Users insert own orders" on public.orders for insert with check ((select auth.uid()) = user_id);
+create policy "Users insert own orders" on public.orders for insert
+with check (
+  (select auth.uid()) = user_id
+  and status = 'pending'
+);
+
+-- Keep anonymous visitors away from member records while allowing the
+-- authenticated browser client to perform only the operations exposed above.
+revoke all on public.profiles, public.addresses, public.orders from anon;
+grant usage on schema public to authenticated;
+grant select, insert, update on public.profiles to authenticated;
+grant select, insert, update, delete on public.addresses to authenticated;
+grant select, insert on public.orders to authenticated;
 
 create or replace function public.handle_new_user()
 returns trigger

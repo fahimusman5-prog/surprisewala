@@ -2,10 +2,23 @@
 /node_modules
 /.next
 
+# Vercel local project metadata
+.vercel
+
 # local environment files
+.env
+.env.local
+.env.*.local
 .env*
 !.env.example
 
 # local verification artifacts
 verification-*.png
 *.pid
+.edge-profile-*
+*.tsbuildinfo
+
+# Original local asset folders are mirrored under /public for Next.js/Vercel.
+/assets-1/
+/assets-2/
+/assets-3/
