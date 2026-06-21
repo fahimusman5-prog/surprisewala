@@ -1,0 +1,11 @@
+# dependencies and builds
+/node_modules
+/.next
+
+# local environment files
+.env*
+!.env.example
+
+# local verification artifacts
+verification-*.png
+*.pid
