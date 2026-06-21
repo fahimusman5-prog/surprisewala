@@ -6,7 +6,7 @@ export async function getSupabaseServerClient() {
   if (!isSupabaseConfigured) return null;
   const cookieStore = await cookies();
 
-  return createServerClient(supabaseUrl, supabaseAnonKey, {
+  return createServerClient(supabaseUrl!, supabaseAnonKey!, {
     cookies: {
       getAll: () => cookieStore.getAll(),
       setAll(cookiesToSet) {

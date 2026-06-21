@@ -6,6 +6,6 @@ let client: SupabaseClient | null = null;
 
 export function getSupabaseBrowserClient() {
   if (!isSupabaseConfigured) return null;
-  if (!client) client = createBrowserClient(supabaseUrl, supabaseAnonKey);
+  if (!client) client = createBrowserClient(supabaseUrl!, supabaseAnonKey!);
   return client;
 }
