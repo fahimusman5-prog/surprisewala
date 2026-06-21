@@ -24,26 +24,73 @@ export function AuthForm({ mode }: AuthFormProps) {
 
   async function submitOtp(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const supabase = getClient();
-    if (!supabase) return;
+    if (loading) return;
+
     const form = new FormData(event.currentTarget);
     const email = String(form.get("email") || "").trim();
     const fullName = String(form.get("fullName") || "").trim();
     const phone = String(form.get("phone") || "").trim();
-    setLoading(true); setMessage("");
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        shouldCreateUser: isSignup,
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-        data: isSignup ? { full_name: fullName, phone } : undefined,
-      },
-    });
-    setLoading(false);
-    if (error) { setTone("error"); setMessage(error.message); return; }
-    setTone("success");
-    setMessage(`Check ${email} for your secure login link.`);
+    if (isSignup) {
+      console.info("Signup button clicked");
+      console.info("Submitted signup email:", email);
+    }
+
+    setMessage("");
+    setTone("");
+
+    if (!email || (isSignup && (!fullName || !phone))) {
+      setTone("error");
+      setMessage("Please fill all required fields.");
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setTone("error");
+      setMessage("Please enter a valid email address.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const supabase = getClient();
+      if (!supabase) return;
+
+      const { data, error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          shouldCreateUser: isSignup,
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          data: isSignup ? { full_name: fullName, phone } : undefined,
+        },
+      });
+
+      if (isSignup) console.info("Supabase signup response:", data);
+
+      if (error) {
+        if (isSignup) console.error("Supabase signup error:", error);
+        setTone("error");
+        setMessage(error.message);
+        return;
+      }
+
+      setTone("success");
+      setMessage(
+        isSignup
+          ? "Account created successfully. Please check your email to continue."
+          : `Check ${email} for your secure login link.`,
+      );
+    } catch (caughtError) {
+      const errorMessage = caughtError instanceof Error
+        ? caughtError.message
+        : "Unable to contact Supabase. Please try again.";
+      if (isSignup) console.error("Supabase signup error:", caughtError);
+      setTone("error");
+      setMessage(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function loginWithGoogle() {
@@ -59,7 +106,7 @@ export function AuthForm({ mode }: AuthFormProps) {
 
   return (
     <>
-      <form className="auth-form" onSubmit={submitOtp}>
+      <form className="auth-form" onSubmit={submitOtp} noValidate>
         {isSignup && (
           <>
             <div className="field">
@@ -78,7 +125,9 @@ export function AuthForm({ mode }: AuthFormProps) {
         </div>
         <button className="liquid-button" disabled={loading} type="submit">
           {loading ? <LoaderCircle size={18} className="animate-spin" /> : <Mail size={18} />}
-          {isSignup ? "Create account with email" : "Email me a login link"}
+          {loading
+            ? (isSignup ? "Creating account..." : "Sending login link...")
+            : (isSignup ? "Create Account" : "Email me a login link")}
         </button>
       </form>
 
@@ -86,7 +135,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       <button className="liquid-button liquid-button--ghost w-full" disabled={loading} type="button" onClick={loginWithGoogle}>
         <Chrome size={18} /> Continue with Google
       </button>
-      <p className="status-message" data-tone={tone} aria-live="polite">{message}</p>
+      <p className="status-message" data-tone={tone} aria-live="polite" role={tone === "error" ? "alert" : "status"}>{message}</p>
       <p className="auth-meta">
         {isSignup ? <>Already a member? <Link href="/login">Log in</Link></> : <>New to Surprisewala? <Link href="/signup">Create an account</Link></>}
         <br />You can still browse and place orders without logging in.
