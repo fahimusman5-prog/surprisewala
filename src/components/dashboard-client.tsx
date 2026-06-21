@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Home, LogOut, MapPin, Package, Pencil, Plus, UserRound, X } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
@@ -82,7 +83,7 @@ export function DashboardClient({ user, initialProfile, initialOrders, initialAd
     <main className="dashboard-main">
       <section className="dashboard-hero glass-card">
         <div><p className="auth-eyebrow">Your happiness hub</p><h1 className="dashboard-title">Welcome, {displayName}</h1><p>Manage your surprises, orders and saved details in one place.</p></div>
-        <a className="liquid-button liquid-button--ghost" href="/#packages"><Home size={18} /> Browse surprises</a>
+        <Link className="liquid-button liquid-button--ghost" href="/#packages"><Home size={18} /> Browse surprises</Link>
       </section>
       <div className="dashboard-grid">
         <nav className="dashboard-nav glass-card" aria-label="Customer dashboard">
