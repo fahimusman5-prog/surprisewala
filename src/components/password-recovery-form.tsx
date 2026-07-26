@@ -11,6 +11,7 @@ const recoveryErrorMessage = (error: Error | null) => {
   if (error?.message.toLowerCase().includes("rate limit")) {
     return "Please wait before requesting another email. For security, Surprisewala limits email sends.";
   }
+
   return "We could not send a reset email. Please try again later.";
 };
 
