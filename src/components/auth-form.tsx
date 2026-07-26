@@ -37,6 +37,10 @@ export function AuthForm({ mode, nextPath = "/dashboard" }: AuthFormProps) {
     return `${window.location.origin}/auth/callback?next=${encodeURIComponent(safeNext)}`;
   }
 
+  function accountCreatedPath() {
+    return `${safeNext}${safeNext.includes("?") ? "&" : "?"}account_created=1`;
+  }
+
   function getClient() {
     const supabase = getSupabaseBrowserClient();
     if (!supabase) {
@@ -75,7 +79,7 @@ export function AuthForm({ mode, nextPath = "/dashboard" }: AuthFormProps) {
           options: { emailRedirectTo: callbackUrl(), data: { full_name: fullName.slice(0, 160), phone: phone.slice(0, 40) } },
         });
         if (error) throw error;
-        if (data.session) window.location.assign(safeNext);
+        if (data.session) window.location.assign(accountCreatedPath());
         else { setTone("success"); setMessage("Check your email to confirm your account, then return here to log in."); }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });

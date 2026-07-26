@@ -90,6 +90,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .status-message { min-height: 22px; margin: 4px 0 0; color: var(--sw-muted); font-size: 13px; line-height: 1.5; }
 .status-message[data-tone="error"] { color: var(--sw-danger); }
 .status-message[data-tone="success"] { color: var(--sw-success); }
+.dashboard-notice { margin: 18px 0 0; padding: 14px 18px; border: 1px solid rgba(110, 231, 183, .25); border-radius: 14px; background: rgba(110, 231, 183, .08); color: var(--sw-success); line-height: 1.5; }
 
 .dashboard-main { padding: 24px 0 80px; }
 .dashboard-hero { padding: clamp(26px, 5vw, 52px); display: flex; justify-content: space-between; align-items: end; gap: 24px; }
