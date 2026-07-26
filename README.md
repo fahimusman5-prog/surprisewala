@@ -9,10 +9,10 @@ Copy `.env.example` to `.env.local` and provide:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
-ADMIN_ORDER_EMAIL=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-Never commit `.env.local`. The frontend uses only the public Supabase anon/publishable key; never expose a `service_role` key.
+Never commit `.env.local`. The frontend uses only the public Supabase anon/publishable key; never expose a `service_role` key. `SUPABASE_SERVICE_ROLE_KEY` is reserved for future secure server-only administration and is not required by the current application.
 
 Install and run:
 
@@ -23,9 +23,12 @@ npm run dev
 
 ## Supabase database
 
-Open **Supabase → SQL Editor → New Query**, paste the complete contents of [`supabase/migrations/20260621000000_membership.sql`](supabase/migrations/20260621000000_membership.sql), and run it.
+Create a new dedicated Supabase project, then apply the migrations in timestamp order:
 
-The migration creates `profiles`, `addresses`, and `orders`, including foreign keys, indexes, profile automation, single-default-address enforcement, grants, and Row Level Security policies. Guest checkout remains a public WhatsApp flow; authenticated checkout additionally saves the order under the signed-in user.
+1. [`supabase/migrations/20260621000000_membership.sql`](supabase/migrations/20260621000000_membership.sql)
+2. [`supabase/migrations/20260726081816_secure_dedicated_auth.sql`](supabase/migrations/20260726081816_secure_dedicated_auth.sql)
+
+They create `profiles`, `addresses`, and `orders`, including foreign keys, indexes, profile automation, secure role protection, grants, and Row Level Security policies. Guest checkout remains a public WhatsApp flow; authenticated checkout additionally saves the order under the signed-in user.
 
 ## Authentication URL configuration
 
@@ -35,6 +38,9 @@ In **Supabase → Authentication → URL Configuration**, set:
 - Redirect URL: `https://surprisewala.com/auth/callback`
 - Redirect URL: `https://www.surprisewala.com/auth/callback`
 - Redirect URL: `http://localhost:3000/auth/callback`
+- For Vercel previews: `https://*-<your-vercel-team-or-account>.vercel.app/**`
+
+Enable Email authentication with confirmation required, secure email-change enabled, and password recovery enabled. If you customize Supabase email templates, use `{{ .RedirectTo }}` for the action URL so confirmation and reset links return to this app.
 
 ## Enable Google login
 
@@ -54,9 +60,9 @@ In **Vercel → Project Settings → Environment Variables**, add:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `ADMIN_ORDER_EMAIL`
+- `NEXT_PUBLIC_SITE_URL` (canonical production domain in Production; `http://localhost:3000` locally)
 
-Apply all three variables to **Production**, **Preview**, and **Development**, then redeploy. Do not commit real values to GitHub.
+Apply the Supabase URL and anon key to **Production**, **Preview**, and **Development**. Add `NEXT_PUBLIC_SITE_URL` with the canonical production URL in Production; previews use Vercel’s `NEXT_PUBLIC_VERCEL_URL` fallback. Add `SUPABASE_SERVICE_ROLE_KEY` only if a future server-only administrative feature requires it—never make it public. Do not commit real values to GitHub.
 
 ## Deployment verification
 
@@ -68,4 +74,4 @@ npm run lint
 npm audit --omit=dev
 ```
 
-Verify the homepage, once-per-session membership popup, guest cart and checkout, cake customization, package filters, WhatsApp actions, `/login`, `/signup`, protected `/dashboard`, email OTP, Google OAuth after provider activation, logout, and authenticated order history after applying the SQL migration.
+Verify the homepage, once-per-session membership popup, guest cart and checkout, cake customization, package filters, WhatsApp actions, `/login`, `/signup`, `/forgot-password`, `/reset-password`, protected `/dashboard`, email confirmation, password login, Google OAuth after provider activation, logout, and authenticated order history after applying the SQL migration.

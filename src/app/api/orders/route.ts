@@ -37,15 +37,16 @@ export async function POST(request: Request) {
       status: "pending",
       customer_notes: String(payload.customerNotes || "").slice(0, 2000),
     }),
-    supabase.from("profiles").upsert({
-      id: user.id,
+    supabase.from("profiles").update({
       full_name: String(customer.fullName || user.user_metadata.full_name || "").slice(0, 160),
-      email: user.email,
       phone: String(customer.phone || user.user_metadata.phone || "").slice(0, 40),
-    }, { onConflict: "id" }),
+    }).eq("id", user.id),
   ]);
 
-  if (orderError) return NextResponse.json({ error: orderError.message }, { status: 500 });
-  if (profileError) console.error("Profile sync failed:", profileError.message);
+  if (orderError) {
+    console.error("Authenticated order save failed", { code: orderError.code });
+    return NextResponse.json({ error: "We could not save this order to your account. Your checkout can still continue." }, { status: 500 });
+  }
+  if (profileError) console.error("Profile sync failed", { code: profileError.code });
   return NextResponse.json({ saved: true });
 }

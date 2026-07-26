@@ -66,6 +66,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .field textarea { min-height: 106px; resize: vertical; }
 .field input:focus, .field textarea:focus { border-color: rgba(94,234,212,.65); box-shadow: 0 0 0 4px rgba(45,212,191,.08); outline: none; }
 .field input[readonly] { opacity: .7; cursor: not-allowed; }
+.field-help { color: var(--sw-muted); font-size: 12px; line-height: 1.45; }
+.password-field { position: relative; }
+.password-field input { padding-right: 52px; }
+.password-toggle { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); width: 38px; height: 38px; display: grid; place-items: center; border: 0; background: transparent; color: var(--sw-muted); cursor: pointer; border-radius: 10px; }
+.password-toggle:hover { color: var(--sw-accent); background: rgba(94,234,212,.08); }
 .liquid-button {
   min-height: 50px; border: 1px solid rgba(129, 255, 237, .45); border-radius: 999px; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 22px;
@@ -81,6 +86,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .auth-divider::before, .auth-divider::after { content:""; height: 1px; background: rgba(255,255,255,.09); flex: 1; }
 .auth-meta { color: var(--sw-muted); font-size: 14px; text-align: center; margin: 22px 0 0; line-height: 1.6; }
 .auth-meta a { color: var(--sw-accent); }
+.auth-meta--left { text-align: left; margin: -4px 0 0; }
 .status-message { min-height: 22px; margin: 4px 0 0; color: var(--sw-muted); font-size: 13px; line-height: 1.5; }
 .status-message[data-tone="error"] { color: var(--sw-danger); }
 .status-message[data-tone="success"] { color: var(--sw-success); }

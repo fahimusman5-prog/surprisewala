@@ -20,8 +20,9 @@ export async function proxy(request: NextRequest) {
 
   let user: User | null = null;
   try {
-    const result = await supabase.auth.getUser();
-    user = result.data.user;
+    const { data, error } = await supabase.auth.getClaims();
+    if (error) throw error;
+    user = data?.claims?.sub ? ({ id: data.claims.sub } as User) : null;
   } catch {
     if (request.nextUrl.pathname.startsWith("/dashboard")) {
       const url = request.nextUrl.clone();
@@ -31,13 +32,23 @@ export async function proxy(request: NextRequest) {
     }
     return response;
   }
-  if (request.nextUrl.pathname.startsWith("/dashboard") && !user) {
+  const pathname = request.nextUrl.pathname;
+  if ((pathname.startsWith("/dashboard") || pathname.startsWith("/admin")) && !user) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("next", request.nextUrl.pathname);
+    url.searchParams.set("next", pathname);
     return NextResponse.redirect(url);
+  }
+  if (pathname.startsWith("/admin") && user) {
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
+    if (profile?.role !== "admin") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard";
+      url.searchParams.set("error", "admin_required");
+      return NextResponse.redirect(url);
+    }
   }
   return response;
 }
 
-export const config = { matcher: ["/dashboard/:path*", "/auth/:path*", "/api/:path*"] };
+export const config = { matcher: ["/dashboard/:path*", "/admin/:path*", "/auth/:path*", "/api/:path*"] };

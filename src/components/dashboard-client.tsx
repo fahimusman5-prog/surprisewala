@@ -49,9 +49,9 @@ export function DashboardClient({ user, initialProfile, initialOrders, initialAd
   async function saveProfile(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); const supabase = getSupabaseBrowserClient(); if (!supabase) return;
     const form = new FormData(event.currentTarget); setBusy(true); setMessage("");
-    const changes = { id: user.id, email: user.email, full_name: String(form.get("fullName") || "").trim(), phone: String(form.get("phone") || "").trim() };
-    const { data, error } = await supabase.from("profiles").upsert(changes, { onConflict: "id" }).select().single();
-    setBusy(false); setMessage(error ? error.message : "Profile updated."); if (data) setProfile(data as Profile);
+    const changes = { full_name: String(form.get("fullName") || "").trim(), phone: String(form.get("phone") || "").trim() };
+    const { data, error } = await supabase.from("profiles").update(changes).eq("id", user.id).select().single();
+    setBusy(false); setMessage(error ? "We could not update your profile. Please try again." : "Profile updated."); if (data) setProfile(data as Profile);
   }
 
   async function saveAddress(event: React.FormEvent<HTMLFormElement>) {
@@ -62,7 +62,7 @@ export function DashboardClient({ user, initialProfile, initialOrders, initialAd
     const query = current ? supabase.from("addresses").update(values).eq("id", current.id) : supabase.from("addresses").insert(values);
     const { data, error } = await query.select().single();
     setBusy(false);
-    if (error) { setMessage(error.message); return; }
+    if (error) { setMessage("We could not save this address. Please try again."); return; }
     if (values.is_default) setAddresses((list) => list.map((address) => ({ ...address, is_default: false })));
     setAddresses((list) => current ? list.map((address) => address.id === current.id ? data as Address : address) : [data as Address, ...list]);
     setAddressDialog(null); setMessage("Address saved.");
@@ -71,12 +71,12 @@ export function DashboardClient({ user, initialProfile, initialOrders, initialAd
   async function deleteAddress(id: string) {
     if (!window.confirm("Delete this saved address?")) return;
     const { error } = await getSupabaseBrowserClient()!.from("addresses").delete().eq("id", id);
-    if (error) setMessage(error.message); else { setAddresses((list) => list.filter((address) => address.id !== id)); setMessage("Address deleted."); }
+    if (error) setMessage("We could not delete this address. Please try again."); else { setAddresses((list) => list.filter((address) => address.id !== id)); setMessage("Address deleted."); }
   }
 
   async function makeDefault(id: string) {
     const { error } = await getSupabaseBrowserClient()!.from("addresses").update({ is_default: true }).eq("id", id);
-    if (error) setMessage(error.message); else setAddresses((list) => list.map((address) => ({ ...address, is_default: address.id === id })));
+    if (error) setMessage("We could not update your default address. Please try again."); else setAddresses((list) => list.map((address) => ({ ...address, is_default: address.id === id })));
   }
 
   return (
