@@ -7,6 +7,12 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const validPassword = (value: string) => value.length >= 10 && /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value);
+const recoveryErrorMessage = (error: Error | null) => {
+  if (error?.message.toLowerCase().includes("rate limit")) {
+    return "Please wait before requesting another email. For security, Surprisewala limits email sends.";
+  }
+  return "We could not send a reset email. Please try again later.";
+};
 
 export function ForgotPasswordForm() {
   const [busy, setBusy] = useState(false); const [message, setMessage] = useState("");
@@ -17,7 +23,7 @@ export function ForgotPasswordForm() {
     const supabase = getSupabaseBrowserClient(); if (!supabase) return setMessage("Membership is not configured yet. Please contact Surprisewala.");
     setBusy(true); setMessage("");
     const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/auth/callback?next=%2Freset-password` });
-    setBusy(false); setMessage(error ? "We could not send a reset email. Please try again later." : "If an account is eligible for recovery, we have sent instructions to that email.");
+    setBusy(false); setMessage(error ? recoveryErrorMessage(error) : "If an account is eligible for recovery, we have sent instructions to that email.");
   }
   return <form className="auth-form" onSubmit={submit} noValidate><div className="field"><label htmlFor="email">Email address</label><input id="email" name="email" type="email" autoComplete="email" required /></div><button className="liquid-button" disabled={busy}>{busy && <LoaderCircle size={18} className="animate-spin" />}{busy ? "Sending..." : "Send reset link"}</button><p className="status-message" data-tone={message.includes("could not") || message.includes("valid") ? "error" : "success"} aria-live="polite">{message}</p><p className="auth-meta"><Link href="/login">Back to login</Link></p></form>;
 }
