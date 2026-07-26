@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Home, LogOut, MapPin, Package, Pencil, Plus, UserRound, X } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -27,7 +27,6 @@ export function DashboardClient({ user, initialProfile, initialOrders, initialAd
   user: UserData; initialProfile: Profile; initialOrders: Order[]; initialAddresses: Address[]; initialSection?: Section;
 }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [section, setSection] = useState<Section>(initialSection);
   const [profile, setProfile] = useState(initialProfile);
   const [addresses, setAddresses] = useState(initialAddresses);
@@ -86,7 +85,6 @@ export function DashboardClient({ user, initialProfile, initialOrders, initialAd
         <div><p className="auth-eyebrow">Your happiness hub</p><h1 className="dashboard-title">Welcome, {displayName}</h1><p>Manage your surprises, orders and saved details in one place.</p></div>
         <Link className="liquid-button liquid-button--ghost" href="/#packages"><Home size={18} /> Browse surprises</Link>
       </section>
-      {searchParams.get("account_created") === "1" && <p className="dashboard-notice" role="status">Account created — you’re signed in and ready to start saving your surprises.</p>}
       <div className="dashboard-grid">
         <nav className="dashboard-nav glass-card" aria-label="Customer dashboard">
           <button className={section === "orders" ? "is-active" : ""} onClick={() => selectSection("orders")}><Package size={19} /> Orders</button>

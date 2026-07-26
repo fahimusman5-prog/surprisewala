@@ -238,6 +238,43 @@ body.modal-open {
 .account-button svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
 .account-button.is-member::after { content: ""; position: absolute; right: .4rem; bottom: .42rem; width: .42rem; height: .42rem; border-radius: 50%; background: #6ee7b7; box-shadow: 0 0 .7rem #6ee7b7; }
 
+.member-menu-auth {
+  display: grid;
+  gap: .45rem;
+  margin-top: .9rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(94, 234, 212, .2);
+}
+.premium-menu__nav .member-menu-auth > a,
+.premium-menu__nav .member-menu-auth__logout {
+  min-height: 2.9rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 999px;
+  color: #eafffd;
+  background: rgba(94,234,212,.055);
+  font: inherit;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+}
+.premium-menu__nav .member-menu-auth > a:hover,
+.premium-menu__nav .member-menu-auth__logout:hover {
+  border-color: rgba(94,234,212,.35);
+  background: rgba(94,234,212,.11);
+}
+.member-menu-auth__label {
+  margin: 0 0 .25rem;
+  color: #5eead4;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
 .guest-checkout-note {
   grid-column: 1 / -1;
   margin: 0 0 1rem;
@@ -304,7 +341,7 @@ body.modal-open {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .member-prompt-backdrop, .member-prompt, .account-button { transition-duration: .01ms !important; }
+  .member-prompt-backdrop, .member-prompt, .account-button, .member-menu-auth * { transition-duration: .01ms !important; }
 }
 
 .icon-button,
