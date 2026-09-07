@@ -1,0 +1,23 @@
+-- Booking details extend the existing order record. Nullable columns preserve historical orders.
+alter table public.orders add column if not exists customer_name text;
+alter table public.orders add column if not exists customer_phone text;
+alter table public.orders add column if not exists customer_email text;
+alter table public.orders add column if not exists surprise_date date;
+alter table public.orders add column if not exists surprise_location text;
+alter table public.orders add column if not exists surprise_time time;
+alter table public.orders add column if not exists surprise_type text;
+alter table public.orders add column if not exists custom_surprise_type text;
+alter table public.orders add column if not exists recipient_name text;
+alter table public.orders add column if not exists recipient_phone text;
+alter table public.orders add column if not exists recipient_relationship text;
+alter table public.orders add column if not exists custom_relationship text;
+alter table public.orders add column if not exists special_notes text;
+alter table public.orders add column if not exists package_id text;
+alter table public.orders add column if not exists package_name text;
+alter table public.orders add column if not exists currency text default 'LKR';
+alter table public.orders add column if not exists subtotal numeric(12,2) default 0;
+alter table public.orders add column if not exists fees numeric(12,2) default 0;
+alter table public.orders add column if not exists total numeric(12,2) default 0;
+alter table public.orders add column if not exists payment_method text;
+alter table public.orders add column if not exists payment_status text default 'pending';
+alter table public.orders add column if not exists order_status text default 'pending';

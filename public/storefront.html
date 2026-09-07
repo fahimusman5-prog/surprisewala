@@ -1683,65 +1683,48 @@
         <div class="checkout-step">
           <div class="checkout-flow__header">
             <p class="section-label">Order Package</p>
-            <h2 id="directOrderTitle">Customer Details</h2>
-            <p>Share your details and we will continue this package order on WhatsApp.</p>
+            <h2 id="directOrderTitle">Your Booking Details</h2>
+            <p>Share your details and we'll continue your surprise planning on WhatsApp.</p>
           </div>
 
           <div class="checkout-flow__grid">
             <form class="checkout-form" data-direct-order-form novalidate>
               <div class="form-grid">
-                <label class="form-field">
-                  <span>Full Name <strong>*</strong></span>
-                  <input type="text" name="fullName" autocomplete="name" required />
+                <label class="form-field"><span>Your Name <strong>*</strong></span>
+                  <input type="text" name="customer_name" autocomplete="name" maxlength="160" required />
                 </label>
-
-                <label class="form-field">
-                  <span>Phone Number <strong>*</strong></span>
-                  <input type="tel" name="phone" autocomplete="tel" required />
+                <label class="form-field"><span>Your Contact No <strong>*</strong></span>
+                  <input type="tel" name="customer_phone" inputmode="tel" autocomplete="tel" maxlength="40" required />
                 </label>
-
-                <label class="form-field">
-                  <span>Email</span>
-                  <input type="email" name="email" autocomplete="email" />
+                <label class="form-field"><span>Email Address</span>
+                  <input type="email" name="customer_email" autocomplete="email" maxlength="240" />
                 </label>
-
-                <label class="form-field">
-                  <span>Country <strong>*</strong></span>
-                  <input type="text" name="country" autocomplete="country-name" required />
+                <label class="form-field"><span>Surprise Date <strong>*</strong></span>
+                  <input type="date" name="surprise_date" required />
                 </label>
-
-                <label class="form-field">
-                  <span>City / Location</span>
-                  <input type="text" name="location" placeholder="Preferred location" />
+                <label class="form-field"><span>Surprise Location <strong>*</strong></span>
+                  <input type="text" name="surprise_location" maxlength="240" required />
                 </label>
-
-                <label class="form-field">
-                  <span>Occasion <strong>*</strong></span>
-                  <input type="text" name="occasion" placeholder="Type your occasion" required />
+                <label class="form-field"><span>Time <strong>*</strong></span>
+                  <input type="time" name="surprise_time" required />
                 </label>
-
-                <label class="form-field">
-                  <span>Preferred Date <strong>*</strong></span>
-                  <input
-                    type="text"
-                    name="date"
-                    id="directPreferredDate"
-                    placeholder="dd/mm/yyyy"
-                    inputmode="numeric"
-                    autocomplete="off"
-                    pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}"
-                    required
-                  />
+                <label class="form-field"><span>What Kind of Surprise <strong>*</strong></span>
+                  <select name="surprise_type" required><option value="">Select one</option><option>Birthday</option><option>Anniversary</option><option>Proposal</option><option>Romantic Surprise</option><option>Graduation</option><option>Welcome Surprise</option><option>Baby Shower</option><option>Other</option></select>
                 </label>
-
-                <label class="form-field">
-                  <span>Preferred Time</span>
-                  <input type="time" name="time" />
+                <label class="form-field"><span>Package Cost</span>
+                  <input type="text" data-direct-package-cost readonly />
                 </label>
-
-                <label class="form-field form-field--wide">
-                  <span>Special Message / Notes</span>
-                  <textarea name="notes" placeholder="Anything we should know?"></textarea>
+                <label class="form-field"><span>Surprise Person Name <strong>*</strong></span>
+                  <input type="text" name="recipient_name" maxlength="160" required />
+                </label>
+                <label class="form-field"><span>Contact Number</span>
+                  <input type="tel" name="recipient_phone" inputmode="tel" maxlength="40" />
+                </label>
+                <label class="form-field"><span>Relationship <strong>*</strong></span>
+                  <select name="recipient_relationship" required><option value="">Select one</option><option>Husband</option><option>Wife</option><option>Boyfriend</option><option>Girlfriend</option><option>Fiancé</option><option>Fiancée</option><option>Friend</option><option>Best Friend</option><option>Mother</option><option>Father</option><option>Brother</option><option>Sister</option><option>Family Member</option><option>Colleague</option><option>Other</option></select>
+                </label>
+                <label class="form-field form-field--wide"><span>If Any Special Note</span>
+                  <textarea name="special_notes" maxlength="2000" placeholder="Tell us anything special we should know about your surprise..."></textarea>
                 </label>
               </div>
 
@@ -1767,8 +1750,8 @@
         <div class="checkout-step checkout-step--details" data-checkout-details>
           <div class="checkout-flow__header">
             <p class="section-label">Checkout</p>
-            <h2 id="checkoutTitle">Your booking details</h2>
-            <p>Share a few details before moving to the payment step.</p>
+            <h2 id="checkoutTitle">Your Booking Details</h2>
+            <p>Tell us everything we need to prepare the perfect surprise.</p>
           </div>
 
           <div class="checkout-flow__grid">
@@ -1777,53 +1760,41 @@
                 Checkout as a guest, or <a href="/signup">create an account</a> to save your order history and enjoy faster future checkouts.
               </p>
               <div class="form-grid">
-                <label class="form-field">
-                  <span>Full Name <strong>*</strong></span>
-                  <input type="text" name="fullName" autocomplete="name" required />
+                <label class="form-field"><span>Your Name <strong>*</strong></span>
+                  <input type="text" name="customer_name" autocomplete="name" maxlength="160" required />
                 </label>
-
-                <label class="form-field">
-                  <span>Phone Number <strong>*</strong></span>
-                  <input type="tel" name="phone" autocomplete="tel" required />
+                <label class="form-field"><span>Your Contact No <strong>*</strong></span>
+                  <input type="tel" name="customer_phone" inputmode="tel" autocomplete="tel" maxlength="40" required />
                 </label>
-
-                <label class="form-field">
-                  <span>Email Address</span>
-                  <input type="email" name="email" autocomplete="email" />
+                <label class="form-field"><span>Email Address</span>
+                  <input type="email" name="customer_email" autocomplete="email" maxlength="240" />
                 </label>
-
-                <label class="form-field">
-                  <span>City / Location</span>
-                  <input type="text" name="location" placeholder="Preferred location" />
+                <label class="form-field"><span>Surprise Date <strong>*</strong></span>
+                  <input type="date" name="surprise_date" required />
                 </label>
-
-                <label class="form-field">
-                  <span>Occasion <strong>*</strong></span>
-                  <input type="text" name="occasion" id="occasion" placeholder="Type your occasion" required />
+                <label class="form-field"><span>Surprise Location <strong>*</strong></span>
+                  <input type="text" name="surprise_location" maxlength="240" required />
                 </label>
-
-                <label class="form-field">
-                  <span>Preferred Date <strong>*</strong></span>
-                  <input
-                    type="text"
-                    name="date"
-                    id="preferredDate"
-                    placeholder="dd/mm/yyyy"
-                    inputmode="numeric"
-                    autocomplete="off"
-                    pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}"
-                    required
-                  />
+                <label class="form-field"><span>Time <strong>*</strong></span>
+                  <input type="time" name="surprise_time" required />
                 </label>
-
-                <label class="form-field preferred-time-wrapper" data-preferred-time-field>
-                  <span>Preferred Time</span>
-                  <input type="time" name="time" />
+                <label class="form-field"><span>What Kind of Surprise <strong>*</strong></span>
+                  <select name="surprise_type" required><option value="">Select one</option><option>Birthday</option><option>Anniversary</option><option>Proposal</option><option>Romantic Surprise</option><option>Graduation</option><option>Welcome Surprise</option><option>Baby Shower</option><option>Other</option></select>
                 </label>
-
-                <label class="form-field form-field--wide">
-                  <span>Special Message / Notes</span>
-                  <textarea name="notes" placeholder="Anything we should know?"></textarea>
+                <label class="form-field"><span>Package Cost</span>
+                  <input type="text" data-checkout-package-cost readonly />
+                </label>
+                <label class="form-field"><span>Surprise Person Name <strong>*</strong></span>
+                  <input type="text" name="recipient_name" maxlength="160" required />
+                </label>
+                <label class="form-field"><span>Contact Number</span>
+                  <input type="tel" name="recipient_phone" inputmode="tel" maxlength="40" />
+                </label>
+                <label class="form-field"><span>Relationship <strong>*</strong></span>
+                  <select name="recipient_relationship" required><option value="">Select one</option><option>Husband</option><option>Wife</option><option>Boyfriend</option><option>Girlfriend</option><option>Fiancé</option><option>Fiancée</option><option>Friend</option><option>Best Friend</option><option>Mother</option><option>Father</option><option>Brother</option><option>Sister</option><option>Family Member</option><option>Colleague</option><option>Other</option></select>
+                </label>
+                <label class="form-field form-field--wide"><span>If Any Special Note</span>
+                  <textarea name="special_notes" maxlength="2000" placeholder="Tell us anything special we should know about your surprise..."></textarea>
                 </label>
               </div>
 

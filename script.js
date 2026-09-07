@@ -51,6 +51,7 @@ const directOrderForm = document.querySelector("[data-direct-order-form]");
 const directOrderDateInput = document.querySelector("#directPreferredDate");
 const directOrderError = document.querySelector("[data-direct-order-error]");
 const directOrderSummary = document.querySelector("[data-direct-order-summary]");
+const directPackageCost = document.querySelector("[data-direct-package-cost]");
 const checkoutModal = document.querySelector("[data-checkout-modal]");
 const checkoutCloseButton = document.querySelector("[data-close-checkout]");
 const checkoutDetailsStep = document.querySelector("[data-checkout-details]");
@@ -61,6 +62,7 @@ const preferredTimeWrapper = document.querySelector(".preferred-time-wrapper");
 const checkoutError = document.querySelector("[data-checkout-error]");
 const checkoutSummary = document.querySelector("[data-checkout-summary]");
 const checkoutTotal = document.querySelector("[data-checkout-total]");
+const checkoutPackageCost = document.querySelector("[data-checkout-package-cost]");
 const paymentSummary = document.querySelector("[data-payment-summary]");
 const paymentTotal = document.querySelector("[data-payment-total]");
 const customerSummary = document.querySelector("[data-customer-summary]");
@@ -107,6 +109,28 @@ const SURPRISEWALA_WHATSAPP_NUMBER = "94760505866";
 const SURPRISEWALA_WHATSAPP_URL = `https://wa.me/${SURPRISEWALA_WHATSAPP_NUMBER}`;
 
 document.documentElement.classList.add("js");
+
+const setSriLankaDateMinimum = () => {
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Colombo" }));
+  const value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  document.querySelectorAll('input[name="surprise_date"]').forEach((input) => input.setAttribute("min", value));
+};
+setSriLankaDateMinimum();
+
+document.querySelectorAll('select[name="surprise_type"], select[name="recipient_relationship"]').forEach((select) => {
+  const customName = select.name === "surprise_type" ? "custom_surprise_type" : "custom_relationship";
+  const label = document.createElement("label"); label.className = "form-field"; label.hidden = true;
+  label.innerHTML = `<span>Please specify</span><input type="text" name="${customName}" maxlength="160" />`;
+  select.closest(".form-field")?.after(label);
+  select.addEventListener("change", () => { label.hidden = select.value !== "Other"; });
+});
+
+fetch("/api/me").then((response) => response.json()).then((me) => {
+  if (!me?.authenticated || !me.profile) return;
+  document.querySelectorAll('input[name="customer_name"]').forEach((input) => { if (!input.value) input.value = me.profile.full_name || ""; });
+  document.querySelectorAll('input[name="customer_phone"]').forEach((input) => { if (!input.value) input.value = me.profile.phone || ""; });
+  document.querySelectorAll('input[name="customer_email"]').forEach((input) => { if (!input.value) input.value = me.profile.email || ""; });
+}).catch(() => undefined);
 
 const openSurprisewalaWhatsapp = (message) => {
   const url = message ? `${SURPRISEWALA_WHATSAPP_URL}?text=${encodeURIComponent(message)}` : SURPRISEWALA_WHATSAPP_URL;
@@ -1523,21 +1547,16 @@ const renderCustomerSummary = () => {
   }
 
   const details = checkoutCustomerDetails;
-  const hideTimeField = isCakeOnlyOrder();
-  const dateTime = [formatDisplayDate(details.date), hideTimeField ? "" : formatDisplayTime(details.time)]
-    .filter(Boolean)
-    .join(" ");
-
   customerSummary.innerHTML = `
     <dl>
-      <div><dt>Name</dt><dd>${details.fullName}</dd></div>
-      <div><dt>Phone</dt><dd>${details.phone}</dd></div>
-      ${details.email ? `<div><dt>Email</dt><dd>${details.email}</dd></div>` : ""}
-      <div><dt>Country</dt><dd>Not provided</dd></div>
-      <div><dt>Occasion</dt><dd>${details.occasion}</dd></div>
-      <div><dt>${hideTimeField ? "Date" : "Date & Time"}</dt><dd>${dateTime || formatDisplayDate(details.date)}</dd></div>
-      ${details.location ? `<div><dt>Location</dt><dd>${details.location}</dd></div>` : ""}
-      ${details.notes ? `<div><dt>Notes</dt><dd>${details.notes}</dd></div>` : ""}
+      <div><dt>Name</dt><dd>${escapeHtml(details.customer_name)}</dd></div>
+      <div><dt>Phone</dt><dd>${escapeHtml(details.customer_phone)}</dd></div>
+      ${details.customer_email ? `<div><dt>Email</dt><dd>${escapeHtml(details.customer_email)}</dd></div>` : ""}
+      <div><dt>Surprise</dt><dd>${escapeHtml(details.surprise_type)}</dd></div>
+      <div><dt>Date & Time</dt><dd>${escapeHtml(details.surprise_date)} ${escapeHtml(details.surprise_time)}</dd></div>
+      <div><dt>Location</dt><dd>${escapeHtml(details.surprise_location)}</dd></div>
+      <div><dt>Surprise person</dt><dd>${escapeHtml(details.recipient_name)} · ${escapeHtml(details.recipient_relationship)}</dd></div>
+      ${details.special_notes ? `<div><dt>Notes</dt><dd>${escapeHtml(details.special_notes)}</dd></div>` : ""}
     </dl>
   `;
 };
@@ -1545,6 +1564,8 @@ const renderCustomerSummary = () => {
 const renderCheckoutSummaries = () => {
   renderSummaryItems(checkoutSummary);
   renderSummaryItems(paymentSummary);
+
+  if (checkoutPackageCost) checkoutPackageCost.value = cartHasCustomizedPricing() ? "Custom / To Be Confirmed" : getCartTotalLabel();
 
   const total = getCartTotalLabel();
 
@@ -1611,32 +1632,14 @@ const getCheckoutDetails = () => {
 
   const formData = new FormData(checkoutForm);
 
-  return {
-    fullName: String(formData.get("fullName") || "").trim(),
-    phone: String(formData.get("phone") || "").trim(),
-    email: String(formData.get("email") || "").trim(),
-    location: String(formData.get("location") || "").trim(),
-    occasion: String(formData.get("occasion") || "").trim(),
-    date: formatCheckoutDate(formData.get("date")),
-    time: isCakeOnlyOrder() ? "" : String(formData.get("time") || "").trim(),
-    notes: String(formData.get("notes") || "").trim(),
-  };
+  return { customer_name: String(formData.get("customer_name") || "").trim(), customer_phone: String(formData.get("customer_phone") || "").trim(), customer_email: String(formData.get("customer_email") || "").trim(), surprise_date: String(formData.get("surprise_date") || "").trim(), surprise_location: String(formData.get("surprise_location") || "").trim(), surprise_time: String(formData.get("surprise_time") || "").trim(), surprise_type: String(formData.get("surprise_type") || "").trim(), custom_surprise_type: String(formData.get("custom_surprise_type") || "").trim(), recipient_name: String(formData.get("recipient_name") || "").trim(), recipient_phone: String(formData.get("recipient_phone") || "").trim(), recipient_relationship: String(formData.get("recipient_relationship") || "").trim(), custom_relationship: String(formData.get("custom_relationship") || "").trim(), special_notes: String(formData.get("special_notes") || "").trim() };
 };
 
 const validateCheckoutDetails = (details) => {
-  const requiredFields = [
-    { name: "fullName", value: details.fullName },
-    { name: "phone", value: details.phone },
-    { name: "occasion", value: details.occasion },
-    { name: "date", value: details.date },
-  ];
-
-  if (!isCakeOnlyOrder()) {
-    requiredFields.push({ name: "time", value: details.time });
-  }
+  const requiredFields = ["customer_name", "customer_phone", "surprise_date", "surprise_location", "surprise_time", "surprise_type", "recipient_name", "recipient_relationship"].map((name) => ({ name, value: details[name] }));
 
   const missingFields = requiredFields.filter((field) => !field.value);
-  const hasInvalidDate = Boolean(details.date && !parseCheckoutDate(details.date));
+  const hasInvalidDate = Boolean(details.surprise_date && !/^\d{4}-\d{2}-\d{2}$/.test(details.surprise_date));
 
   checkoutForm.querySelectorAll(".form-field").forEach((field) => {
     const input = field.querySelector("input, select, textarea");
@@ -1645,12 +1648,12 @@ const validateCheckoutDetails = (details) => {
       Boolean(
         input &&
           (missingFields.some((missingField) => missingField.name === input.name) ||
-            (input.name === "date" && hasInvalidDate))
+            (input.name === "surprise_date" && hasInvalidDate))
       )
     );
   });
 
-  return hasInvalidDate ? [...missingFields, { name: "date", value: details.date }] : missingFields;
+  return hasInvalidDate ? [...missingFields, { name: "surprise_date", value: details.surprise_date }] : missingFields;
 };
 
 const saveCheckoutDetails = (details) => {
@@ -1674,33 +1677,27 @@ const confirmCheckoutOnWhatsapp = () => {
   const breakdown = getPaymentBreakdown();
   const selectedPackages = cart.map(getCartItemText).join(", ");
   const hideTimeField = isCakeOnlyOrder();
-  const timeLine = hideTimeField ? "" : `Time: ${formatDisplayTime(details.time) || "Not provided"}\n`;
-  const message = `Hello Surprisewala, I would like to confirm my order.
-
-Customer Details:
-Name: ${details.fullName}
-Phone: ${details.phone}
-Country: Not provided
-Occasion: ${details.occasion}
-Date: ${formatDisplayDate(details.date)}
-${timeLine}Location: ${details.location || "Not provided"}
-
-Order Details:
-Package: ${selectedPackages}
-Total: ${cartHasCustomizedPricing() ? "Customized" : formatCurrency(breakdown.finalTotal)}
-
-Notes:
-${details.notes || "No notes provided"}`;
+  const lines = [`Hello Surprisewala 👋`, ``, `*ORDER DETAILS*`, `Package: ${selectedPackages}`, `Package Cost: ${cartHasCustomizedPricing() ? "Custom / To Be Confirmed" : formatCurrency(breakdown.finalTotal)}`, ``, `Your Name: ${details.customer_name}`, `Contact No: ${details.customer_phone}`];
+  if (details.customer_email) lines.push(`Email: ${details.customer_email}`);
+  lines.push(`Surprise Date: ${details.surprise_date}`, `Time: ${details.surprise_time}`, `Surprise Location: ${details.surprise_location}`, `Surprise Type: ${details.surprise_type}`, ``, `*SURPRISE PERSON DETAILS*`, `Name: ${details.recipient_name}`);
+  if (details.recipient_phone) lines.push(`Contact No: ${details.recipient_phone}`);
+  lines.push(`Relationship: ${details.recipient_relationship}`);
+  if (details.special_notes) lines.push(``, `*SPECIAL REQUIREMENTS*`, details.special_notes);
+  lines.push(``, `Thank you.`);
+  const message = lines.join("\n");
 
   document.dispatchEvent(new CustomEvent("surprisewala:order-submitted", {
     detail: {
       orderType: isCakeOnlyOrder() ? "cake" : "package",
       items: cart.map((item) => ({ ...item })),
       totalAmount: cartHasCustomizedPricing() ? 0 : breakdown.finalTotal,
-      customerNotes: details.notes || "",
-      customer: { fullName: details.fullName, phone: details.phone, email: details.email },
+      customerNotes: details.special_notes || "",
+      customer: { fullName: details.customer_name, phone: details.customer_phone, email: details.customer_email },
     },
   }));
+
+  const firstPackage = cart[0];
+  saveBookingToServer({ ...details, package_id: firstPackage ? firstPackage.id : "" }).catch(() => undefined);
 
   openSurprisewalaWhatsapp(message);
 };
@@ -2020,6 +2017,8 @@ const renderDirectOrderSummary = () => {
 
   const selectedPackage = packages[activeDirectOrderPackageId];
 
+  if (directPackageCost) directPackageCost.value = selectedPackage?.priceLabel || "Custom / To Be Confirmed";
+
   if (!selectedPackage) {
     directOrderSummary.innerHTML = "";
     return;
@@ -2078,29 +2077,13 @@ const getDirectOrderDetails = () => {
 
   const formData = new FormData(directOrderForm);
 
-  return {
-    fullName: String(formData.get("fullName") || "").trim(),
-    phone: String(formData.get("phone") || "").trim(),
-    email: String(formData.get("email") || "").trim(),
-    country: String(formData.get("country") || "").trim(),
-    location: String(formData.get("location") || "").trim(),
-    occasion: String(formData.get("occasion") || "").trim(),
-    date: formatCheckoutDate(formData.get("date")),
-    time: String(formData.get("time") || "").trim(),
-    notes: String(formData.get("notes") || "").trim(),
-  };
+  return { customer_name: String(formData.get("customer_name") || "").trim(), customer_phone: String(formData.get("customer_phone") || "").trim(), customer_email: String(formData.get("customer_email") || "").trim(), surprise_date: String(formData.get("surprise_date") || "").trim(), surprise_location: String(formData.get("surprise_location") || "").trim(), surprise_time: String(formData.get("surprise_time") || "").trim(), surprise_type: String(formData.get("surprise_type") || "").trim(), recipient_name: String(formData.get("recipient_name") || "").trim(), recipient_phone: String(formData.get("recipient_phone") || "").trim(), recipient_relationship: String(formData.get("recipient_relationship") || "").trim(), special_notes: String(formData.get("special_notes") || "").trim() };
 };
 
 const validateDirectOrderDetails = (details) => {
-  const requiredFields = [
-    { name: "fullName", value: details.fullName },
-    { name: "phone", value: details.phone },
-    { name: "country", value: details.country },
-    { name: "occasion", value: details.occasion },
-    { name: "date", value: details.date },
-  ];
+  const requiredFields = ["customer_name", "customer_phone", "surprise_date", "surprise_location", "surprise_time", "surprise_type", "recipient_name", "recipient_relationship"].map((name) => ({ name, value: details[name] }));
   const missingFields = requiredFields.filter((field) => !field.value);
-  const hasInvalidDate = Boolean(details.date && !parseCheckoutDate(details.date));
+  const hasInvalidDate = Boolean(details.surprise_date && !/^\d{4}-\d{2}-\d{2}$/.test(details.surprise_date));
 
   directOrderForm.querySelectorAll(".form-field").forEach((field) => {
     const input = field.querySelector("input, select, textarea");
@@ -2109,12 +2092,12 @@ const validateDirectOrderDetails = (details) => {
       Boolean(
         input &&
           (missingFields.some((missingField) => missingField.name === input.name) ||
-            (input.name === "date" && hasInvalidDate))
+            (input.name === "surprise_date" && hasInvalidDate))
       )
     );
   });
 
-  return hasInvalidDate ? [...missingFields, { name: "date", value: details.date }] : missingFields;
+  return hasInvalidDate ? [...missingFields, { name: "surprise_date", value: details.surprise_date }] : missingFields;
 };
 
 const submitDirectOrderToWhatsapp = (details) => {
@@ -2124,25 +2107,21 @@ const submitDirectOrderToWhatsapp = (details) => {
     return;
   }
 
-  const message = `Hello Surprisewala, I would like to order this package.
-
-Package: ${selectedPackage.name}
-Price: ${selectedPackage.priceLabel}
-
-Customer Details:
-Name: ${details.fullName}
-Phone: ${details.phone}
-Email: ${details.email || "Not provided"}
-Country: ${details.country}
-Location: ${details.location || "Not provided"}
-Occasion: ${details.occasion}
-Preferred Date: ${formatDisplayDate(details.date)}
-Preferred Time: ${formatDisplayTime(details.time) || "Not provided"}
-Notes: ${details.notes || "No notes provided"}
-
-Please send me more details.`;
+  const lines = [`Hello Surprisewala 👋`, ``, `*ORDER DETAILS*`, `Package: ${selectedPackage.name}`, `Package Cost: ${selectedPackage.priceLabel}`, ``, `Your Name: ${details.customer_name}`, `Contact No: ${details.customer_phone}`];
+  if (details.customer_email) lines.push(`Email: ${details.customer_email}`);
+  lines.push(`Surprise Date: ${details.surprise_date}`, `Time: ${details.surprise_time}`, `Surprise Location: ${details.surprise_location}`, `Surprise Type: ${details.surprise_type}`, ``, `*SURPRISE PERSON DETAILS*`, `Name: ${details.recipient_name}`);
+  if (details.recipient_phone) lines.push(`Contact No: ${details.recipient_phone}`);
+  lines.push(`Relationship: ${details.recipient_relationship}`);
+  if (details.special_notes) lines.push(``, `*SPECIAL REQUIREMENTS*`, details.special_notes);
+  lines.push(``, `Thank you.`);
+  const message = lines.join("\n");
+  saveBookingToServer({ ...details, package_id: activeDirectOrderPackageId }).catch(() => undefined);
 
   openSurprisewalaWhatsapp(message);
+};
+
+const saveBookingToServer = async (details) => {
+  try { await fetch("/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(details) }); } catch { /* WhatsApp remains available for guests */ }
 };
 
 const openCart = () => {
@@ -2378,8 +2357,8 @@ if (directOrderForm) {
     if (missingFields.length) {
       if (directOrderError) {
         directOrderError.textContent =
-          details.date && !parseCheckoutDate(details.date)
-            ? "Please enter the preferred date as DD/MM/YYYY."
+          details.surprise_date && !/^\d{4}-\d{2}-\d{2}$/.test(details.surprise_date)
+            ? "Please choose a valid surprise date."
             : "Please complete the required fields.";
       }
       return;
@@ -2389,8 +2368,11 @@ if (directOrderForm) {
       directOrderError.textContent = "";
     }
 
+    const submitButton = directOrderForm.querySelector("button[type=submit]");
+    if (submitButton) { submitButton.disabled = true; submitButton.textContent = "Preparing WhatsApp…"; }
     submitDirectOrderToWhatsapp(details);
     closeDirectOrder();
+    window.setTimeout(() => { if (submitButton) { submitButton.disabled = false; submitButton.textContent = "Send on WhatsApp"; } }, 1200);
   });
 }
 
@@ -2416,8 +2398,8 @@ if (checkoutForm) {
     if (missingFields.length) {
       if (checkoutError) {
         checkoutError.textContent =
-          details.date && !parseCheckoutDate(details.date)
-            ? "Please enter the preferred date as DD/MM/YYYY."
+          details.surprise_date && !/^\d{4}-\d{2}-\d{2}$/.test(details.surprise_date)
+            ? "Please choose a valid surprise date."
             : "Please complete the required fields.";
       }
       return;

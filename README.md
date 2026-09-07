@@ -29,6 +29,7 @@ Apply the migrations in timestamp order to the dedicated Surprisewala project:
 2. [`supabase/migrations/20260726081816_secure_dedicated_auth.sql`](supabase/migrations/20260726081816_secure_dedicated_auth.sql)
 3. [`supabase/migrations/20260726091925_secure_rls_policy_roles.sql`](supabase/migrations/20260726091925_secure_rls_policy_roles.sql)
 4. [`supabase/migrations/20260726092223_authorize_admin_policy_function.sql`](supabase/migrations/20260726092223_authorize_admin_policy_function.sql)
+5. [`supabase/migrations/20260907000000_booking_order_details.sql`](supabase/migrations/20260907000000_booking_order_details.sql)
 
 They create `profiles`, `addresses`, and `orders`, including foreign keys, indexes, profile automation, secure role protection, grants, and Row Level Security policies. Guest checkout remains a public WhatsApp flow; authenticated checkout additionally saves the order under the signed-in user.
 
