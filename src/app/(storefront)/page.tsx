@@ -34,7 +34,7 @@ export default function HomePage() {
   return (
     <>
       <div className="storefront-root" dangerouslySetInnerHTML={{ __html: getStorefrontMarkup() }} />
-      <Script src="/script.js" strategy="afterInteractive" />
+      <Script src="/script.js?v=booking-fields-20261005" strategy="afterInteractive" />
       <Script src="/membership-home.js" strategy="afterInteractive" />
     </>
   );
