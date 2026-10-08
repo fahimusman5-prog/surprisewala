@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { getStorefrontMarkup, loadStorefrontData } from "@/lib/storefront";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Surprisewala | Premium Surprise Planner in Sri Lanka",
@@ -23,18 +24,12 @@ export const metadata: Metadata = {
   },
 };
 
-function getStorefrontMarkup() {
-  const html = readFileSync(join(process.cwd(), "public", "storefront.html"), "utf8");
-  const body = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1];
-  if (!body) throw new Error("The storefront HTML is missing its body content.");
-  return body.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
-}
-
-export default function HomePage() {
+export default async function HomePage() {
+  const data = await loadStorefrontData();
   return (
     <>
-      <div className="storefront-root" dangerouslySetInnerHTML={{ __html: getStorefrontMarkup() }} />
-      <Script src="/script.js?v=booking-fields-20261005" strategy="afterInteractive" />
+      <div className="storefront-root" dangerouslySetInnerHTML={{ __html: getStorefrontMarkup(data) }} />
+      <Script src="/script.js?v=legal-payhere-20261008" strategy="afterInteractive" />
       <Script src="/membership-home.js" strategy="afterInteractive" />
     </>
   );

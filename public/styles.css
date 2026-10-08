@@ -5433,3 +5433,12 @@ body.modal-open {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Managed business content keeps the existing storefront layout. */
+.cms-empty { width: min(760px, calc(100% - 32px)); margin: 24px auto; padding: 18px 22px; color: var(--color-muted, #b7cdcd); text-align: center; border: 1px solid rgba(94,234,212,.2); border-radius: 14px; line-height: 1.6; }
+.cms-empty a { color: var(--color-teal, #5eead4); }
+.review-card__top img { border-radius: 50%; object-fit: cover; }
+.storefront-root .trust-stats__inner { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
+
+/* Scoped legal and payment additions preserve existing storefront layout. */
+.checkout-legal{font-size:13px;line-height:1.75;color:var(--color-muted);margin:20px 0}.checkout-legal a{color:var(--color-teal);text-decoration:underline;text-underline-offset:3px}.payhere-method{padding:22px;margin:20px 0;border:1px solid rgba(69,243,255,.3);border-radius:18px;background:rgba(69,243,255,.04)}.payhere-method[hidden]{display:none}.payhere-method [role=alert]{color:#fda4af}.site-footer__inner{grid-template-columns: minmax(200px,1.6fr) repeat(3,minmax(135px,1fr))}.footer-cta{grid-column:1/-1}.footer-column{min-width:0;overflow-wrap:anywhere}@media(max-width:900px){.site-footer__inner{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.site-footer__inner{grid-template-columns:minmax(0,1fr)}}

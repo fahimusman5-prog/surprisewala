@@ -1,60 +1,71 @@
 import { NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import seed from "@/data/storefront-seed.json";
+import { InputError, localDate, normalizePhone, record, textValue } from "@/lib/admin/model";
+import { sameOrigin, AccessError } from "@/lib/admin/server";
 
-const CATALOG: Record<string, { name: string; price: number | null; customizable: boolean }> = {
-  "simple-elegant": { name: "Simple but elegant Surprise", price: 14000, customizable: false },
-  "on-the-go": { name: "Unexpected surprise on the go", price: 18000, customizable: false },
-  flashmob: { name: "A flashmob surprise to your loved ones", price: 26000, customizable: false },
-  emotions: { name: "Those emotions what we live for!", price: 28000, customizable: false },
-  "unique-wow": { name: "Unique way to surprise your loved to feel wow", price: null, customizable: true },
-  "car-surprise": { name: "Car Surprise", price: null, customizable: true },
-  "cafe-surprise": { name: "Cafe Surprise", price: null, customizable: true },
-  "beach-surprise": { name: "Beach Surprise", price: null, customizable: true },
-  "romantic-room": { name: "Romantic Room Setup", price: null, customizable: true },
-  "solo-boat": { name: "Private Solo Boat Surprise", price: null, customizable: true },
-};
-const text = (value: unknown, max: number) => String(value ?? "").trim().slice(0, max);
-const phone = (value: unknown) => text(value, 40).replace(/[\u0000-\u001f]/g, "");
-const required = ["customer_name", "customer_phone", "surprise_date", "surprise_location", "surprise_time", "surprise_type", "recipient_name", "recipient_relationship"] as const;
-
+const required = ["customer_name", "customer_phone", "surprise_date", "surprise_location", "surprise_time", "surprise_type", "recipient_name", "recipient_relationship"];
+const surpriseTypes = ["Birthday", "Anniversary", "Proposal", "Romantic Surprise", "Graduation", "Welcome Surprise", "Baby Shower", "Other"];
+const relationships = ["Husband", "Wife", "Boyfriend", "Girlfriend", "Fiancé", "Fiancée", "Friend", "Best Friend", "Mother", "Father", "Brother", "Sister", "Family Member", "Colleague", "Other"];
+type BookingItem = { id: string; quantity: number; customization?: { weight: string; topper: string; message: string } };
+function validateBooking(payload: Record<string, unknown>) {
+  const keys = [ ...required, "customer_email", "custom_surprise_type", "recipient_phone", "custom_relationship", "special_notes", "payment_method" ];
+  const values: Record<string, string> = Object.fromEntries(keys.map(key => [key, textValue(payload[key], key === "special_notes" ? 2000 : 240)]));
+  if (required.some(key => !values[key]) || values.customer_name.length < 2 || values.recipient_name.length < 2 || values.surprise_location.length < 2) throw new InputError("Please complete all required booking fields.");
+  if (values.customer_email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.customer_email)) throw new InputError("Please enter a valid email address.");
+  for (const key of ["customer_phone", "recipient_phone"]) if (values[key] && (!/^\+?[0-9 ()-]{7,25}$/.test(values[key]) || normalizePhone(values[key]).length < 7)) throw new InputError("Please enter a valid phone number.");
+  if (!surpriseTypes.includes(values.surprise_type) || !relationships.includes(values.recipient_relationship) || (values.surprise_type === "Other" && !values.custom_surprise_type) || (values.recipient_relationship === "Other" && !values.custom_relationship)) throw new InputError("Please choose valid booking options.");
+  const date = new Date(`${values.surprise_date}T12:00:00Z`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(values.surprise_date) || Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== values.surprise_date || values.surprise_date < localDate()) throw new InputError("Choose a valid surprise date today or later.");
+  if (!/^([01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/.test(values.surprise_time)) throw new InputError("Please choose a valid surprise time.");
+  if (values.payment_method && !["bank", "bank_transfer", "cash", "card", "koko", "mintpay", "whatsapp"].includes(values.payment_method)) throw new InputError("Choose a valid payment method.");
+  const rawItems = payload.items ?? [{ id: payload.package_id, quantity: 1 }];
+  if (!Array.isArray(rawItems) || !rawItems.length || rawItems.length > 25) throw new InputError("Select between 1 and 25 packages.");
+  const items: BookingItem[] = rawItems.map(raw => {
+    const item = record(raw), id = textValue(item.id, 100, true), quantity = item.quantity ?? 1;
+    if (!/^[a-z0-9][a-z0-9-]{0,99}$/.test(id) || typeof quantity !== "number" || !Number.isInteger(quantity) || quantity < 1 || quantity > 20) throw new InputError("Check the package and quantity.");
+    if (item.customization == null) return { id, quantity };
+    const custom = record(item.customization);
+    const weight = textValue(custom.weight, 40), topper = textValue(custom.topper, 100), message = textValue(custom.message, 300);
+    if (!["1kg", "1.5kg", "2kg", "1 kg", "1.5 kg", "2 kg"].includes(weight) || !["None", "none", "Happy Birthday", "Happy Anniversary"].includes(topper)) throw new InputError("Choose valid cake customization options.");
+    return { id, quantity, customization: { weight, topper, message } };
+  });
+  const submissionKey = textValue(payload.submission_key, 36, true);
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(submissionKey)) throw new InputError("Please reopen the booking form and try again.");
+  return { ...values, special_notes: values.special_notes, items, submission_key: submissionKey };
+}
 export async function POST(request: Request) {
-  const supabase = await getSupabaseServerClient();
-  if (!supabase) return NextResponse.json({ saved: false, reason: "not_configured" }, { status: 202 });
-  let payload: Record<string, unknown>;
-  try { payload = await request.json(); } catch { return NextResponse.json({ error: "Invalid booking payload." }, { status: 400 }); }
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ saved: false, reason: "guest" }, { status: 202 });
-
-  if (!payload.package_id) {
-    if (!Array.isArray(payload.items) || payload.items.length === 0 || payload.items.length > 100) return NextResponse.json({ error: "Order items are required." }, { status: 400 });
-    const totalAmount = Number(payload.totalAmount ?? 0);
-    if (!Number.isFinite(totalAmount) || totalAmount < 0 || totalAmount > 100_000_000) return NextResponse.json({ error: "Invalid order total." }, { status: 400 });
-    const customer = (payload.customer || {}) as Record<string, unknown>;
-    const [{ error: orderError }, { error: profileError }] = await Promise.all([
-      supabase.from("orders").insert({ user_id: user.id, order_type: text(payload.orderType || "whatsapp_checkout", 80), items: payload.items, total_amount: totalAmount, status: "pending", customer_notes: text(payload.customerNotes, 2000) }),
-      supabase.from("profiles").update({ full_name: text(customer.fullName || user.user_metadata.full_name, 160), phone: phone(customer.phone || user.user_metadata.phone) }).eq("id", user.id),
-    ]);
-    if (orderError) return NextResponse.json({ error: "We could not save this order to your account. Your checkout can still continue." }, { status: 500 });
-    if (profileError) console.error("Profile sync failed", { code: profileError.code });
-    return NextResponse.json({ saved: true });
+  try {
+    sameOrigin(request);
+    if (Number(request.headers.get("content-length")) > 32000) throw new InputError("The booking form is too large.");
+    let payload: Record<string, unknown>; try { payload = record(await request.json()); } catch { throw new InputError("Invalid booking payload."); }
+    const booking = validateBooking(payload);
+    const supabase = await getSupabaseServerClient();
+    if (!supabase) return NextResponse.json({ saved: false, reason: "not_configured" }, { status: 202 });
+    const activation = await supabase.from("site_settings").select("value").eq("key", "cms_enabled").maybeSingle();
+    if (activation.error && !["42P01", "PGRST205"].includes(activation.error.code)) return NextResponse.json({ error: "We couldn't load the current catalog. Please try again." }, { status: 503 });
+    if (activation.data?.value === "true") {
+      const result = await supabase.rpc("submit_booking", { p_payload: booking });
+      if (result.error || !result.data?.id) return NextResponse.json({ error: "Your booking could not be saved. Check package availability and your details, then retry." }, { status: 400 });
+      return NextResponse.json({ saved: true, orderId: result.data.id, orderReference: result.data.order_reference, subtotal: result.data.subtotal, total: result.data.total, customizable: result.data.customizable });
+    }
+    // Only the known, explicitly disabled pre-CMS phase uses the extracted catalog.
+    // Activation moves pricing and submission permanently into the database.
+    const selected = booking.items.map(item => {
+      const pack = seed.packages.find(pack => pack.id === item.id);
+      if (!pack?.active) throw new InputError("That package is no longer available.");
+      return { ...item, name: pack.name, price: pack.price, order_mode: pack.order_mode };
+    });
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return NextResponse.json({ saved: false, reason: "guest" }, { status: 202 });
+    const subtotal = selected.reduce((sum, item) => sum + (item.price ?? 0) * item.quantity, 0);
+    const customizable = selected.some(item => item.order_mode !== "cart");
+    const details = Object.fromEntries(Object.entries(booking).filter(([key]) => !["items", "submission_key"].includes(key)));
+    const result = await supabase.from("orders").insert({ ...details, user_id: user.id, order_type: customizable ? "custom_package" : "package", items: selected, total_amount: subtotal, status: "pending", customer_notes: booking.special_notes || null, package_id: selected[0].id, package_name: selected.map(item => item.name).join(" + "), currency: "LKR", subtotal, fees: 0, total: subtotal, payment_status: "pending", order_status: "pending" }).select("id").single();
+    if (result.error) return NextResponse.json({ error: "We couldn't save your booking details. Please try again." }, { status: 500 });
+    return NextResponse.json({ saved: true, orderId: result.data.id, subtotal, total: subtotal, customizable });
+  } catch (error) {
+    if (error instanceof InputError || error instanceof AccessError) return NextResponse.json({ error: error.message }, { status: error instanceof AccessError ? error.status : 400 });
+    return NextResponse.json({ error: "Your booking could not be saved. Please try again." }, { status: 500 });
   }
-
-  const packageId = text(payload.package_id, 80);
-  const pack = CATALOG[packageId];
-  if (!pack) return NextResponse.json({ error: "That package is no longer available." }, { status: 400 });
-  const values = Object.fromEntries(Object.entries(payload).map(([key, value]) => [key, text(value, key === "special_notes" ? 2000 : 240)])) as Record<string, string>;
-  if (required.some((key) => !values[key])) return NextResponse.json({ error: "Please complete all required booking fields." }, { status: 400 });
-  if (values.customer_name.length < 2 || values.recipient_name.length < 2 || values.surprise_location.length < 2 || (values.customer_email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.customer_email))) return NextResponse.json({ error: "Please check the booking details and try again." }, { status: 400 });
-  const surpriseTypes = ["Birthday", "Anniversary", "Proposal", "Romantic Surprise", "Graduation", "Welcome Surprise", "Baby Shower", "Other"];
-  const relationships = ["Husband", "Wife", "Boyfriend", "Girlfriend", "Fiancé", "Fiancée", "Friend", "Best Friend", "Mother", "Father", "Brother", "Sister", "Family Member", "Colleague", "Other"];
-  if (!surpriseTypes.includes(values.surprise_type) || !relationships.includes(values.recipient_relationship) || (values.surprise_type === "Other" && !values.custom_surprise_type) || (values.recipient_relationship === "Other" && !values.custom_relationship)) return NextResponse.json({ error: "Please choose valid booking options." }, { status: 400 });
-  if (!/^\+?[0-9 ()-]{7,25}$/.test(phone(values.customer_phone)) || (values.recipient_phone && !/^\+?[0-9 ()-]{7,25}$/.test(phone(values.recipient_phone)))) return NextResponse.json({ error: "Please enter a valid phone number." }, { status: 400 });
-  const date = new Date(`${values.surprise_date}T00:00:00+05:30`);
-  const today = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Colombo" })); today.setHours(0, 0, 0, 0);
-  if (Number.isNaN(date.getTime()) || date < today) return NextResponse.json({ error: "Surprise date cannot be in the past." }, { status: 400 });
-  const subtotal = pack.price === null ? 0 : pack.price;
-  const row = { user_id: user.id, order_type: pack.customizable ? "custom_package" : "package", items: [{ id: packageId, name: pack.name, quantity: 1, price: pack.price }], total_amount: subtotal, status: "pending", customer_notes: values.special_notes || null, customer_name: values.customer_name, customer_phone: phone(values.customer_phone), customer_email: values.customer_email || null, surprise_date: values.surprise_date, surprise_location: values.surprise_location, surprise_time: values.surprise_time, surprise_type: values.surprise_type, custom_surprise_type: values.custom_surprise_type || null, recipient_name: values.recipient_name, recipient_phone: values.recipient_phone ? phone(values.recipient_phone) : null, recipient_relationship: values.recipient_relationship, custom_relationship: values.custom_relationship || null, special_notes: values.special_notes || null, package_id: packageId, package_name: pack.name, currency: "LKR", subtotal, fees: 0, total: subtotal, payment_status: "pending", order_status: "pending" };
-  const { data, error } = await supabase.from("orders").insert(row).select("id").single();
-  if (error) return NextResponse.json({ error: "We couldn't save your booking details. Please try again." }, { status: 500 });
-  return NextResponse.json({ saved: true, orderId: data.id, subtotal, total: subtotal, customizable: pack.customizable });
 }

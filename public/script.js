@@ -1,3 +1,22 @@
+(() => {
+const escapeHtml = (value) =>
+  String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+
+const safeAsset = (value) => {
+  if (!value) return '';
+  if (/^\/(?!\/)/.test(value)) return value;
+  try { const url = new URL(value); return url.protocol === 'https:' ? url.href : ''; } catch { return ''; }
+};
+const storefrontData = (() => {
+  try { return JSON.parse(document.querySelector('#storefront-data')?.textContent || '{}'); } catch { return {}; }
+})();
+const storefrontSettings = Object.fromEntries((storefrontData.site_settings || []).map((setting) => [setting.key, setting.value]));
 const statCards = document.querySelectorAll(".stat-card");
 const statNumbers = document.querySelectorAll("[data-count-to]");
 const storySection = document.querySelector(".our-story");
@@ -7,14 +26,7 @@ const packageCards = document.querySelectorAll("[data-package-card]");
 const packageFilterButtons = document.querySelectorAll("[data-package-filter]");
 const packageEmptyMessage = document.querySelector("[data-package-empty]");
 const packagesSection = document.querySelector("#packages");
-const packageCategoryHashMap = {
-  "#packages": "all",
-  "#cakes": "cakes",
-  "#gifts": "gifts",
-  "#flowers": "flowers",
-  "#for-him": "for-him",
-  "#for-her": "for-her",
-};
+const packageCategoryHashMap = Object.fromEntries([['#packages', 'all'], ...(storefrontData.collections || []).map((collection) => ['#' + collection.slug, collection.slug])]);
 const detailsModal = document.querySelector("[data-details-modal]");
 const detailsCloseButton = document.querySelector("[data-close-details]");
 const modalTitle = document.querySelector("#packageModalTitle");
@@ -51,6 +63,7 @@ const directOrderForm = document.querySelector("[data-direct-order-form]");
 const directOrderDateInput = document.querySelector("#directPreferredDate");
 const directOrderError = document.querySelector("[data-direct-order-error]");
 const directOrderSummary = document.querySelector("[data-direct-order-summary]");
+const directPackageCost = document.querySelector("[data-direct-package-cost]");
 const checkoutModal = document.querySelector("[data-checkout-modal]");
 const checkoutCloseButton = document.querySelector("[data-close-checkout]");
 const checkoutDetailsStep = document.querySelector("[data-checkout-details]");
@@ -62,6 +75,7 @@ const checkoutError = document.querySelector("[data-checkout-error]");
 const checkoutSummary = document.querySelector("[data-checkout-summary]");
 const checkoutPackageCost = document.querySelector("[data-checkout-package-cost]");
 const checkoutTotal = document.querySelector("[data-checkout-total]");
+const checkoutPackageCost = document.querySelector("[data-checkout-package-cost]");
 const paymentSummary = document.querySelector("[data-payment-summary]");
 const paymentTotal = document.querySelector("[data-payment-total]");
 const customerSummary = document.querySelector("[data-customer-summary]");
@@ -104,14 +118,37 @@ const menuLinks = document.querySelectorAll("[data-menu-link]");
 const menuPackageFilterLinks = document.querySelectorAll("[data-menu-package-filter]");
 const parallaxSections = document.querySelectorAll("[data-parallax-section]");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const SURPRISEWALA_WHATSAPP_NUMBER = "94760505866";
+const SURPRISEWALA_WHATSAPP_NUMBER = (storefrontSettings.whatsapp || '').replace(/\D/g, '');
 const SURPRISEWALA_WHATSAPP_URL = `https://wa.me/${SURPRISEWALA_WHATSAPP_NUMBER}`;
 
 document.documentElement.classList.add("js");
 
+const setSriLankaDateMinimum = () => {
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Colombo" }));
+  const value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  document.querySelectorAll('input[name="surprise_date"]').forEach((input) => input.setAttribute("min", value));
+};
+setSriLankaDateMinimum();
+
+document.querySelectorAll('select[name="surprise_type"], select[name="recipient_relationship"]').forEach((select) => {
+  const field = select.closest('form')?.querySelector(select.name === 'surprise_type' ? '[data-other-surprise]' : '[data-other-relationship]');
+  const update = () => { if (field) { field.hidden = select.value !== 'Other'; field.querySelector('input').required = select.value === 'Other'; } };
+  select.addEventListener('change', update);
+  select.closest('form')?.addEventListener('reset', () => setTimeout(update));
+  update();
+});
+
+fetch("/api/me").then((response) => response.json()).then((me) => {
+  if (!me?.authenticated || !me.profile) return;
+  document.querySelectorAll('input[name="customer_name"]').forEach((input) => { if (!input.value) input.value = me.profile.full_name || ""; });
+  document.querySelectorAll('input[name="customer_phone"]').forEach((input) => { if (!input.value) input.value = me.profile.phone || ""; });
+  document.querySelectorAll('input[name="customer_email"]').forEach((input) => { if (!input.value) input.value = me.profile.email || ""; });
+}).catch(() => undefined);
+
 const openSurprisewalaWhatsapp = (message) => {
   const url = message ? `${SURPRISEWALA_WHATSAPP_URL}?text=${encodeURIComponent(message)}` : SURPRISEWALA_WHATSAPP_URL;
-  window.open(url, "_blank");
+  if (!SURPRISEWALA_WHATSAPP_NUMBER) return;
+  window.open(url, "_blank", "noopener,noreferrer");
 };
 
 const enableParallax =
@@ -154,396 +191,10 @@ if (enableParallax) {
   window.addEventListener("resize", requestParallaxUpdate);
 }
 
-const packages = {
-  "simple-elegant": {
-    name: "Simple but elegant Surprise",
-    badge: "Midnight / Day / Night",
-    price: 14000,
-    priceLabel: "LKR 14,000",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A heartfelt cake, bouquet or frame surprise with full memory coverage.",
-    image: {
-      src: "assets-1/birthday-cake-14k.jpeg",
-      alt: "Birthday cake and flower bouquet for Simple but elegant Surprise package",
-    },
-    video: {
-      src: "assets-2/simple-elegant-14k-video.mp4",
-      label: "Simple but elegant Surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "1 kg Customized Cake or Double Chocolate fudge Cake (wording can be customized)",
-      "Natural Flower Bouquet Or Customized Frame",
-      "Full Coverage of video with pictures (free of charge)",
-      "Final Surprise video (free of charge)",
-      "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
-    ],
-  },
-  "on-the-go": {
-    name: "Unexpected surprise on the go",
-    badge: "Midnight / Day / Night",
-    price: 18000,
-    priceLabel: "LKR 18,000",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A moving surprise with cake, flowers, firework, video and keepsakes.",
-    images: [
-      {
-        src: "assets-1/on-the-go-18k-fireworks.jpeg",
-        alt: "Firework surprise moment for Unexpected surprise on the go package",
-      },
-      {
-        src: "assets-1/on-the-go-18k-cake.jpeg",
-        alt: "Cake and bouquet for Unexpected surprise on the go package",
-      },
-    ],
-    video: {
-      src: "assets-2/on-the-go-18k-video.mp4",
-      label: "Unexpected surprise on the go package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "1 kg Customized Cake or Double Chocolate fudge Cake (wording can be customized)",
-      "Natural Flower Bouquet Or Customized Frame",
-      "Firework (12 shot or one Shot Sky cell)",
-      "Full Coverage of video with pictures (free of charge)",
-      "Final Surprise video (free of charge)",
-      "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
-    ],
-  },
-  flashmob: {
-    name: "A flashmob surprise to your loved ones",
-    badge: "Midnight / Day / Night",
-    price: 26000,
-    priceLabel: "LKR 26,000",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A bold balloon, cake, flower and firework moment with full coverage.",
-    images: [
-      {
-        src: "assets-1/flashmob-26k-balloon-cake.jpeg",
-        alt: "Balloon setup with cake and bouquet for flashmob surprise package",
-      },
-      {
-        src: "assets-1/flashmob-26k-fireworks.jpeg",
-        alt: "Firework moment for flashmob surprise package",
-      },
-    ],
-    video: {
-      src: "assets-2/flashmob-26k-video.mp4",
-      label: "A flashmob surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Balloon Setup (Can be customized the color and wording)",
-      "1 kg Customized Cake or Double Chocolate fudge Cake (wording can be customized)",
-      "Natural Flower Bouquet Or Customized Frame",
-      "Firework (12 shots / One Shot Sky Cell)",
-      "Full Coverage of video with pictures (free of charge)",
-      "Final Surprise video (free of charge)",
-      "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
-    ],
-  },
-  emotions: {
-    name: "Those emotions what we live for!",
-    badge: "Midnight / Day / Night",
-    price: 28000,
-    priceLabel: "LKR 28,000",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A cinematic emotional surprise with balloons, cake, flowers and sky rockets.",
-    images: [
-      {
-        src: "assets-1/emotions-28k-balloon-cake.jpeg",
-        alt: "Balloon setup with cake and bouquet for Those emotions package",
-      },
-      {
-        src: "assets-1/emotions-28k-fireworks.jpeg",
-        alt: "Firework moment for Those emotions package",
-      },
-    ],
-    video: {
-      src: "assets-2/emotions-28k-video.mp4",
-      label: "Those emotions package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Balloon Setup (Can be customized the color and wording)",
-      "1 kg Customized Cake or Double Chocolate fudge Cake (wording can be customized)",
-      "Natural Flower Bouquet Or Customized Frame",
-      "Fireworks (100 Sky Rockets)",
-      "Full Coverage of surprise videos with pictures (free of charge)",
-      "Final Surprise video with cinematic song (free of charge)",
-      "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
-    ],
-  },
-  "unique-wow": {
-    name: "Unique way to surprise your loved to feel wow",
-    badge: "Midnight / Day / Night",
-    price: 36000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A unique banner surprise with decor, bouquet, cake and fireworks.",
-    images: [
-      {
-        src: "assets-1/unique-wow-36k-balloon-cake.jpeg",
-        alt: "Balloon setup with cake and bouquet for Unique way surprise package",
-      },
-      {
-        src: "assets-1/unique-wow-36k-fireworks.jpeg",
-        alt: "Firework moment for Unique way surprise package",
-      },
-    ],
-    video: {
-      src: "assets-2/unique-wow-video.mp4",
-      label: "Unique way to surprise your loved to feel wow package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Balloon Setup (Can be customized the color and wording)",
-      "1 kg Customized Cake or Double Chocolate fudge Cake",
-      "Banner Surprise (Can be planned in a unique way)",
-      "Natural Flower Bouquet",
-      "Fireworks (100 Sky Rockets)",
-      "Full Coverage of surprise videos with pictures (free of charge)",
-      "Final Surprise video with cinematic song (free of charge)",
-      "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
-    ],
-  },
-  "car-surprise": {
-    name: "Car Surprise",
-    price: 37000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A decorated car surprise with lights, balloons, cake, bouquet and fireworks.",
-    image: {
-      src: "assets-1/car-surprise-photo-01.jpeg",
-      alt: "Car Surprise birthday trunk setup with balloons, bouquet and lights",
-    },
-    video: {
-      src: "assets-2/car-surprise-video.mp4",
-      label: "Car Surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Including Car",
-      "Light Theme setup",
-      "Full Decorations with balloons, Banner and Photos",
-      "Mini cake with Customized Wording",
-      "Natural Flower Bouquet",
-      "Fireworks (12 shots)",
-      "Balloon setup (can be customized the theme and wording)",
-      "Full Coverage and Surprise video with pictures",
-      "Complementary Polaroid picture from us as a Gesture",
-    ],
-  },
-  "cafe-surprise": {
-    name: "Cafe Surprise",
-    price: 36000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A romantic cafe setup with cake, music, petals, bouquet and decor.",
-    video: {
-      src: "assets-2/cafe-surprise-video.mp4",
-      label: "Cafe Surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Customized decor with a Mini chocolate fudge cake with customized wording",
-      "Background music",
-      "Natural Flower Bouquet to propose your loved ones",
-      "Romantic setup with Petals",
-      "Balloon Setup",
-      "Complementary Polaroid picture from us as a Gesture",
-      "Including Place hiring cost",
-      "Flower Fountain cracker",
-      "Surprise video with pictures",
-    ],
-  },
-  "beach-surprise": {
-    name: "Beach Surprise",
-    price: 38000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A beachside letter-light setup with petals, candles, cake and fireworks.",
-    images: [
-      {
-        src: "assets-1/beach-surprise-photo-01.jpeg",
-        alt: "Beach Surprise floral marry me setup with lanterns",
-      },
-      {
-        src: "assets-1/beach-surprise-photo-02.jpeg",
-        alt: "Beach Surprise heart-shaped sand setup with love letters",
-      },
-    ],
-    video: {
-      src: "assets-3/beach-surprise-video.mp4",
-      label: "Beach Surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Simple Deco with letter lights (can be customized according to your idea)",
-      "Full of rose petals and candles",
-      "Mini cake (Can be Customized the wording)",
-      "Natural Rose or Normal Bouquet",
-      "Fireworks (100 Shots and fountains)",
-      "Complementary Polaroid picture from us as a Gesture",
-      "Full Coverage of video with pictures",
-      "Final Surprise video (free of charge)",
-    ],
-  },
-  "romantic-room": {
-    name: "Romantic Room Setup",
-    price: 36000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A private room setup with rose petals, candles, balloons, cake and bouquet.",
-    images: [
-      {
-        src: "assets-1/romantic-room-photo-01.jpeg",
-        alt: "Romantic Room Setup birthday room with balloons, cake and rose petals",
-      },
-      {
-        src: "assets-1/romantic-room-photo-02.jpeg",
-        alt: "Romantic Room Setup with ocean view, rose petals and love letters",
-      },
-      {
-        src: "assets-1/romantic-room-photo-03.jpeg",
-        alt: "Romantic Room Setup birthday decoration with gold and black balloons",
-      },
-    ],
-    video: {
-      src: "assets-3/romantic-room-video.mp4",
-      label: "Romantic Room Setup package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Full deco (can be customized according to your idea)",
-      "Full of rose petals and candles",
-      "Mini cake",
-      "Few Helium Gas balloons with pictures",
-      "Balloon setup (can be customized the theme and wording)",
-      "Natural Rose or Normal Bouquet",
-      "Complementary Polaroid picture from us as a Gesture",
-      "Full Coverage of video with pictures",
-      "Final Surprise video (free of charge)",
-    ],
-  },
-  boat: {
-    name: "Private Solo Boat Surprise",
-    price: 87000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A private boat experience with decor, cake, guitarist, fireworks and sailing.",
-    video: {
-      src: "assets-3/private-solo-boat-video.mp4",
-      label: "Private Solo Boat Surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Romantic Decorations inside the Boat",
-      "Mini chocolate fudge cake with customized wording",
-      "Guitarist with selected songs to express the love with music (3 to 5 songs can be chosen)",
-      "Flower Bouquet to Propose or give your loved ones",
-      "Full Firework Show",
-      "Venue charge included",
-      "30 Mins Boat sailing in the lake",
-      "Very Beautiful location to take pictures",
-      "Full surprise videos and Pictures will be given",
-    ],
-  },
-  "live-music": {
-    name: "Live Music surprise to your loved ones under the moon!",
-    price: 48000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A moonlit live music surprise with cake, balloons, bouquet and fireworks.",
-    video: {
-      src: "assets-3/live-music-video.mp4",
-      label: "Live Music surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Live Music with the guitar (4 songs can be chosen and we make it as a remix and Ending with Happy Birthday Song)",
-      "Chocolate Fudge cake/ Any other cake within the budget (wording can be customized)",
-      "Balloon setup (can be customized the theme and wording)",
-      "Natural Rose Bouquet",
-      "Firework Show",
-      "Complementary Polaroid picture from us as a Gesture",
-      "Full Coverage of video with pictures",
-      "Final Surprise video (free of charge)",
-    ],
-  },
-  "theater-surprise": {
-    name: "Theater Surprise",
-    price: 103000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A luxury theater surprise with edited video, movie experience and bouquet.",
-    video: {
-      src: "assets-3/theater-surprise-video.mp4",
-      label: "Theater Surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "A small video clip will be played on the theater screen (Video will Edited from our End)",
-      "Lux theater experience with a movie including 45 seats (Movie can be Selected according your wish which is available on the requested day)",
-      "Cake Hamper Set will be brought inside the theater or Small backdrop with a cake in a lobby Area",
-      "Rose Bouquet",
-      "Complementary Polaroid picture from us as a Gesture",
-      "Full Surprise video coverage with pictures will be provided",
-    ],
-  },
-  "teepee-surprise": {
-    name: "Teepee Surprise",
-    price: 53000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A cozy teepee setup with cake, bouquet, flower fountain and coverage.",
-    images: [
-      {
-        src: "assets-1/teepee-surprise-photo-01.jpeg",
-        alt: "Teepee Surprise rooftop setup with lights, cake and candles",
-      },
-      {
-        src: "assets-1/teepee-surprise-photo-02.jpeg",
-        alt: "Teepee Surprise setup with love letters and candle path",
-      },
-    ],
-    video: {
-      src: "assets-3/teepee-surprise-video.mp4",
-      label: "Teepee Surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Teepee Setup (can be customized according to your idea)",
-      "Double chocolate fudge cake or any simple customized cake",
-      "Natural Rose Bouquet",
-      "Flower Fountain",
-      "Complementary Polaroid picture from us as a Gesture",
-      "Including hiring and transportation cost",
-      "Full Coverage of video with pictures",
-      "Final Surprise video (free of charge)",
-    ],
-  },
-  "marry-me": {
-    name: "Marry Me Surprise",
-    price: 132000,
-    priceLabel: "Can be customized",
-    note: "Extra charges will apply for surprises outside Colombo.",
-    description: "A full proposal setup with crackers, roses, music, coverage and emotion.",
-    video: {
-      src: "assets-3/marry-me-video.mp4",
-      label: "Marry Me Surprise package video",
-      orientation: "portrait",
-    },
-    includes: [
-      "Romantic Full Setup",
-      "Cracker Show",
-      "Rose Bouquet to knee Down and Propose",
-      "Full coverage videos and Pictures",
-      "Random People Giving roses",
-      "Background Music while proposing",
-    ],
-  },
-};
+const packages = Object.fromEntries((storefrontData.packages || []).filter((pack) => pack.order_mode !== 'cake').map((pack) => {
+  const images = (storefrontData.package_images || []).filter((image) => image.package_id === pack.id).map((image) => ({ src: safeAsset(image.image_path), alt: image.alt_text || pack.name })).filter((image) => image.src);
+  return [pack.id, { name: pack.name, badge: pack.badge, price: pack.price, priceLabel: pack.order_mode === 'cart' && pack.price !== null ? 'LKR ' + Number(pack.price).toLocaleString('en-US') : 'Can be customized', note: pack.price_note, description: pack.description, order_mode: pack.order_mode, image: pack.main_image ? {src: safeAsset(pack.main_image), alt: pack.name} : null, images, video: pack.video_url ? {src: safeAsset(pack.video_url), label: pack.name + ' video', orientation: pack.video_orientation || 'portrait'} : null, includes: (storefrontData.package_items || []).filter((item) => item.package_id === pack.id).map((item) => item.label) }];
+}));
 
 let cart = [];
 let activePackageId = null;
@@ -552,7 +203,10 @@ let activeCakeId = null;
 let selectedCakeWeight = "";
 let selectedCakeTopper = "";
 let checkoutCustomerDetails = null;
-let selectedPaymentMethod = "card";
+let checkoutSubmissionKey = null;
+let directSubmissionKey = null;
+let bookingSaveInFlight = false;
+let selectedPaymentMethod = "bank";
 let selectedInstallmentMethod = "koko";
 let activeGalleryIndex = 0;
 let galleryTimer = null;
@@ -565,91 +219,33 @@ let touchDeltaX = 0;
 let countryTouchStartX = 0;
 let countryTouchDeltaX = 0;
 
-const galleryPhotos = [
-  {
-    type: "image",
-    src: "assets-1/gallery/proposal-car-surprise.jpeg",
-    label: "Car proposal surprise",
-  },
-  {
-    type: "video",
-    src: "assets-3/gallery/gallery-video-01.mp4",
-    label: "Gallery video 1",
-  },
-  {
-    type: "image",
-    src: "assets-1/gallery/city-of-dreams-couple.jpeg",
-    label: "City of Dreams birthday moment",
-  },
-  {
-    type: "image",
-    src: "assets-1/gallery/fireworks-moment.jpeg",
-    label: "Fireworks celebration",
-  },
-  {
-    type: "video",
-    src: "assets-3/gallery/gallery-video-02.mp4",
-    label: "Gallery video 2",
-  },
-  {
-    type: "image",
-    src: "assets-1/gallery/birthday-unicorn-setup.jpeg",
-    label: "Unicorn birthday setup",
-  },
-  {
-    type: "image",
-    src: "assets-1/gallery/waterfront-birthday-couple.jpeg",
-    label: "Waterfront birthday surprise",
-  },
-  {
-    type: "video",
-    src: "assets-3/gallery/gallery-video-04.mp4",
-    label: "Gallery video 4",
-  },
-  {
-    type: "image",
-    src: "assets-1/gallery/city-of-dreams-couple-alt.jpeg",
-    label: "Birthday bouquet reveal",
-  },
-];
+const galleryPhotos = (storefrontData.gallery_items || []).map((item) => ({type: item.media_type, src: safeAsset(item.image_path), label: item.title || item.caption || 'Surprisewala gallery moment'})).filter((item) => item.src);
 
 const countries = [
-  { code: "LK", name: "Sri Lanka", flag: "assets-1/flags/lk.png" },
-  { code: "AE", name: "United Arab Emirates", flag: "assets-1/flags/ae.png" },
-  { code: "QA", name: "Qatar", flag: "assets-1/flags/qa.png" },
-  { code: "SA", name: "Saudi Arabia", flag: "assets-1/flags/sa.png" },
-  { code: "KW", name: "Kuwait", flag: "assets-1/flags/kw.png" },
-  { code: "OM", name: "Oman", flag: "assets-1/flags/om.png" },
-  { code: "JP", name: "Japan", flag: "assets-1/flags/jp.png" },
-  { code: "AU", name: "Australia", flag: "assets-1/flags/au.png" },
-  { code: "GB", name: "United Kingdom", flag: "assets-1/flags/gb.png" },
+  { code: "LK", name: "Sri Lanka", flag: "/assets-1/flags/lk.png" },
+  { code: "AE", name: "United Arab Emirates", flag: "/assets-1/flags/ae.png" },
+  { code: "QA", name: "Qatar", flag: "/assets-1/flags/qa.png" },
+  { code: "SA", name: "Saudi Arabia", flag: "/assets-1/flags/sa.png" },
+  { code: "KW", name: "Kuwait", flag: "/assets-1/flags/kw.png" },
+  { code: "OM", name: "Oman", flag: "/assets-1/flags/om.png" },
+  { code: "JP", name: "Japan", flag: "/assets-1/flags/jp.png" },
+  { code: "AU", name: "Australia", flag: "/assets-1/flags/au.png" },
+  { code: "GB", name: "United Kingdom", flag: "/assets-1/flags/gb.png" },
 ];
 
 const navbarCountries = [
-  { name: "Sri Lanka", flag: "assets-1/flags/lk.png", whatsapp: "94760505866" },
-  { name: "United Arab Emirates", flag: "assets-1/flags/ae.png", whatsapp: "94760505866" },
-  { name: "Qatar", flag: "assets-1/flags/qa.png", whatsapp: "94760505866" },
-  { name: "Saudi Arabia", flag: "assets-1/flags/sa.png", whatsapp: "94760505866" },
-  { name: "Kuwait", flag: "assets-1/flags/kw.png", whatsapp: "94760505866" },
-  { name: "Oman", flag: "assets-1/flags/om.png", whatsapp: "94760505866" },
-  { name: "Japan", flag: "assets-1/flags/jp.png", whatsapp: "94760505866" },
-  { name: "Australia", flag: "assets-1/flags/au.png", whatsapp: "94760505866" },
-  { name: "United Kingdom", flag: "assets-1/flags/gb.png", whatsapp: "94760505866" },
+  { name: "Sri Lanka", flag: "/assets-1/flags/lk.png", whatsapp: SURPRISEWALA_WHATSAPP_NUMBER },
+  { name: "United Arab Emirates", flag: "/assets-1/flags/ae.png", whatsapp: SURPRISEWALA_WHATSAPP_NUMBER },
+  { name: "Qatar", flag: "/assets-1/flags/qa.png", whatsapp: SURPRISEWALA_WHATSAPP_NUMBER },
+  { name: "Saudi Arabia", flag: "/assets-1/flags/sa.png", whatsapp: SURPRISEWALA_WHATSAPP_NUMBER },
+  { name: "Kuwait", flag: "/assets-1/flags/kw.png", whatsapp: SURPRISEWALA_WHATSAPP_NUMBER },
+  { name: "Oman", flag: "/assets-1/flags/om.png", whatsapp: SURPRISEWALA_WHATSAPP_NUMBER },
+  { name: "Japan", flag: "/assets-1/flags/jp.png", whatsapp: SURPRISEWALA_WHATSAPP_NUMBER },
+  { name: "Australia", flag: "/assets-1/flags/au.png", whatsapp: SURPRISEWALA_WHATSAPP_NUMBER },
+  { name: "United Kingdom", flag: "/assets-1/flags/gb.png", whatsapp: SURPRISEWALA_WHATSAPP_NUMBER },
 ];
 
-const cakes = Object.fromEntries(
-  Array.from({ length: 21 }, (_, index) => {
-    const number = String(index + 1).padStart(2, "0");
-
-    return [
-      `cake-${number}`,
-      {
-        name: `Cake ${number}`,
-        image: `assets-1/cakes/cake-${number}.jpg`,
-      },
-    ];
-  })
-);
+const cakes = Object.fromEntries((storefrontData.packages || []).filter((pack) => pack.order_mode === 'cake').map((pack) => [pack.id, {name: pack.name, image: safeAsset(pack.main_image)}]));
 
 const paymentMethods = {
   card: {
@@ -813,7 +409,7 @@ const filterPackages = (filter) => {
       .split(",")
       .map((category) => category.trim())
       .filter(Boolean);
-    const shouldShow = filter === "all" ? categories.includes("all") : categories.includes(filter);
+    const shouldShow = filter === "all" || categories.includes(filter);
 
     if (shouldShow) {
       visibleCount += 1;
@@ -849,12 +445,16 @@ const activatePackageFilter = (filter = "all") => {
   filterPackages(filter);
 };
 
-activatePackageFilter("all");
+activatePackageFilter(storefrontData.initial_collection || 'all');
 
 packageFilterButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const filter = button.dataset.packageFilter || "all";
 
+    if (window.location.pathname.startsWith('/collections/')) {
+      window.location.assign(filter === 'all' ? '/#packages' : '/collections/' + encodeURIComponent(filter) + '#packages');
+      return;
+    }
     activatePackageFilter(filter);
   });
 });
@@ -885,11 +485,11 @@ const renderGallery = () => {
         const media =
           photo.type === "video"
             ? `
-              <video class="gallery-slide__media" controls playsinline preload="metadata" aria-label="${photo.label}">
-                <source src="${photo.src}" type="video/mp4" />
+              <video class="gallery-slide__media" controls playsinline preload="metadata" aria-label="${escapeHtml(photo.label)}">
+                <source src="${escapeHtml(photo.src)}" type="video/mp4" />
               </video>
             `
-            : `<img class="gallery-slide__media" src="${photo.src}" alt="${photo.label}" loading="lazy" decoding="async" />`;
+            : `<img class="gallery-slide__media" src="${escapeHtml(photo.src)}" alt="${escapeHtml(photo.label)}" loading="lazy" decoding="async" />`;
 
         return `
         <div class="gallery-slide" data-gallery-slide="${index}">
@@ -903,7 +503,7 @@ const renderGallery = () => {
   galleryDots.innerHTML = galleryPhotos
     .map(
       (photo, index) => `
-        <button class="gallery-dot" type="button" data-gallery-dot="${index}" aria-label="Show ${photo.label}"></button>
+        <button class="gallery-dot" type="button" data-gallery-dot="${index}" aria-label="Show ${escapeHtml(photo.label)}"></button>
       `
     )
     .join("");
@@ -938,6 +538,7 @@ const updateGallery = () => {
 };
 
 const goToGallerySlide = (index) => {
+  if (!galleryPhotos.length) return;
   activeGalleryIndex = (index + galleryPhotos.length) % galleryPhotos.length;
   updateGallery();
 };
@@ -950,7 +551,7 @@ const stopGalleryAutoplay = () => {
 };
 
 const startGalleryAutoplay = () => {
-  if (prefersReducedMotion || !galleryCarousel || galleryTimer) {
+  if (prefersReducedMotion || !galleryCarousel || galleryPhotos.length < 2 || galleryTimer) {
     return;
   }
 
@@ -1205,22 +806,20 @@ if (countriesSection && "IntersectionObserver" in window) {
 
 const formatCurrency = (value) => `LKR ${value.toLocaleString("en-US")}`;
 
-const cartEnabledPackageIds = new Set(["simple-elegant", "on-the-go", "flashmob", "emotions"]);
+const cartEnabledPackageIds = new Set((storefrontData.packages || []).filter((pack) => pack.order_mode === 'cart' && pack.price !== null).map((pack) => pack.id));
 
 const canAddPackageToCart = (packageId) => cartEnabledPackageIds.has(packageId);
 
-const escapeHtml = (value) =>
-  String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 
 const loadCart = () => {
   try {
     const storedCart = JSON.parse(localStorage.getItem("surprisewalaCart") || "[]");
-    cart = Array.isArray(storedCart) ? storedCart : [];
+    cart = Array.isArray(storedCart) ? storedCart.flatMap((item) => {
+      const pack = packages[item.id];
+      if (!pack || pack.order_mode !== 'cart' || pack.price === null) return [];
+      const quantity = Math.min(20, Math.max(1, Number(item.quantity) || 1));
+      return [{...item, id: item.id, name: pack.name, price: Number(pack.price), quantity: Math.floor(quantity)}];
+    }) : [];
   } catch {
     cart = [];
   }
@@ -1351,15 +950,13 @@ const getCartTotalLabel = () => (cartHasCustomizedPricing() ? "Customized" : for
 const isCakeOnlyOrder = () => cart.length > 0 && cart.every(isCakeItem);
 
 const updateCheckoutTimeField = () => {
-  const cakeOnlyOrder = isCakeOnlyOrder();
-  console.log("Cake only order:", cakeOnlyOrder);
-  console.log("Cart items:", cart);
+  const cakeOnlyOrder = false;
 
   if (!preferredTimeWrapper) {
     return;
   }
 
-  const timeInput = preferredTimeWrapper.querySelector('input[name="time"]');
+  const timeInput = preferredTimeWrapper.querySelector('input[name="surprise_time"]');
   preferredTimeWrapper.hidden = cakeOnlyOrder;
   preferredTimeWrapper.style.display = cakeOnlyOrder ? "none" : "";
 
@@ -1376,7 +973,7 @@ const updateCheckoutTimeField = () => {
 };
 
 const getPaymentBreakdown = () => {
-  const methodKey = selectedPaymentMethod === "installment" ? selectedInstallmentMethod : selectedPaymentMethod;
+  const methodKey = "bank";
   const method = paymentMethods[methodKey] || paymentMethods.card;
   const originalTotal = getCartTotal();
   const feeAmount = Math.round(originalTotal * method.feePercentage);
@@ -1420,7 +1017,7 @@ const renderPaymentDetails = () => {
   }
 
   if (confirmWhatsappButton) {
-    confirmWhatsappButton.textContent = breakdown.method.actionLabel;
+    confirmWhatsappButton.textContent = 'Confirm on WhatsApp';
   }
 
   if (paymentTotal) {
@@ -1543,6 +1140,8 @@ const renderCheckoutSummaries = () => {
   renderSummaryItems(paymentSummary);
   if (checkoutPackageCost) checkoutPackageCost.value = getCartTotalLabel();
 
+  if (checkoutPackageCost) checkoutPackageCost.value = cartHasCustomizedPricing() ? "Custom / To Be Confirmed" : getCartTotalLabel();
+
   const total = getCartTotalLabel();
 
   if (checkoutTotal) {
@@ -1575,6 +1174,7 @@ const openCheckout = () => {
     return;
   }
 
+  checkoutSubmissionKey = crypto.randomUUID();
   closeCart();
   updateCheckoutTimeField();
   renderCheckoutSummaries();
@@ -1614,6 +1214,8 @@ const getCheckoutDetails = () => {
 const validateCheckoutDetails = (details) => {
   const requiredFields = ["customer_name", "customer_phone", "surprise_date", "surprise_location", "surprise_time", "surprise_type", "recipient_name", "recipient_relationship"].map((name) => ({ name, value: details[name] }));
 
+  if (details.surprise_type === 'Other') requiredFields.push({name: 'custom_surprise_type', value: details.custom_surprise_type});
+  if (details.recipient_relationship === 'Other') requiredFields.push({name: 'custom_relationship', value: details.custom_relationship});
   const missingFields = requiredFields.filter((field) => !field.value);
   const hasInvalidDate = Boolean(details.surprise_date && !/^\d{4}-\d{2}-\d{2}$/.test(details.surprise_date));
 
@@ -1654,22 +1256,14 @@ const confirmCheckoutOnWhatsapp = () => {
   const selectedPackages = cart.map(getCartItemText).join(", ");
   const lines = [`Hello Surprisewala 👋`, ``, `*ORDER DETAILS*`, `Package: ${selectedPackages}`, `Package Cost: ${cartHasCustomizedPricing() ? "Custom / To Be Confirmed" : formatCurrency(breakdown.finalTotal)}`, ``, `Your Name: ${details.customer_name}`, `Contact No: ${details.customer_phone}`];
   if (details.customer_email) lines.push(`Email: ${details.customer_email}`);
-  lines.push(`Surprise Date: ${details.surprise_date}`, `Time: ${details.surprise_time}`, `Surprise Location: ${details.surprise_location}`, `Surprise Type: ${details.surprise_type}`, ``, `*SURPRISE PERSON DETAILS*`, `Name: ${details.recipient_name}`);
+  lines.push(`Surprise Date: ${details.surprise_date}`, `Time: ${details.surprise_time}`, `Surprise Location: ${details.surprise_location}`, `Surprise Type: ${details.surprise_type === "Other" ? details.custom_surprise_type : details.surprise_type}`, ``, `*SURPRISE PERSON DETAILS*`, `Name: ${details.recipient_name}`);
   if (details.recipient_phone) lines.push(`Contact No: ${details.recipient_phone}`);
-  lines.push(`Relationship: ${details.recipient_relationship}`);
+  lines.push(`Relationship: ${details.recipient_relationship === "Other" ? details.custom_relationship : details.recipient_relationship}`);
   if (details.special_notes) lines.push(``, `*SPECIAL REQUIREMENTS*`, details.special_notes);
   lines.push(``, `Thank you.`);
   const message = lines.join("\n");
 
-  document.dispatchEvent(new CustomEvent("surprisewala:order-submitted", {
-    detail: {
-      orderType: isCakeOnlyOrder() ? "cake" : "package",
-      items: cart.map((item) => ({ ...item })),
-      totalAmount: cartHasCustomizedPricing() ? 0 : breakdown.finalTotal,
-      customerNotes: details.special_notes || "",
-      customer: { fullName: details.customer_name, phone: details.customer_phone, email: details.customer_email },
-    },
-  }));
+  saveBookingToServer({ ...details, items: cart.map((item) => ({id: item.id, quantity: item.quantity})), submission_key: checkoutSubmissionKey , payment_method: "whatsapp" }, checkoutError).catch(() => undefined);
 
   openSurprisewalaWhatsapp(message);
 };
@@ -1838,7 +1432,7 @@ const changeQuantity = (packageId, amount) => {
     return;
   }
 
-  item.quantity += amount;
+  item.quantity = Math.min(20, item.quantity + amount);
 
   if (item.quantity <= 0) {
     cart = cart.filter((cartItem) => cartItem.id !== packageId);
@@ -1877,8 +1471,8 @@ const renderModalPhoto = () => {
   modalPhoto.classList.toggle("media-placeholder--slideshow", hasSlideshow);
   modalPhoto.innerHTML = `
     <img
-      src="${activeImage.src}"
-      alt="${activeImage.alt}"
+      src="${escapeHtml(activeImage.src)}"
+      alt="${escapeHtml(activeImage.alt)}"
       loading="lazy"
       decoding="async"
     />
@@ -1960,8 +1554,8 @@ const openDetails = (packageId) => {
     modalNote.hidden = !selectedPackage.note;
   }
   modalCartButton.textContent = canAddPackageToCart(packageId) ? "Add to Cart" : "Book Now";
-  modalIncludes.innerHTML = selectedPackage.includes.map((item) => `<li>${item}</li>`).join("");
-  activeModalImages = selectedPackage.images || (selectedPackage.image ? [selectedPackage.image] : []);
+  modalIncludes.innerHTML = selectedPackage.includes.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+  activeModalImages = selectedPackage.images?.length ? selectedPackage.images : (selectedPackage.image ? [selectedPackage.image] : []);
   activeModalImageIndex = 0;
   renderModalPhoto();
   renderModalVideo(selectedPackage);
@@ -1989,6 +1583,8 @@ const renderDirectOrderSummary = () => {
 
   const selectedPackage = packages[activeDirectOrderPackageId];
 
+  if (directPackageCost) directPackageCost.value = selectedPackage?.priceLabel || "Custom / To Be Confirmed";
+
   if (!selectedPackage) {
     directOrderSummary.innerHTML = "";
     return;
@@ -2013,6 +1609,7 @@ const openDirectOrder = (packageId) => {
   }
 
   activeDirectOrderPackageId = packageId;
+  directSubmissionKey = crypto.randomUUID();
   directOrderForm.reset();
 
   if (directOrderError) {
@@ -2047,29 +1644,15 @@ const getDirectOrderDetails = () => {
 
   const formData = new FormData(directOrderForm);
 
-  return {
-    fullName: String(formData.get("fullName") || "").trim(),
-    phone: String(formData.get("phone") || "").trim(),
-    email: String(formData.get("email") || "").trim(),
-    country: String(formData.get("country") || "").trim(),
-    location: String(formData.get("location") || "").trim(),
-    occasion: String(formData.get("occasion") || "").trim(),
-    date: formatCheckoutDate(formData.get("date")),
-    time: String(formData.get("time") || "").trim(),
-    notes: String(formData.get("notes") || "").trim(),
-  };
+  return { customer_name: String(formData.get("customer_name") || "").trim(), customer_phone: String(formData.get("customer_phone") || "").trim(), customer_email: String(formData.get("customer_email") || "").trim(), surprise_date: String(formData.get("surprise_date") || "").trim(), surprise_location: String(formData.get("surprise_location") || "").trim(), surprise_time: String(formData.get("surprise_time") || "").trim(), surprise_type: String(formData.get("surprise_type") || "").trim(), custom_surprise_type: String(formData.get("custom_surprise_type") || "").trim(), recipient_name: String(formData.get("recipient_name") || "").trim(), recipient_phone: String(formData.get("recipient_phone") || "").trim(), recipient_relationship: String(formData.get("recipient_relationship") || "").trim(), custom_relationship: String(formData.get("custom_relationship") || "").trim(), special_notes: String(formData.get("special_notes") || "").trim() };
 };
 
 const validateDirectOrderDetails = (details) => {
-  const requiredFields = [
-    { name: "fullName", value: details.fullName },
-    { name: "phone", value: details.phone },
-    { name: "country", value: details.country },
-    { name: "occasion", value: details.occasion },
-    { name: "date", value: details.date },
-  ];
+  const requiredFields = ["customer_name", "customer_phone", "surprise_date", "surprise_location", "surprise_time", "surprise_type", "recipient_name", "recipient_relationship"].map((name) => ({ name, value: details[name] }));
+  if (details.surprise_type === 'Other') requiredFields.push({name: 'custom_surprise_type', value: details.custom_surprise_type});
+  if (details.recipient_relationship === 'Other') requiredFields.push({name: 'custom_relationship', value: details.custom_relationship});
   const missingFields = requiredFields.filter((field) => !field.value);
-  const hasInvalidDate = Boolean(details.date && !parseCheckoutDate(details.date));
+  const hasInvalidDate = Boolean(details.surprise_date && !/^\d{4}-\d{2}-\d{2}$/.test(details.surprise_date));
 
   directOrderForm.querySelectorAll(".form-field").forEach((field) => {
     const input = field.querySelector("input, select, textarea");
@@ -2078,12 +1661,12 @@ const validateDirectOrderDetails = (details) => {
       Boolean(
         input &&
           (missingFields.some((missingField) => missingField.name === input.name) ||
-            (input.name === "date" && hasInvalidDate))
+            (input.name === "surprise_date" && hasInvalidDate))
       )
     );
   });
 
-  return hasInvalidDate ? [...missingFields, { name: "date", value: details.date }] : missingFields;
+  return hasInvalidDate ? [...missingFields, { name: "surprise_date", value: details.surprise_date }] : missingFields;
 };
 
 const submitDirectOrderToWhatsapp = (details) => {
@@ -2093,25 +1676,32 @@ const submitDirectOrderToWhatsapp = (details) => {
     return;
   }
 
-  const message = `Hello Surprisewala, I would like to order this package.
-
-Package: ${selectedPackage.name}
-Price: ${selectedPackage.priceLabel}
-
-Customer Details:
-Name: ${details.fullName}
-Phone: ${details.phone}
-Email: ${details.email || "Not provided"}
-Country: ${details.country}
-Location: ${details.location || "Not provided"}
-Occasion: ${details.occasion}
-Preferred Date: ${formatDisplayDate(details.date)}
-Preferred Time: ${formatDisplayTime(details.time) || "Not provided"}
-Notes: ${details.notes || "No notes provided"}
-
-Please send me more details.`;
+  const lines = [`Hello Surprisewala 👋`, ``, `*ORDER DETAILS*`, `Package: ${selectedPackage.name}`, `Package Cost: ${selectedPackage.priceLabel}`, ``, `Your Name: ${details.customer_name}`, `Contact No: ${details.customer_phone}`];
+  if (details.customer_email) lines.push(`Email: ${details.customer_email}`);
+  lines.push(`Surprise Date: ${details.surprise_date}`, `Time: ${details.surprise_time}`, `Surprise Location: ${details.surprise_location}`, `Surprise Type: ${details.surprise_type === "Other" ? details.custom_surprise_type : details.surprise_type}`, ``, `*SURPRISE PERSON DETAILS*`, `Name: ${details.recipient_name}`);
+  if (details.recipient_phone) lines.push(`Contact No: ${details.recipient_phone}`);
+  lines.push(`Relationship: ${details.recipient_relationship === "Other" ? details.custom_relationship : details.recipient_relationship}`);
+  if (details.special_notes) lines.push(``, `*SPECIAL REQUIREMENTS*`, details.special_notes);
+  lines.push(``, `Thank you.`);
+  const message = lines.join("\n");
+  saveBookingToServer({ ...details, items: [{id: activeDirectOrderPackageId, quantity: 1}], submission_key: directSubmissionKey , payment_method: "whatsapp" }, directOrderError).catch(() => undefined);
 
   openSurprisewalaWhatsapp(message);
+};
+
+const saveBookingToServer = async (details, errorElement) => {
+  if (bookingSaveInFlight) return;
+  bookingSaveInFlight = true;
+  try {
+    const response = await fetch('/api/orders', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(details) });
+    const result = await response.json();
+    if (!response.ok || (storefrontData.source === 'managed' && !result.saved)) throw new Error(result.error || "Your booking could not be saved. Please keep this form open and retry, or confirm directly on WhatsApp.");
+    if (errorElement) errorElement.textContent = result.saved ? 'Booking saved. Our team will confirm availability with you on WhatsApp.' : 'Continue with our team on WhatsApp to confirm your booking.';
+    return result;
+  } catch (error) {
+    if (errorElement) errorElement.textContent = error.message || 'Unable to save this booking. Please retry or contact us on WhatsApp.';
+    throw error;
+  } finally { bookingSaveInFlight = false; }
 };
 
 const openCart = () => {
@@ -2347,8 +1937,8 @@ if (directOrderForm) {
     if (missingFields.length) {
       if (directOrderError) {
         directOrderError.textContent =
-          details.date && !parseCheckoutDate(details.date)
-            ? "Please enter the preferred date as DD/MM/YYYY."
+          details.surprise_date && !/^\d{4}-\d{2}-\d{2}$/.test(details.surprise_date)
+            ? "Please choose a valid surprise date."
             : "Please complete the required fields.";
       }
       return;
@@ -2358,8 +1948,10 @@ if (directOrderForm) {
       directOrderError.textContent = "";
     }
 
+    const submitButton = directOrderForm.querySelector("button[type=submit]");
+    if (submitButton) { submitButton.disabled = true; submitButton.textContent = "Preparing WhatsApp…"; }
     submitDirectOrderToWhatsapp(details);
-    closeDirectOrder();
+    window.setTimeout(() => { if (submitButton) { submitButton.disabled = false; submitButton.textContent = "Send on WhatsApp"; } }, 1200);
   });
 }
 
@@ -2458,7 +2050,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 loadCart();
-selectedPaymentMethod = localStorage.getItem("surprisewalaPaymentMethod") || "card";
+selectedPaymentMethod = "bank";
 selectedInstallmentMethod = localStorage.getItem("surprisewalaInstallmentMethod") || "koko";
 syncPackageActionButtons();
 renderCart();
@@ -2751,7 +2343,7 @@ const openCakeFromHash = () => {
 };
 
 const openPackageCategoryFromHash = () => {
-  const filter = packageCategoryHashMap[window.location.hash];
+  const filter = window.location.hash === "#packages" && storefrontData.initial_collection !== "all" ? storefrontData.initial_collection : packageCategoryHashMap[window.location.hash];
 
   if (!filter) {
     return;
@@ -2792,3 +2384,24 @@ if (siteFooter && "IntersectionObserver" in window) {
 } else if (siteFooter) {
   siteFooter.classList.add("is-visible");
 }
+
+})();
+
+// Online payment is an opt-in extension. Existing guest WhatsApp flow is unchanged.
+const payhereCard = document.querySelector('[data-payhere-method]');
+if (payhereCard) fetch('/api/payhere/availability').then(r=>r.json()).then(data=>{payhereCard.hidden=!data.enabled;}).catch(()=>{});
+const payhereBook = document.querySelector('[data-payhere-book]');
+if (payhereBook) payhereBook.addEventListener('click',async()=>{
+ const error=document.querySelector('[data-payhere-error]');
+ payhereBook.disabled=true;
+ try {
+  if(!checkoutCustomerDetails || !cart.length) throw new Error('Complete your booking details first.');
+  if(cartHasCustomizedPricing()) throw new Error('Contact our team to confirm your custom quote before payment.');
+  const me=await fetch('/api/me',{cache:'no-store'});
+  const account=await me.json();
+  if(!account.authenticated) throw new Error('Please sign in before online payment. Your cart will stay saved. Guest WhatsApp ordering remains available.');
+  const result=await saveBookingToServer({...checkoutCustomerDetails,items:cart.map(item=>({id:item.id,quantity:item.quantity})),submission_key:checkoutSubmissionKey,payment_method:'card'},error);
+  if(!result?.saved || !result.orderId) throw new Error('A saved booking is required. Please retry or contact support.');
+  location.assign('/payment/checkout?order='+encodeURIComponent(result.orderId));
+ }catch(e){error.textContent=e.message||'Unable to prepare payment.';payhereBook.disabled=false;}
+});

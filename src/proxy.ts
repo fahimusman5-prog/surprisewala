@@ -7,6 +7,12 @@ export async function proxy(request: NextRequest) {
   if (!isSupabaseConfigured) return NextResponse.next({ request });
 
   let response = NextResponse.next({ request });
+  const redirectWithCookies = (url: URL) => {
+    const redirected = NextResponse.redirect(url);
+    response.cookies.getAll().forEach(cookie => redirected.cookies.set(cookie));
+    redirected.headers.set("Cache-Control", "private, no-store");
+    return redirected;
+  };
   const supabase = createServerClient(supabaseUrl!, supabaseAnonKey!, {
     cookies: {
       getAll: () => request.cookies.getAll(),
@@ -28,7 +34,7 @@ export async function proxy(request: NextRequest) {
       const url = request.nextUrl.clone();
       url.pathname = "/login";
       url.searchParams.set("error", "auth_unavailable");
-      return NextResponse.redirect(url);
+      return redirectWithCookies(url);
     }
     return response;
   }
@@ -36,19 +42,11 @@ export async function proxy(request: NextRequest) {
   if ((pathname.startsWith("/dashboard") || pathname.startsWith("/admin")) && !user) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("next", pathname);
-    return NextResponse.redirect(url);
+    url.searchParams.set("next", request.nextUrl.pathname);
+    return redirectWithCookies(url);
   }
-  if (pathname.startsWith("/admin") && user) {
-    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
-    if (profile?.role !== "admin") {
-      const url = request.nextUrl.clone();
-      url.pathname = "/dashboard";
-      url.searchParams.set("error", "admin_required");
-      return NextResponse.redirect(url);
-    }
-  }
+  response.headers.set("Cache-Control", "private, no-store");
   return response;
 }
 
-export const config = { matcher: ["/dashboard/:path*", "/admin/:path*", "/auth/:path*", "/api/:path*"] };
+export const config = { matcher: ["/dashboard/:path*", "/admin/:path*", "/auth/:path*", "/api/admin/:path*", "/api/orders", "/api/me", "/api/payhere/initiate", "/api/payhere/status", "/payment/:path*"] };

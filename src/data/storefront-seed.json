@@ -1,0 +1,1924 @@
+{
+  "packages": [
+    {
+      "id": "simple-elegant",
+      "slug": "simple-elegant",
+      "name": "Simple but elegant Surprise",
+      "badge": "Midnight / Day / Night",
+      "description": "A heartfelt cake, bouquet or frame surprise with full memory coverage.",
+      "price": 14000,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/1.jpg",
+      "video_url": "/assets-2/simple-elegant-14k-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "cart",
+      "active": true,
+      "featured": true,
+      "display_order": 0,
+      "archived_at": null
+    },
+    {
+      "id": "on-the-go",
+      "slug": "on-the-go",
+      "name": "Unexpected surprise on the go",
+      "badge": "Midnight / Day / Night",
+      "description": "A moving surprise with cake, flowers, firework, video and keepsakes.",
+      "price": 18000,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/2.jpg",
+      "video_url": "/assets-2/on-the-go-18k-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "cart",
+      "active": true,
+      "featured": true,
+      "display_order": 1,
+      "archived_at": null
+    },
+    {
+      "id": "flashmob",
+      "slug": "flashmob",
+      "name": "A flashmob surprise to your loved ones",
+      "badge": "Midnight / Day / Night",
+      "description": "A bold balloon, cake, flower and firework moment with full coverage.",
+      "price": 26000,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/4.jpg",
+      "video_url": "/assets-2/flashmob-26k-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "cart",
+      "active": true,
+      "featured": true,
+      "display_order": 2,
+      "archived_at": null
+    },
+    {
+      "id": "emotions",
+      "slug": "emotions",
+      "name": "Those emotions what we live for!",
+      "badge": "Midnight / Day / Night",
+      "description": "A cinematic emotional surprise with balloons, cake, flowers and sky rockets.",
+      "price": 28000,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/5.jpg",
+      "video_url": "/assets-2/emotions-28k-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "cart",
+      "active": true,
+      "featured": true,
+      "display_order": 3,
+      "archived_at": null
+    },
+    {
+      "id": "unique-wow",
+      "slug": "unique-wow",
+      "name": "Unique way to surprise your loved to feel wow",
+      "badge": "Midnight / Day / Night",
+      "description": "A unique banner surprise with decor, bouquet, cake and fireworks.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/6.jpg",
+      "video_url": "/assets-2/unique-wow-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 4,
+      "archived_at": null
+    },
+    {
+      "id": "car-surprise",
+      "slug": "car-surprise",
+      "name": "Car Surprise",
+      "badge": "",
+      "description": "A decorated car surprise with lights, balloons, cake, bouquet and fireworks.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/7.jpg",
+      "video_url": "/assets-2/car-surprise-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 5,
+      "archived_at": null
+    },
+    {
+      "id": "cafe-surprise",
+      "slug": "cafe-surprise",
+      "name": "Cafe Surprise",
+      "badge": "",
+      "description": "A romantic cafe setup with cake, music, petals, bouquet and decor.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/8.jpg",
+      "video_url": "/assets-2/cafe-surprise-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 6,
+      "archived_at": null
+    },
+    {
+      "id": "beach-surprise",
+      "slug": "beach-surprise",
+      "name": "Beach Surprise",
+      "badge": "",
+      "description": "A beachside letter-light setup with petals, candles, cake and fireworks.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/9.jpg",
+      "video_url": "/assets-3/beach-surprise-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 7,
+      "archived_at": null
+    },
+    {
+      "id": "romantic-room",
+      "slug": "romantic-room",
+      "name": "Romantic Room Setup",
+      "badge": "",
+      "description": "A private room setup with rose petals, candles, balloons, cake and bouquet.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/10.jpg",
+      "video_url": "/assets-3/romantic-room-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 8,
+      "archived_at": null
+    },
+    {
+      "id": "boat",
+      "slug": "boat",
+      "name": "Private Solo Boat Surprise",
+      "badge": "",
+      "description": "A private boat experience with decor, cake, guitarist, fireworks and sailing.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/11.jpg",
+      "video_url": "/assets-3/private-solo-boat-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 9,
+      "archived_at": null
+    },
+    {
+      "id": "live-music",
+      "slug": "live-music",
+      "name": "Live Music surprise to your loved ones under the moon!",
+      "badge": "",
+      "description": "A moonlit live music surprise with cake, balloons, bouquet and fireworks.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/12.jpg",
+      "video_url": "/assets-3/live-music-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 10,
+      "archived_at": null
+    },
+    {
+      "id": "theater-surprise",
+      "slug": "theater-surprise",
+      "name": "Theater Surprise",
+      "badge": "",
+      "description": "A luxury theater surprise with edited video, movie experience and bouquet.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/13.jpg",
+      "video_url": "/assets-3/theater-surprise-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 11,
+      "archived_at": null
+    },
+    {
+      "id": "teepee-surprise",
+      "slug": "teepee-surprise",
+      "name": "Teepee Surprise",
+      "badge": "",
+      "description": "A cozy teepee setup with cake, bouquet, flower fountain and coverage.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/14.jpg",
+      "video_url": "/assets-3/teepee-surprise-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 12,
+      "archived_at": null
+    },
+    {
+      "id": "marry-me",
+      "slug": "marry-me",
+      "name": "Marry Me Surprise",
+      "badge": "",
+      "description": "A full proposal setup with crackers, roses, music, coverage and emotion.",
+      "price": null,
+      "price_note": "Extra charges will apply for surprises outside Colombo.",
+      "main_image": "/assets-1/packages/15.jpg",
+      "video_url": "/assets-3/marry-me-video.mp4",
+      "video_orientation": "portrait",
+      "order_mode": "enquiry",
+      "active": true,
+      "featured": false,
+      "display_order": 13,
+      "archived_at": null
+    },
+    {
+      "id": "cake-01",
+      "slug": "cake-01",
+      "name": "Cake 01",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-01.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 14,
+      "archived_at": null
+    },
+    {
+      "id": "cake-02",
+      "slug": "cake-02",
+      "name": "Cake 02",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-02.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 15,
+      "archived_at": null
+    },
+    {
+      "id": "cake-03",
+      "slug": "cake-03",
+      "name": "Cake 03",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-03.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 16,
+      "archived_at": null
+    },
+    {
+      "id": "cake-04",
+      "slug": "cake-04",
+      "name": "Cake 04",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-04.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 17,
+      "archived_at": null
+    },
+    {
+      "id": "cake-05",
+      "slug": "cake-05",
+      "name": "Cake 05",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-05.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 18,
+      "archived_at": null
+    },
+    {
+      "id": "cake-06",
+      "slug": "cake-06",
+      "name": "Cake 06",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-06.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 19,
+      "archived_at": null
+    },
+    {
+      "id": "cake-07",
+      "slug": "cake-07",
+      "name": "Cake 07",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-07.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 20,
+      "archived_at": null
+    },
+    {
+      "id": "cake-08",
+      "slug": "cake-08",
+      "name": "Cake 08",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-08.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 21,
+      "archived_at": null
+    },
+    {
+      "id": "cake-09",
+      "slug": "cake-09",
+      "name": "Cake 09",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-09.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 22,
+      "archived_at": null
+    },
+    {
+      "id": "cake-10",
+      "slug": "cake-10",
+      "name": "Cake 10",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-10.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 23,
+      "archived_at": null
+    },
+    {
+      "id": "cake-11",
+      "slug": "cake-11",
+      "name": "Cake 11",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-11.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 24,
+      "archived_at": null
+    },
+    {
+      "id": "cake-12",
+      "slug": "cake-12",
+      "name": "Cake 12",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-12.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 25,
+      "archived_at": null
+    },
+    {
+      "id": "cake-13",
+      "slug": "cake-13",
+      "name": "Cake 13",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-13.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 26,
+      "archived_at": null
+    },
+    {
+      "id": "cake-14",
+      "slug": "cake-14",
+      "name": "Cake 14",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-14.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 27,
+      "archived_at": null
+    },
+    {
+      "id": "cake-15",
+      "slug": "cake-15",
+      "name": "Cake 15",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-15.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 28,
+      "archived_at": null
+    },
+    {
+      "id": "cake-16",
+      "slug": "cake-16",
+      "name": "Cake 16",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-16.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 29,
+      "archived_at": null
+    },
+    {
+      "id": "cake-17",
+      "slug": "cake-17",
+      "name": "Cake 17",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-17.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 30,
+      "archived_at": null
+    },
+    {
+      "id": "cake-18",
+      "slug": "cake-18",
+      "name": "Cake 18",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-18.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 31,
+      "archived_at": null
+    },
+    {
+      "id": "cake-19",
+      "slug": "cake-19",
+      "name": "Cake 19",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-19.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 32,
+      "archived_at": null
+    },
+    {
+      "id": "cake-20",
+      "slug": "cake-20",
+      "name": "Cake 20",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-20.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 33,
+      "archived_at": null
+    },
+    {
+      "id": "cake-21",
+      "slug": "cake-21",
+      "name": "Cake 21",
+      "badge": "",
+      "description": "Customizable cake with your selected weight, topper and wording.",
+      "price": null,
+      "price_note": "",
+      "main_image": "/assets-1/cakes/cake-21.jpg",
+      "video_url": null,
+      "video_orientation": "portrait",
+      "order_mode": "cake",
+      "active": true,
+      "featured": false,
+      "display_order": 34,
+      "archived_at": null
+    }
+  ],
+  "collections": [
+    {
+      "id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed",
+      "name": "Surprise Packages",
+      "slug": "surprises",
+      "short_description": "Signature surprise experiences for your special moments.",
+      "cover_image": "/assets-1/packages/1.jpg",
+      "active": true,
+      "featured": false,
+      "display_order": 0,
+      "archived_at": null
+    },
+    {
+      "id": "634d68bf-e3ae-44b0-9196-d87823f2e1c4",
+      "name": "For Him",
+      "slug": "for-him",
+      "short_description": "",
+      "cover_image": null,
+      "active": true,
+      "featured": false,
+      "display_order": 1,
+      "archived_at": null
+    },
+    {
+      "id": "349461a1-708c-437c-ad3a-6ee81ad8ca86",
+      "name": "For Her",
+      "slug": "for-her",
+      "short_description": "",
+      "cover_image": null,
+      "active": true,
+      "featured": false,
+      "display_order": 2,
+      "archived_at": null
+    },
+    {
+      "id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a",
+      "name": "Cakes",
+      "slug": "cakes",
+      "short_description": "",
+      "cover_image": null,
+      "active": true,
+      "featured": false,
+      "display_order": 3,
+      "archived_at": null
+    },
+    {
+      "id": "fd10afc6-a0a2-43f4-9944-d00eb93a417f",
+      "name": "Gifts",
+      "slug": "gifts",
+      "short_description": "",
+      "cover_image": null,
+      "active": true,
+      "featured": false,
+      "display_order": 4,
+      "archived_at": null
+    },
+    {
+      "id": "e141c8dc-713f-440e-b6e4-972b749afedc",
+      "name": "Flowers",
+      "slug": "flowers",
+      "short_description": "",
+      "cover_image": null,
+      "active": true,
+      "featured": false,
+      "display_order": 5,
+      "archived_at": null
+    }
+  ],
+  "package_collections": [
+    {
+      "package_id": "cake-01",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-02",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-03",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-04",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-05",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-06",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-07",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-08",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-09",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-10",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-11",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-12",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-13",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-14",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-15",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-16",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-17",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-18",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-19",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-20",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "cake-21",
+      "collection_id": "4e9e3fb2-d579-47ee-ab96-5458b544aa3a"
+    },
+    {
+      "package_id": "simple-elegant",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "on-the-go",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "flashmob",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "emotions",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "unique-wow",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "car-surprise",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "cafe-surprise",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "beach-surprise",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "romantic-room",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "boat",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "live-music",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "theater-surprise",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "teepee-surprise",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    },
+    {
+      "package_id": "marry-me",
+      "collection_id": "e5006ad7-6ad0-40cd-9e19-cecff3c7b5ed"
+    }
+  ],
+  "package_items": [
+    {
+      "id": "335dc252-58ee-4520-9d88-acaf366c23a7",
+      "package_id": "simple-elegant",
+      "label": "1 kg Customized Cake or Double Chocolate fudge Cake (wording can be customized)",
+      "display_order": 0
+    },
+    {
+      "id": "088c1471-826d-4aa6-b7d8-c600b688b567",
+      "package_id": "simple-elegant",
+      "label": "Natural Flower Bouquet Or Customized Frame",
+      "display_order": 1
+    },
+    {
+      "id": "5e070bf4-262e-447f-9c36-535c4d82b78f",
+      "package_id": "simple-elegant",
+      "label": "Full Coverage of video with pictures (free of charge)",
+      "display_order": 2
+    },
+    {
+      "id": "46d0a0d8-d616-4032-bd73-7723b8dd0e28",
+      "package_id": "simple-elegant",
+      "label": "Final Surprise video (free of charge)",
+      "display_order": 3
+    },
+    {
+      "id": "55c4d317-074f-43dd-90f3-d399eb31535f",
+      "package_id": "simple-elegant",
+      "label": "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
+      "display_order": 4
+    },
+    {
+      "id": "3df32d96-1051-4d36-940d-f4471bd50385",
+      "package_id": "on-the-go",
+      "label": "1 kg Customized Cake or Double Chocolate fudge Cake (wording can be customized)",
+      "display_order": 0
+    },
+    {
+      "id": "c8ecd5aa-b720-4b79-9653-71c95a52009b",
+      "package_id": "on-the-go",
+      "label": "Natural Flower Bouquet Or Customized Frame",
+      "display_order": 1
+    },
+    {
+      "id": "fb09b095-5cce-4f3b-87fd-797f6ef241ce",
+      "package_id": "on-the-go",
+      "label": "Firework (12 shot or one Shot Sky cell)",
+      "display_order": 2
+    },
+    {
+      "id": "46278bbd-47db-4be5-802a-a23d6406f317",
+      "package_id": "on-the-go",
+      "label": "Full Coverage of video with pictures (free of charge)",
+      "display_order": 3
+    },
+    {
+      "id": "a603bb53-4437-42b2-951a-40e007b204e1",
+      "package_id": "on-the-go",
+      "label": "Final Surprise video (free of charge)",
+      "display_order": 4
+    },
+    {
+      "id": "db4c2ee3-7dc7-4b92-8f28-a16f62132e6b",
+      "package_id": "on-the-go",
+      "label": "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
+      "display_order": 5
+    },
+    {
+      "id": "b2a0f99b-498a-4f13-a437-9b95fa3e0642",
+      "package_id": "flashmob",
+      "label": "Balloon Setup (Can be customized the color and wording)",
+      "display_order": 0
+    },
+    {
+      "id": "56aba9f4-f72e-4870-ab1e-b264c44d120a",
+      "package_id": "flashmob",
+      "label": "1 kg Customized Cake or Double Chocolate fudge Cake (wording can be customized)",
+      "display_order": 1
+    },
+    {
+      "id": "10428dfd-6d17-41fb-bf0e-685966ccb939",
+      "package_id": "flashmob",
+      "label": "Natural Flower Bouquet Or Customized Frame",
+      "display_order": 2
+    },
+    {
+      "id": "b1220c0f-1a26-48b6-82b7-8097302f58f7",
+      "package_id": "flashmob",
+      "label": "Firework (12 shots / One Shot Sky Cell)",
+      "display_order": 3
+    },
+    {
+      "id": "80ac7759-ec96-4523-9901-eb316660dfd9",
+      "package_id": "flashmob",
+      "label": "Full Coverage of video with pictures (free of charge)",
+      "display_order": 4
+    },
+    {
+      "id": "cccfaa50-0fb2-4760-a1c8-3795578aa340",
+      "package_id": "flashmob",
+      "label": "Final Surprise video (free of charge)",
+      "display_order": 5
+    },
+    {
+      "id": "08bea2cb-76ea-441e-93a1-aaeaa6a0977e",
+      "package_id": "flashmob",
+      "label": "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
+      "display_order": 6
+    },
+    {
+      "id": "4d6749a9-7dfc-450a-b1db-877479eb36d3",
+      "package_id": "emotions",
+      "label": "Balloon Setup (Can be customized the color and wording)",
+      "display_order": 0
+    },
+    {
+      "id": "c9b2ecea-8905-4da1-a054-9d840d16dfc2",
+      "package_id": "emotions",
+      "label": "1 kg Customized Cake or Double Chocolate fudge Cake (wording can be customized)",
+      "display_order": 1
+    },
+    {
+      "id": "49b84f2f-c94b-4fde-80cf-68a30b8a87fa",
+      "package_id": "emotions",
+      "label": "Natural Flower Bouquet Or Customized Frame",
+      "display_order": 2
+    },
+    {
+      "id": "6395b7ca-24ea-4b01-ae3b-d0f06262b15e",
+      "package_id": "emotions",
+      "label": "Fireworks (100 Sky Rockets)",
+      "display_order": 3
+    },
+    {
+      "id": "64d1f0fc-1b61-491b-9485-d268ce72ca08",
+      "package_id": "emotions",
+      "label": "Full Coverage of surprise videos with pictures (free of charge)",
+      "display_order": 4
+    },
+    {
+      "id": "ec307330-36c7-4a6e-9a2f-1cdf0d3c35a3",
+      "package_id": "emotions",
+      "label": "Final Surprise video with cinematic song (free of charge)",
+      "display_order": 5
+    },
+    {
+      "id": "8fc4272d-89b9-45db-b921-4b1f5225613e",
+      "package_id": "emotions",
+      "label": "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
+      "display_order": 6
+    },
+    {
+      "id": "f72d697a-80c8-4a37-8544-f669550e5f1c",
+      "package_id": "unique-wow",
+      "label": "Balloon Setup (Can be customized the color and wording)",
+      "display_order": 0
+    },
+    {
+      "id": "1e382db4-e1e1-4cd0-8ca3-e5a59b8252af",
+      "package_id": "unique-wow",
+      "label": "1 kg Customized Cake or Double Chocolate fudge Cake",
+      "display_order": 1
+    },
+    {
+      "id": "bdc310cf-4078-4d53-9b89-e0051235fdc0",
+      "package_id": "unique-wow",
+      "label": "Banner Surprise (Can be planned in a unique way)",
+      "display_order": 2
+    },
+    {
+      "id": "bfeb0c2a-1696-4793-b50f-b480390f6b50",
+      "package_id": "unique-wow",
+      "label": "Natural Flower Bouquet",
+      "display_order": 3
+    },
+    {
+      "id": "e0324d57-c6f6-4357-9ba4-55eb2dbef306",
+      "package_id": "unique-wow",
+      "label": "Fireworks (100 Sky Rockets)",
+      "display_order": 4
+    },
+    {
+      "id": "56b24f27-04d9-4aeb-b311-bedb724e61ce",
+      "package_id": "unique-wow",
+      "label": "Full Coverage of surprise videos with pictures (free of charge)",
+      "display_order": 5
+    },
+    {
+      "id": "99aa40cf-e61d-4447-bb2f-f334bc05a09b",
+      "package_id": "unique-wow",
+      "label": "Final Surprise video with cinematic song (free of charge)",
+      "display_order": 6
+    },
+    {
+      "id": "361cffca-1e8a-432e-b88f-fc2d7e276c79",
+      "package_id": "unique-wow",
+      "label": "Complementary Polaroid picture to keep it as a long time memory (an on point printed photo will be given at that moment)",
+      "display_order": 7
+    },
+    {
+      "id": "d31ca4e9-dca2-4156-89b6-f71bad75b295",
+      "package_id": "car-surprise",
+      "label": "Including Car",
+      "display_order": 0
+    },
+    {
+      "id": "404c3f3a-b2e7-48f1-9dbf-6db8d351f5bd",
+      "package_id": "car-surprise",
+      "label": "Light Theme setup",
+      "display_order": 1
+    },
+    {
+      "id": "f2899029-c299-4838-8a49-0a5a6692a808",
+      "package_id": "car-surprise",
+      "label": "Full Decorations with balloons, Banner and Photos",
+      "display_order": 2
+    },
+    {
+      "id": "0e790985-f955-4c8c-8f33-4ed98702a6f2",
+      "package_id": "car-surprise",
+      "label": "Mini cake with Customized Wording",
+      "display_order": 3
+    },
+    {
+      "id": "40560c91-7bac-450d-88b1-a011e1b66e4a",
+      "package_id": "car-surprise",
+      "label": "Natural Flower Bouquet",
+      "display_order": 4
+    },
+    {
+      "id": "a1a62283-adf2-4feb-9a77-9a485b96555c",
+      "package_id": "car-surprise",
+      "label": "Fireworks (12 shots)",
+      "display_order": 5
+    },
+    {
+      "id": "454803aa-98e6-4c20-aee3-60514adf0ab8",
+      "package_id": "car-surprise",
+      "label": "Balloon setup (can be customized the theme and wording)",
+      "display_order": 6
+    },
+    {
+      "id": "21eb78d4-6837-4484-827b-1f4bf0ddb9c3",
+      "package_id": "car-surprise",
+      "label": "Full Coverage and Surprise video with pictures",
+      "display_order": 7
+    },
+    {
+      "id": "6f73fb9e-d197-4c7b-a34a-7880e9e1fe3a",
+      "package_id": "car-surprise",
+      "label": "Complementary Polaroid picture from us as a Gesture",
+      "display_order": 8
+    },
+    {
+      "id": "104a4e67-4459-4c72-911f-7b5610fb3829",
+      "package_id": "cafe-surprise",
+      "label": "Customized decor with a Mini chocolate fudge cake with customized wording",
+      "display_order": 0
+    },
+    {
+      "id": "09c95dbb-3f98-4c0c-8f16-cadc4d48d73e",
+      "package_id": "cafe-surprise",
+      "label": "Background music",
+      "display_order": 1
+    },
+    {
+      "id": "6d8c62fe-b3f2-4938-9719-cacdabce68cb",
+      "package_id": "cafe-surprise",
+      "label": "Natural Flower Bouquet to propose your loved ones",
+      "display_order": 2
+    },
+    {
+      "id": "ec9fe147-b8a7-4b22-9eaa-2aa60d20fb0a",
+      "package_id": "cafe-surprise",
+      "label": "Romantic setup with Petals",
+      "display_order": 3
+    },
+    {
+      "id": "d5b1b0ff-9625-4df4-9ee0-dfa72b94456a",
+      "package_id": "cafe-surprise",
+      "label": "Balloon Setup",
+      "display_order": 4
+    },
+    {
+      "id": "4882128d-3824-4927-b2cc-be6b3df9d3fe",
+      "package_id": "cafe-surprise",
+      "label": "Complementary Polaroid picture from us as a Gesture",
+      "display_order": 5
+    },
+    {
+      "id": "816053b0-5b99-4c66-9b02-287a17afccf3",
+      "package_id": "cafe-surprise",
+      "label": "Including Place hiring cost",
+      "display_order": 6
+    },
+    {
+      "id": "0411af36-f7b1-4880-bc22-1dddb026b227",
+      "package_id": "cafe-surprise",
+      "label": "Flower Fountain cracker",
+      "display_order": 7
+    },
+    {
+      "id": "caa18bbf-ea1b-4a8e-9606-45e5f75647dd",
+      "package_id": "cafe-surprise",
+      "label": "Surprise video with pictures",
+      "display_order": 8
+    },
+    {
+      "id": "944377cc-c2c3-4e5a-8bd1-c5cba3309ef5",
+      "package_id": "beach-surprise",
+      "label": "Simple Deco with letter lights (can be customized according to your idea)",
+      "display_order": 0
+    },
+    {
+      "id": "071bf03e-b5cd-4cfe-87d4-ddfd2f481339",
+      "package_id": "beach-surprise",
+      "label": "Full of rose petals and candles",
+      "display_order": 1
+    },
+    {
+      "id": "c27346f9-be50-4e65-8ea9-17f5acedf3f2",
+      "package_id": "beach-surprise",
+      "label": "Mini cake (Can be Customized the wording)",
+      "display_order": 2
+    },
+    {
+      "id": "6fb32c2a-f06c-42a9-9a92-a949e8af7407",
+      "package_id": "beach-surprise",
+      "label": "Natural Rose or Normal Bouquet",
+      "display_order": 3
+    },
+    {
+      "id": "25a9bdd1-bf06-46cf-922f-82d37f77a5c0",
+      "package_id": "beach-surprise",
+      "label": "Fireworks (100 Shots and fountains)",
+      "display_order": 4
+    },
+    {
+      "id": "bd00c589-74ba-4fbf-9035-211cb9471ad7",
+      "package_id": "beach-surprise",
+      "label": "Complementary Polaroid picture from us as a Gesture",
+      "display_order": 5
+    },
+    {
+      "id": "aab9fbec-67c3-406b-87d7-854b25d91c34",
+      "package_id": "beach-surprise",
+      "label": "Full Coverage of video with pictures",
+      "display_order": 6
+    },
+    {
+      "id": "9facd0c4-db68-4262-92ad-e3f45636258d",
+      "package_id": "beach-surprise",
+      "label": "Final Surprise video (free of charge)",
+      "display_order": 7
+    },
+    {
+      "id": "b1fe80b1-1f01-49f1-80d0-2dfe7eb077fa",
+      "package_id": "romantic-room",
+      "label": "Full deco (can be customized according to your idea)",
+      "display_order": 0
+    },
+    {
+      "id": "74345a6c-a6c8-4971-8d35-aa565f578595",
+      "package_id": "romantic-room",
+      "label": "Full of rose petals and candles",
+      "display_order": 1
+    },
+    {
+      "id": "5899c4ba-68dd-4465-a474-beb46e52aaf5",
+      "package_id": "romantic-room",
+      "label": "Mini cake",
+      "display_order": 2
+    },
+    {
+      "id": "259265d3-a3c0-4d97-beda-e005e8606129",
+      "package_id": "romantic-room",
+      "label": "Few Helium Gas balloons with pictures",
+      "display_order": 3
+    },
+    {
+      "id": "ff9e43a7-9dbf-4d18-8ef5-6d9545adf3e2",
+      "package_id": "romantic-room",
+      "label": "Balloon setup (can be customized the theme and wording)",
+      "display_order": 4
+    },
+    {
+      "id": "82491487-d48b-434e-840f-1670ddec1406",
+      "package_id": "romantic-room",
+      "label": "Natural Rose or Normal Bouquet",
+      "display_order": 5
+    },
+    {
+      "id": "0d503468-92ba-447d-8919-7f5371889f8d",
+      "package_id": "romantic-room",
+      "label": "Complementary Polaroid picture from us as a Gesture",
+      "display_order": 6
+    },
+    {
+      "id": "8e72e8f7-49c5-4d4d-b9b2-c6d536a7d517",
+      "package_id": "romantic-room",
+      "label": "Full Coverage of video with pictures",
+      "display_order": 7
+    },
+    {
+      "id": "498e7510-4184-423f-adf2-2e1ab371645f",
+      "package_id": "romantic-room",
+      "label": "Final Surprise video (free of charge)",
+      "display_order": 8
+    },
+    {
+      "id": "280a4306-86db-4af7-9abe-adcaa8558ff3",
+      "package_id": "boat",
+      "label": "Romantic Decorations inside the Boat",
+      "display_order": 0
+    },
+    {
+      "id": "c09e0c7a-8749-4daf-bc87-54bcd1da2051",
+      "package_id": "boat",
+      "label": "Mini chocolate fudge cake with customized wording",
+      "display_order": 1
+    },
+    {
+      "id": "11b372d4-16ff-4bb1-a14e-74a2b2cc5a1b",
+      "package_id": "boat",
+      "label": "Guitarist with selected songs to express the love with music (3 to 5 songs can be chosen)",
+      "display_order": 2
+    },
+    {
+      "id": "d5e4c043-747a-43e7-9894-c8317e590cd5",
+      "package_id": "boat",
+      "label": "Flower Bouquet to Propose or give your loved ones",
+      "display_order": 3
+    },
+    {
+      "id": "1ffd8a26-fddc-4f38-b200-8ed1e25ece54",
+      "package_id": "boat",
+      "label": "Full Firework Show",
+      "display_order": 4
+    },
+    {
+      "id": "cc088c99-82fb-4caf-a865-6b712c71f1e6",
+      "package_id": "boat",
+      "label": "Venue charge included",
+      "display_order": 5
+    },
+    {
+      "id": "4f6aba8f-6b20-4749-8e6e-f4a012609551",
+      "package_id": "boat",
+      "label": "30 Mins Boat sailing in the lake",
+      "display_order": 6
+    },
+    {
+      "id": "13082657-3b91-4297-9571-9124a18a9191",
+      "package_id": "boat",
+      "label": "Very Beautiful location to take pictures",
+      "display_order": 7
+    },
+    {
+      "id": "49f2ad76-ccbb-455d-bf70-8011b13ab61a",
+      "package_id": "boat",
+      "label": "Full surprise videos and Pictures will be given",
+      "display_order": 8
+    },
+    {
+      "id": "b23aa154-c88a-4e91-9a42-9a0644eb63a2",
+      "package_id": "live-music",
+      "label": "Live Music with the guitar (4 songs can be chosen and we make it as a remix and Ending with Happy Birthday Song)",
+      "display_order": 0
+    },
+    {
+      "id": "1bdf8700-4a11-4c81-b8be-9d1a24f95641",
+      "package_id": "live-music",
+      "label": "Chocolate Fudge cake/ Any other cake within the budget (wording can be customized)",
+      "display_order": 1
+    },
+    {
+      "id": "5736a0db-f2a8-47e3-967b-e7718abb5ed3",
+      "package_id": "live-music",
+      "label": "Balloon setup (can be customized the theme and wording)",
+      "display_order": 2
+    },
+    {
+      "id": "dcb53ba7-449c-4151-8b4c-de91c82ccb2b",
+      "package_id": "live-music",
+      "label": "Natural Rose Bouquet",
+      "display_order": 3
+    },
+    {
+      "id": "fb9ec72a-888a-45e4-97d2-1736ddce6964",
+      "package_id": "live-music",
+      "label": "Firework Show",
+      "display_order": 4
+    },
+    {
+      "id": "b9cda31b-6c9a-4e6f-b78b-b7a428861a5c",
+      "package_id": "live-music",
+      "label": "Complementary Polaroid picture from us as a Gesture",
+      "display_order": 5
+    },
+    {
+      "id": "91a2d84e-70ec-40ba-b5da-67f712c31b50",
+      "package_id": "live-music",
+      "label": "Full Coverage of video with pictures",
+      "display_order": 6
+    },
+    {
+      "id": "51f14dc9-7c0d-432d-9a89-01a32c085250",
+      "package_id": "live-music",
+      "label": "Final Surprise video (free of charge)",
+      "display_order": 7
+    },
+    {
+      "id": "1a51fe4e-4a89-45e1-ace7-1dd0d99e3322",
+      "package_id": "theater-surprise",
+      "label": "A small video clip will be played on the theater screen (Video will Edited from our End)",
+      "display_order": 0
+    },
+    {
+      "id": "cdcae54e-672e-4444-82de-43071a01db9e",
+      "package_id": "theater-surprise",
+      "label": "Lux theater experience with a movie including 45 seats (Movie can be Selected according your wish which is available on the requested day)",
+      "display_order": 1
+    },
+    {
+      "id": "22202003-5cb6-4f1b-ae41-0f5e1591b93b",
+      "package_id": "theater-surprise",
+      "label": "Cake Hamper Set will be brought inside the theater or Small backdrop with a cake in a lobby Area",
+      "display_order": 2
+    },
+    {
+      "id": "e0a8274b-171a-46fc-834a-679c62770e97",
+      "package_id": "theater-surprise",
+      "label": "Rose Bouquet",
+      "display_order": 3
+    },
+    {
+      "id": "651d422c-9967-4784-8d14-24827e00c6cc",
+      "package_id": "theater-surprise",
+      "label": "Complementary Polaroid picture from us as a Gesture",
+      "display_order": 4
+    },
+    {
+      "id": "17e3c30a-5102-4857-b573-246fb8e3a4d2",
+      "package_id": "theater-surprise",
+      "label": "Full Surprise video coverage with pictures will be provided",
+      "display_order": 5
+    },
+    {
+      "id": "1dce69cb-9a11-413d-963e-d2dbc5ede2e1",
+      "package_id": "teepee-surprise",
+      "label": "Teepee Setup (can be customized according to your idea)",
+      "display_order": 0
+    },
+    {
+      "id": "51d7a444-d013-482b-bd14-20854f071881",
+      "package_id": "teepee-surprise",
+      "label": "Double chocolate fudge cake or any simple customized cake",
+      "display_order": 1
+    },
+    {
+      "id": "03f026e5-4e74-476c-b182-8c0b152b54a9",
+      "package_id": "teepee-surprise",
+      "label": "Natural Rose Bouquet",
+      "display_order": 2
+    },
+    {
+      "id": "85d6108f-5f1e-4ab6-b0e9-d08dca3e2834",
+      "package_id": "teepee-surprise",
+      "label": "Flower Fountain",
+      "display_order": 3
+    },
+    {
+      "id": "bcb7fbd6-bd28-4c7c-89c6-4b8e438d7e7e",
+      "package_id": "teepee-surprise",
+      "label": "Complementary Polaroid picture from us as a Gesture",
+      "display_order": 4
+    },
+    {
+      "id": "c6edf9ed-c60e-49b8-9bce-a88782c9d0f2",
+      "package_id": "teepee-surprise",
+      "label": "Including hiring and transportation cost",
+      "display_order": 5
+    },
+    {
+      "id": "d945fd63-cff3-4fad-a36c-8af9754543ec",
+      "package_id": "teepee-surprise",
+      "label": "Full Coverage of video with pictures",
+      "display_order": 6
+    },
+    {
+      "id": "1c62166c-6547-41d3-9fbd-33903e4723fe",
+      "package_id": "teepee-surprise",
+      "label": "Final Surprise video (free of charge)",
+      "display_order": 7
+    },
+    {
+      "id": "ed08cdce-9fef-4376-be4a-e9e0476c2973",
+      "package_id": "marry-me",
+      "label": "Romantic Full Setup",
+      "display_order": 0
+    },
+    {
+      "id": "c70b2bee-679d-4108-ae8b-a5e4ef71e541",
+      "package_id": "marry-me",
+      "label": "Cracker Show",
+      "display_order": 1
+    },
+    {
+      "id": "945091fe-34b6-49a1-a9de-947e10490470",
+      "package_id": "marry-me",
+      "label": "Rose Bouquet to knee Down and Propose",
+      "display_order": 2
+    },
+    {
+      "id": "de2483b0-ae44-4d7d-b948-6a9c5b307126",
+      "package_id": "marry-me",
+      "label": "Full coverage videos and Pictures",
+      "display_order": 3
+    },
+    {
+      "id": "4fdcc42d-238b-4ec2-baa9-83b32de92f81",
+      "package_id": "marry-me",
+      "label": "Random People Giving roses",
+      "display_order": 4
+    },
+    {
+      "id": "59eac622-4518-4745-a3a8-33925cd64132",
+      "package_id": "marry-me",
+      "label": "Background Music while proposing",
+      "display_order": 5
+    }
+  ],
+  "package_images": [
+    {
+      "id": "cd08edb9-08b9-46f5-bb86-f9987cb5d624",
+      "package_id": "simple-elegant",
+      "image_path": "/assets-1/birthday-cake-14k.jpeg",
+      "alt_text": "Birthday cake and flower bouquet for Simple but elegant Surprise package",
+      "display_order": 0
+    },
+    {
+      "id": "93f6c4e3-a77d-4da3-a5e9-db2fe61f57e4",
+      "package_id": "on-the-go",
+      "image_path": "/assets-1/on-the-go-18k-fireworks.jpeg",
+      "alt_text": "Firework surprise moment for Unexpected surprise on the go package",
+      "display_order": 0
+    },
+    {
+      "id": "12e7748b-49b0-4837-9051-926e4a400c3c",
+      "package_id": "on-the-go",
+      "image_path": "/assets-1/on-the-go-18k-cake.jpeg",
+      "alt_text": "Cake and bouquet for Unexpected surprise on the go package",
+      "display_order": 1
+    },
+    {
+      "id": "82820ab1-99b4-486c-99d7-a02acf10ffec",
+      "package_id": "flashmob",
+      "image_path": "/assets-1/flashmob-26k-balloon-cake.jpeg",
+      "alt_text": "Balloon setup with cake and bouquet for flashmob surprise package",
+      "display_order": 0
+    },
+    {
+      "id": "55a62e84-3df3-4b56-a858-b86f3c8b6411",
+      "package_id": "flashmob",
+      "image_path": "/assets-1/flashmob-26k-fireworks.jpeg",
+      "alt_text": "Firework moment for flashmob surprise package",
+      "display_order": 1
+    },
+    {
+      "id": "72732085-a510-4a03-8143-3e6f74abae7c",
+      "package_id": "emotions",
+      "image_path": "/assets-1/emotions-28k-balloon-cake.jpeg",
+      "alt_text": "Balloon setup with cake and bouquet for Those emotions package",
+      "display_order": 0
+    },
+    {
+      "id": "a3019247-8f4f-4310-ad1f-54f7b4a68486",
+      "package_id": "emotions",
+      "image_path": "/assets-1/emotions-28k-fireworks.jpeg",
+      "alt_text": "Firework moment for Those emotions package",
+      "display_order": 1
+    },
+    {
+      "id": "8253f682-9b86-4c52-8b29-85b32ae30499",
+      "package_id": "unique-wow",
+      "image_path": "/assets-1/unique-wow-36k-balloon-cake.jpeg",
+      "alt_text": "Balloon setup with cake and bouquet for Unique way surprise package",
+      "display_order": 0
+    },
+    {
+      "id": "66507778-af6b-48e9-af2a-a80fc2442910",
+      "package_id": "unique-wow",
+      "image_path": "/assets-1/unique-wow-36k-fireworks.jpeg",
+      "alt_text": "Firework moment for Unique way surprise package",
+      "display_order": 1
+    },
+    {
+      "id": "df16722e-5feb-415e-b0b2-b3bdb8789a4e",
+      "package_id": "car-surprise",
+      "image_path": "/assets-1/car-surprise-photo-01.jpeg",
+      "alt_text": "Car Surprise birthday trunk setup with balloons, bouquet and lights",
+      "display_order": 0
+    },
+    {
+      "id": "4f43b858-2c99-4c88-9793-1a6029db4230",
+      "package_id": "beach-surprise",
+      "image_path": "/assets-1/beach-surprise-photo-01.jpeg",
+      "alt_text": "Beach Surprise floral marry me setup with lanterns",
+      "display_order": 0
+    },
+    {
+      "id": "018270ec-3cf1-487c-997f-412b8faa8a12",
+      "package_id": "beach-surprise",
+      "image_path": "/assets-1/beach-surprise-photo-02.jpeg",
+      "alt_text": "Beach Surprise heart-shaped sand setup with love letters",
+      "display_order": 1
+    },
+    {
+      "id": "9533895b-8793-48db-a562-56867c94ef01",
+      "package_id": "romantic-room",
+      "image_path": "/assets-1/romantic-room-photo-01.jpeg",
+      "alt_text": "Romantic Room Setup birthday room with balloons, cake and rose petals",
+      "display_order": 0
+    },
+    {
+      "id": "a08b7225-c8d6-468b-b59d-6b151e668992",
+      "package_id": "romantic-room",
+      "image_path": "/assets-1/romantic-room-photo-02.jpeg",
+      "alt_text": "Romantic Room Setup with ocean view, rose petals and love letters",
+      "display_order": 1
+    },
+    {
+      "id": "427b29dc-7e5f-4b5e-ab83-028ffe2910d6",
+      "package_id": "romantic-room",
+      "image_path": "/assets-1/romantic-room-photo-03.jpeg",
+      "alt_text": "Romantic Room Setup birthday decoration with gold and black balloons",
+      "display_order": 2
+    },
+    {
+      "id": "343531c0-094b-41ee-8332-b6e2598b3df7",
+      "package_id": "teepee-surprise",
+      "image_path": "/assets-1/teepee-surprise-photo-01.jpeg",
+      "alt_text": "Teepee Surprise rooftop setup with lights, cake and candles",
+      "display_order": 0
+    },
+    {
+      "id": "4592b855-c24e-41bd-95cd-98a2f4eb9b64",
+      "package_id": "teepee-surprise",
+      "image_path": "/assets-1/teepee-surprise-photo-02.jpeg",
+      "alt_text": "Teepee Surprise setup with love letters and candle path",
+      "display_order": 1
+    }
+  ],
+  "gallery_items": [
+    {
+      "id": "b067464e-c9e4-4c45-9087-fe28de534444",
+      "image_path": "/assets-1/gallery/proposal-car-surprise.jpeg",
+      "media_type": "image",
+      "title": "Car proposal surprise",
+      "caption": "",
+      "active": true,
+      "featured": false,
+      "display_order": 0,
+      "archived_at": null
+    },
+    {
+      "id": "3f11b9ad-e40a-4ede-ba02-dd7029d52f2e",
+      "image_path": "/assets-3/gallery/gallery-video-01.mp4",
+      "media_type": "video",
+      "title": "Gallery video 1",
+      "caption": "",
+      "active": true,
+      "featured": false,
+      "display_order": 1,
+      "archived_at": null
+    },
+    {
+      "id": "91c7ace8-5596-4567-bffb-1562b14a196f",
+      "image_path": "/assets-1/gallery/city-of-dreams-couple.jpeg",
+      "media_type": "image",
+      "title": "City of Dreams birthday moment",
+      "caption": "",
+      "active": true,
+      "featured": false,
+      "display_order": 2,
+      "archived_at": null
+    },
+    {
+      "id": "227661df-7b48-4794-b3d3-0c67a883ad6e",
+      "image_path": "/assets-1/gallery/fireworks-moment.jpeg",
+      "media_type": "image",
+      "title": "Fireworks celebration",
+      "caption": "",
+      "active": true,
+      "featured": false,
+      "display_order": 3,
+      "archived_at": null
+    },
+    {
+      "id": "e6a2b8d1-4f4d-48f0-9e99-805b80a5dcda",
+      "image_path": "/assets-3/gallery/gallery-video-02.mp4",
+      "media_type": "video",
+      "title": "Gallery video 2",
+      "caption": "",
+      "active": true,
+      "featured": false,
+      "display_order": 4,
+      "archived_at": null
+    },
+    {
+      "id": "76642293-8bfa-4788-b507-a454069476d3",
+      "image_path": "/assets-1/gallery/birthday-unicorn-setup.jpeg",
+      "media_type": "image",
+      "title": "Unicorn birthday setup",
+      "caption": "",
+      "active": true,
+      "featured": false,
+      "display_order": 5,
+      "archived_at": null
+    },
+    {
+      "id": "0c143cb7-469d-4f6b-8ee1-3a66455e94a2",
+      "image_path": "/assets-1/gallery/waterfront-birthday-couple.jpeg",
+      "media_type": "image",
+      "title": "Waterfront birthday surprise",
+      "caption": "",
+      "active": true,
+      "featured": false,
+      "display_order": 6,
+      "archived_at": null
+    },
+    {
+      "id": "5f0a9629-c1b0-4bfd-a644-f38cc4043a49",
+      "image_path": "/assets-3/gallery/gallery-video-04.mp4",
+      "media_type": "video",
+      "title": "Gallery video 4",
+      "caption": "",
+      "active": true,
+      "featured": false,
+      "display_order": 7,
+      "archived_at": null
+    },
+    {
+      "id": "c6c3ecbb-6edd-4944-8195-af5ba3d42599",
+      "image_path": "/assets-1/gallery/city-of-dreams-couple-alt.jpeg",
+      "media_type": "image",
+      "title": "Birthday bouquet reveal",
+      "caption": "",
+      "active": true,
+      "featured": false,
+      "display_order": 8,
+      "archived_at": null
+    }
+  ],
+  "reviews": [
+    {
+      "id": "3cf5e134-bc37-4c4c-83a2-ab32b7b7f315",
+      "customer_name": "Ayesha Fernando",
+      "review": "The setup was beautiful and perfectly planned. My sister cried happy tears.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 0
+    },
+    {
+      "id": "d3a9a4b4-2c6f-4bba-bba5-3773f872ebfe",
+      "customer_name": "Rifka Sameer",
+      "review": "They made the surprise feel so personal and emotional. Every detail mattered.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 1
+    },
+    {
+      "id": "fcf9509a-406b-4b3f-9502-919c2405f4f2",
+      "customer_name": "Naveen Perera",
+      "review": "Everything was handled professionally from start to finish. Truly stress free.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 2
+    },
+    {
+      "id": "eb7cb8fa-1799-43c5-81cf-a4e5be54076a",
+      "customer_name": "Fathima Zainab",
+      "review": "The birthday decor looked premium and warm. The final video was lovely.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 3
+    },
+    {
+      "id": "2fb6cc44-d6e6-4e99-b1d3-3fecb99bca07",
+      "customer_name": "Tharindu Silva",
+      "review": "My proposal setup was elegant, private, and exactly what I had imagined.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 4
+    },
+    {
+      "id": "098781fb-2aed-4c9a-a1e4-2d03828254ad",
+      "customer_name": "Hana Mohamed",
+      "review": "Such a kind team. They understood the feeling I wanted and brought it to life.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 5
+    },
+    {
+      "id": "59d1280c-bcf2-40d4-8e52-c88b755d3ae3",
+      "customer_name": "Minuri Jayasinghe",
+      "review": "The midnight car surprise was magical. It felt thoughtful, neat, and premium.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 6
+    },
+    {
+      "id": "e4c39d70-741b-4f73-a36a-a91a6543c0a5",
+      "customer_name": "Abdulla Kareem",
+      "review": "Quick communication, beautiful flowers, and perfect timing. Highly recommended.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 7
+    },
+    {
+      "id": "aa8d10af-513b-427c-807b-f326bcf7ebac",
+      "customer_name": "Shalini Raj",
+      "review": "They made my parents' anniversary so special. The decorations were stunning.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 8
+    },
+    {
+      "id": "553af1c9-2aee-409d-bf6d-4dc27285fe49",
+      "customer_name": "Imran Nazeer",
+      "review": "The team managed everything calmly and beautifully. We only had to enjoy it.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 9
+    },
+    {
+      "id": "7a60b3d8-6edf-4931-b226-2209d936ecc6",
+      "customer_name": "Kavisha Dissanayake",
+      "review": "The cake, balloons, and video coverage were all arranged perfectly on time.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 10
+    },
+    {
+      "id": "20663da3-eb07-426d-be08-559436a365df",
+      "customer_name": "Sarah Williams",
+      "review": "Even from overseas, they helped me plan a beautiful surprise for my family.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 11
+    },
+    {
+      "id": "a8a200d1-0374-4435-b55b-d51f667c2492",
+      "customer_name": "Yasiru Fernando",
+      "review": "The flower bouquet and polaroids made the surprise feel very personal.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 12
+    },
+    {
+      "id": "c66124f8-d741-4a86-ba38-99df9696d072",
+      "customer_name": "Mariam Al Falasi",
+      "review": "Professional planning, elegant design, and a very emotional reveal moment.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 13
+    },
+    {
+      "id": "17b20a17-1194-468a-972f-ec0f4acc506c",
+      "customer_name": "Dineth Peiris",
+      "review": "The cinematic video was amazing. It captured every smile and happy reaction.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 14
+    },
+    {
+      "id": "9ee130c2-0615-4bd5-a19e-11458a50a415",
+      "customer_name": "Nuzha Rahman",
+      "review": "They listened carefully and created a surprise that felt meaningful and warm.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 15
+    },
+    {
+      "id": "910615ed-203e-423e-b13a-43b76aff00f3",
+      "customer_name": "Chamath Wijesinghe",
+      "review": "The setup was clean, premium, and exactly ready when we arrived.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 16
+    },
+    {
+      "id": "3223112d-f1be-4cdd-83aa-6130c4415719",
+      "customer_name": "Leona Mathews",
+      "review": "A beautiful experience from booking to delivery. My best friend loved it.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 17
+    },
+    {
+      "id": "16d531ae-23dc-4053-bcc8-dead1db88bc9",
+      "customer_name": "Sajith Kumar",
+      "review": "They turned a simple birthday into a memory we will talk about for years.",
+      "rating": 5,
+      "customer_image": null,
+      "package_id": null,
+      "published": false,
+      "featured": false,
+      "display_order": 18
+    }
+  ],
+  "site_statistics": [
+    {
+      "id": "5c91aadd-7e01-4a6b-9580-98ddfeaf2ce2",
+      "key": "surprises-delivered",
+      "label": "Surprises Delivered",
+      "value": 4880,
+      "suffix": "+",
+      "active": true,
+      "display_order": 0
+    },
+    {
+      "id": "c6eb0e96-f9fe-43ab-b1ea-6a6a52d604e1",
+      "key": "countries-active",
+      "label": "Countries Active",
+      "value": 9,
+      "suffix": "",
+      "active": true,
+      "display_order": 1
+    }
+  ],
+  "site_settings": [
+    {
+      "key": "phone",
+      "value": "+94 76 050 5866"
+    },
+    {
+      "key": "whatsapp",
+      "value": "94760505866"
+    },
+    {
+      "key": "instagram",
+      "value": "https://www.instagram.com/surprisewala.lk"
+    },
+    {
+      "key": "facebook",
+      "value": "https://www.facebook.com/share/1CQxMihCMG/"
+    },
+    {
+      "key": "tiktok",
+      "value": "https://www.tiktok.com/@surprisewala.lk_?_r=1&_t=ZS-96Jz6Fm1V25"
+    },
+    {
+      "key": "google_review_url",
+      "value": "https://www.google.com/search?q=Surprisewala+Reviews"
+    },
+    {
+      "key": "cms_enabled",
+      "value": "false"
+    }
+  ]
+}

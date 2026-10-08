@@ -14,6 +14,7 @@ export async function loadDashboardData() {
   ]);
 
   return {
+    paymentsEnabled: process.env.PAYHERE_ENABLED === "true" && process.env.SURPRISEWALA_CMS_ENABLED === "true",
     user: { id: user.id, email: user.email ?? "", metadata: user.user_metadata },
     profile: profileResult.data,
     orders: ordersResult.data ?? [],

@@ -1,0 +1,3 @@
+import Link from "next/link";
+import { ShieldX, ArrowLeft } from "lucide-react";
+export default function AccessDenied() { return <main className="ad-denied"><img src="/assets-1/logo.png" alt="Surprisewala" /><section className="ad-panel"><ShieldX size={34} /><span className="ad-eyebrow">Team access</span><h1>Access unavailable</h1><p>Your account does not have permission to open this workspace or section. Contact the site owner if you need access.</p><Link className="ad-button" href="/admin/login"><ArrowLeft size={16} />Back to sign in</Link><Link className="ad-text-button" href="/">Visit website</Link></section></main>; }

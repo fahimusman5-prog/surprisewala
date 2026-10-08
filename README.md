@@ -86,3 +86,7 @@ npm audit --omit=dev
 ```
 
 Verify the homepage, guest-only once-per-session membership popup, authenticated account navigation, guest cart and checkout, cake customization, package filters, WhatsApp actions, `/login`, `/signup`, `/forgot-password`, `/reset-password`, protected `/dashboard`, password login, Google OAuth after provider activation, logout, and authenticated order history.
+
+## PayHere and legal preparation
+
+See [the readiness report](docs/payhere/READINESS.md) for the legal routes, payment architecture, migration, server-only environment variables, sandbox testing and owner decisions. Payments default to disabled. No remote migration was applied.

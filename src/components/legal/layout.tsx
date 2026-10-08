@@ -1,0 +1,15 @@
+import Link from "next/link";
+import { ArrowUpRight, ShieldCheck } from "lucide-react";
+import { business, legalLinks, legalPublicationReady } from "@/lib/legal";
+import "./legal.css";
+
+export function CareHeader() {
+  return <header className="care-header"><Link href="/" aria-label="Surprisewala home"><img src="/assets-1/logo.png" alt="Surprisewala" width="138" height="55" /></Link><nav aria-label="Main navigation"><Link href="/packages">Packages</Link><Link href="/#story">About</Link><Link href="/contact">Contact <ArrowUpRight size={14}/></Link></nav></header>;
+}
+export function CareFooter() {
+  return <footer className="care-footer"><div><strong>Surprisewala</strong><p>Your happiness partner.</p><a href={business.whatsapp}>{business.phone}</a><p>{business.email}<br/>{business.address}</p><Link href="/#story">Our story</Link> · <Link href="/contact">Contact us</Link></div><nav aria-label="Legal pages">{legalLinks.map(([url,label]) => <Link key={url} href={url}>{label}</Link>)}</nav></footer>;
+}
+export function LegalPageLayout({ policy }: { policy: { title: string; description: string; sections: readonly { heading: string; body: string }[] } }) {
+  const toc = <ol>{policy.sections.map((section,i) => <li key={section.heading}><a href={`#section-${i+1}`}><span>{String(i+1).padStart(2,"0")}</span>{section.heading}</a></li>)}</ol>;
+  return <div className="care-shell"><a className="care-skip" href="#main-content">Skip to policy</a><CareHeader/><main id="main-content"><div className="care-hero"><nav aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true"> / </span><span>{policy.title}</span></nav><p className="care-eyebrow"><ShieldCheck size={16}/> CUSTOMER CARE</p><h1>{policy.title}</h1><p className="care-description">{policy.description}</p><p className="care-updated">Last updated: <time dateTime={business.version}>{business.updated}</time></p></div><div className="care-grid"><aside className="care-toc" aria-label="On this page"><h2>On this page</h2>{toc}</aside><details className="care-mobile-toc"><summary>On this page</summary>{toc}</details><article className="care-content">{!legalPublicationReady && <div className="care-draft" role="note"><strong>Policy preparation notice</strong><p>Business details and policy decisions are awaiting owner confirmation. Marked placeholders must be completed before publication or PayHere review.</p></div>}{policy.sections.map((section,i) => <section id={`section-${i+1}`} key={section.heading}><span className="care-number">{String(i+1).padStart(2,"0")}</span><div><h2>{section.heading}</h2><p>{section.body}</p></div></section>)}<section className="care-contact"><span className="care-number"><ArrowUpRight size={20}/></span><div><h2>Here to help</h2><p>{business.brand} · {business.legalName}</p><p><a href={business.whatsapp}>WhatsApp: {business.phone}</a><br/>{business.email}<br/>{business.address}</p><p>Retention decision: {business.retentionPeriod}</p><Link href="/contact">Contact our team →</Link></div></section></article></div></main><CareFooter/></div>;
+}

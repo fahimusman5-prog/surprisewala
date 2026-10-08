@@ -32,7 +32,14 @@ for (const name of ['customer_name', 'customer_phone', 'surprise_date', 'surpris
 values.surprise_date = '17/10/2026';
 assert.ok(context.validate(context.read()).some((field) => field.name === 'surprise_date'));
 values.surprise_date = '2026-10-17';
-for (const path of ['src/app/(storefront)/page.tsx', 'public/storefront.html']) {
-  assert.ok(fs.readFileSync(path, 'utf8').includes('/script.js?v=booking-fields-20261005'), `${path} must load the updated script URL`);
+for (const [select, custom] of [['surprise_type', 'custom_surprise_type'], ['recipient_relationship', 'custom_relationship']]) {
+  const previous = values[select]; values[select] = 'Other';
+  assert.ok(context.validate(context.read()).some((field) => field.name === custom));
+  values[custom] = 'Custom details';
+  assert.equal(context.validate(context.read()).length, 0);
+  values[select] = previous;
 }
-console.log('Checkout regression checks passed: completed form, required fields, date format, and versioned script URLs.');
+for (const path of ['src/app/(storefront)/page.tsx', 'src/app/(storefront)/collections/[slug]/page.tsx', 'public/storefront.html']) {
+  assert.ok(fs.readFileSync(path, 'utf8').includes('/script.js?v=legal-payhere-20261008'), `${path} must load the updated script URL`);
+}
+console.log('Checkout regression checks passed: completed form, required fields, date format, Other details, and versioned script URLs.');

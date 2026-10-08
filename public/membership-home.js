@@ -150,15 +150,6 @@
     }
   }
 
-  document.addEventListener("surprisewala:order-submitted", (event) => {
-    fetch("/api/orders", {
-      method: "POST",
-      credentials: "same-origin",
-      keepalive: true,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(event.detail),
-    }).catch(() => {});
-  });
 
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") refreshAuthentication();
